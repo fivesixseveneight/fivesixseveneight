@@ -16,23 +16,26 @@ require_once dirname(__FILE__) . '/lib/slim/Slim.php';
 require_once dirname(__FILE__) . '/lib/orm/Idorm.php';
 require_once dirname(__FILE__) .'/lib/facebook/src/facebook.php';
 
-mysqli_connect("localhost","linkendr_root","1password1", "linkendr_fivesixseveneight");
-
-// Check connection
-if (mysqli_connect_errno()){
- echo "Failed to connect to MySQL: " . mysqli_connect_error();
-}
+/*
+*
+* database configs
+*
+*/ 
+$db_host = "localhost";
+$db_username = "linkendr_root";
+$db_password = "1password1";
+$db_database = "linkendr_fivesixseveneight";
  
 /**
  * App Instance
  */
- 
 $app = new Slim();
 $app->config( 'debug', true );
 $app->facebook = new Facebook(array(
   'appId'  => '224679534393438',
   'secret' => 'e7ee425e809bd0ffb976d5968a3a5e8c',
 ));
+
 
 // ROUTES
 $app->get('/',  function () use ( $app ) {
@@ -42,7 +45,6 @@ $app->get('/',  function () use ( $app ) {
 // TEST
 $app->get('/test',  function () use ( $app ) {
 				$output = [];
-				
                 renderJSON( '200', 
 		                	array( 			
 		                					'type'=>'GET only',
@@ -50,6 +52,10 @@ $app->get('/test',  function () use ( $app ) {
 		                					'called'=>'/test' ),
                 			$output);
 });
+
+
+
+
 
 // Contact
 $app->get('/contact-page',  function () use ( $app ) {
@@ -177,6 +183,61 @@ $app->get('/facebookGetUser',  function () use ( $app ) {
 		                					'called'=>'/facebookGetUser' ),
                 			$output);
 });
+
+
+
+
+
+/*
+*
+*	DATABASE
+*	
+*/
+// GET USERS
+$app->get('/getUsers',  function () use ( $app ) {
+				$output = new stdClass();
+				
+				$sqlQueryStr = "SELECT * FROM users";
+				
+				$output -> usersArr = fetchSqlQuery($sqlQueryStr);		
+                renderJSON( '200', 
+		                	array( 			
+		                					'type'=>'GET only',
+		                					'description'=>'Gets users from database',
+		                					'called'=>'/getUsers' ),
+                			$output);
+                			
+                			
+});
+
+
+/*
+*	fetchSqlQuery
+*	
+*	fetches data from database
+*	
+*/
+
+function fetchSqlQuery($query){
+	global $db_host;
+	global $db_username;
+	global $db_password;
+	global $db_database;
+	
+	$sql_db = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+	// Check connection
+	if (mysqli_connect_errno()){
+	 echo "Failed to connect to MySQL: " . mysqli_connect_error();
+	}
+	$data = [];
+	$result = mysqli_query($sql_db, $query);
+	while ($row = mysqli_fetch_assoc($result)) {
+		$data[] = $row;
+    }
+	$sql_db -> close(); 
+	$result -> close(); 
+	return $data;
+};
 
 
 /**
