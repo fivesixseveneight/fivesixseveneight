@@ -57,6 +57,7 @@ $app->get('/test',  function () use ( $app ) {
 
 
 
+
 // Contact
 $app->get('/contact-page',  function () use ( $app ) {
 				$wp_query = new WP_Query(array(				 
@@ -208,6 +209,115 @@ $app->get('/getUsers',  function () use ( $app ) {
                 			$output);
                 			
                 			
+});
+
+
+// Logs a user in
+$app->post('/login',  function () use ( $app ) {
+				$output = new stdClass();
+				$params = json_decode($app->request()->getBody());
+				$passwordStr = $params -> password;
+				$emailStr = $params -> email;
+				
+				//	$passwordStr = "password";
+				//	$emailStr = "kendrick.lin@hotmail.com";
+				
+				$sqlQueryStr = "SELECT * FROM users WHERE email='$emailStr'";
+								
+				global $db_host;
+				global $db_username;
+				global $db_password;
+				global $db_database;
+				
+				$sql_db = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+				if (mysqli_connect_errno()){
+					echo "Failed to connect to MySQL: " . mysqli_connect_error();
+				}
+
+				$result = mysqli_query($sql_db, $sqlQueryStr);
+
+				// check if user data has returned
+				$rowsNum = mysqli_num_rows($result);
+				
+				// no user found
+				if($rowsNum == 0){
+					$output -> messageStr = "Log in unsuccessful, email not found";
+					$output -> successBln = false;
+					header('HTTP/1.1 401 Unauthorized', true, 401);
+				    renderJSON( '401', 
+		                	array( 	'type'=>'GET only',
+		                					'description'=>'Logs user in',
+		                					'called'=>'/login' ),
+                			$output);
+					exit;
+				//user found
+				}else{
+					$dbUserObj = mysqli_fetch_assoc($result);
+				}
+	
+				//Verify password
+				if($dbUserObj['password'] == $passwordStr){
+					$output -> messageStr = "Log in successful";
+					$output -> successBln = true;
+				}else{
+					$output -> messageStr = "Log in unsuccessful, incorrect password";
+					$output -> successBln = false;
+					header('HTTP/1.1 401 Unauthorized', true, 401);
+				    renderJSON( '401', 
+		                	array( 	'type'=>'GET only',
+		                					'description'=>'Logs user in',
+		                					'called'=>'/login' ),
+                			$output);
+					exit;	
+				}
+				
+				$sql_db -> close(); 
+				$result -> close(); 
+				
+				$_SESSION['id'] = $dbUserObj['id'];
+				$_SESSION['email'] = $dbUserObj['email'];
+				$_SESSION['username'] = $dbUserObj['username'];
+
+				$output -> userSessionObj = $_SESSION;
+				
+                renderJSON( '200', 
+		                	array( 	'type'=>'POST only',
+		                					'description'=>'Logs user in',
+		                					'called'=>'/login' ),
+                			$output);
+});
+
+// LOGS USER OUT 
+$app->post('/logout',  function () use ( $app ) {
+	$output = new stdClass();
+	
+	if (session_status() == PHP_SESSION_NONE) {
+	    session_start();
+	}
+
+	session_destroy();
+	
+	if(session_status() != PHP_SESSION_ACTIVE){
+		$output -> messageStr = "Log out successful";
+		$output -> successBln = true;	
+	}else{
+		$output -> messageStr = "Log out failed";
+		$output -> successBln = false;
+		
+		header('HTTP/1.1 401 Unauthorized', true, 401);
+				    renderJSON( '401', 
+		                	array( 	'type'=>'GET only',
+		                					'description'=>'Logs user out',
+		                					'called'=>'/logout' ),
+                			$output);
+					exit;	
+	}
+
+	renderJSON( '200', 
+	    	array( 	'type'=>'POST only',
+	    					'description'=>'Logs user out',
+	    					'called'=>'/logout' ),
+			$output);
 });
 
 

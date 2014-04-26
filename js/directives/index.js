@@ -10,6 +10,7 @@ define([
 		'./form-submitted-bln',
 		'./mouse-enter-class',
 		'./mouse-leave-class',
+		'./submit-form-clicked',
 		'./mouse-click-toggle-class'
 		
         ], function () {});
