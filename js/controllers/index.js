@@ -9,7 +9,9 @@ define([
     './header-controller',
     './primary-controller',
     './home-controller',
-    './login-controller'
+    './login-controller',
+    './logout-controller',
+    './register-controller'
 
 
 ], function () {});

@@ -1,17 +1,24 @@
 define(['./module'], function (controllers) {
     'use strict';
-    controllers.controller('loginController', ['$scope','$rootScope', 'loginFormPost', function ($scope, $rootScope, loginFormPost) {
+    controllers.controller('loginController', ['$scope','$rootScope', '$state', 'loginFormPost', function ($scope, $rootScope, $state, loginFormPost) {
      	
     	$scope.pageContent = {};
 
     	$scope.email;
     	$scope.password;
-    	
+    	$scope.userLoggedIn = $rootScope.isLoggedInBln;
+
     	$scope.$on('$destroy', function() {
         //  console.log("destroy scope");
             destroy();
         });
 		
+    	$scope.$watch('isLoggedInBln', function() {
+         //     console.log("isLoggedInBln", $scope.userLoggedIn);
+              $scope.userLoggedIn = $rootScope.isLoggedInBln;
+              checkIfLoggedIn();
+        });
+    		
     	
     	$scope.loginSubmit = function(){
         // 	console.log("loginSubmit");
@@ -32,7 +39,7 @@ define(['./module'], function (controllers) {
 			
 			$scope.$broadcast('formProcessingBln');
 			loginFormPost.postLoginFormData(dataObj).then(function(obj){
-				console.log("callback post", obj);
+			//	console.log("callback post", obj);
 				var dataObj = {};
 				dataObj.messageStr = obj.messageStr;
 				formSubmittedSuccess(dataObj);
@@ -40,44 +47,59 @@ define(['./module'], function (controllers) {
 		};
 		
 		var setupVerification = function(event ){
-	    	//	console.log("setupVerification");
-	    		$("#loginForm").submit(false);
-	    		$("#loginForm").validate({
-	        		rules: {
-	        			password: "required",
-	        			email: {
-	        			      required: true,
-	        			      email: true
-	        			}
-	        		},
-	        		messages: {
-	        			password: "Please enter your password",
-	        			email: "Please enter a valid e-mail"
-	        		}
-	        	});
-	    		
-	    	};
-	    	
-	    	var verfiyBeforeSubmit = function(){
-	    	//	console.log("verfiyBeforeSubmit");
-	    		return $("#loginForm").valid();
-	    	};
-	    	
-	    	var formSubmittedSuccess = function(obj){
-	    	//	console.log("formSubmittedSuccess");
-	  		  	$scope.$broadcast('formSubmittedBln', obj); 
-	    	};
-			
-	    	
-	    	var destroy = function(){
-	    		console.log("destroy");
-	    		$('#loginForm').data('validator', null);
-	    		$("#loginForm").unbind('validate');
-	    	
-	    	};
-	    	
-	    	setupVerification();
-	    	$scope.loadingEnd();
+    	//	console.log("setupVerification");
+    		$("#loginForm").submit(false);
+    		$("#loginForm").validate({
+        		rules: {
+        			password: "required",
+        			email: {
+        			      required: true,
+        			      email: true
+        			}
+        		},
+        		messages: {
+        			password: "Please enter your password",
+        			email: "Please enter a valid e-mail"
+        		}
+        	});
+    		
+    	};
+    	
+    	var verfiyBeforeSubmit = function(){
+    	//	console.log("verfiyBeforeSubmit");
+    		return $("#loginForm").valid();
+    	};
+    	
+    	var formSubmittedSuccess = function(obj){
+    		console.log("login success");
+    		$rootScope.isLoggedInBln = true;
+  		  	$scope.$broadcast('formSubmittedBln', obj); 
+    	};
+		
+    	var destroy = function(){
+    	//	console.log("destroy");
+    		$('#loginForm').data('validator', null);
+    		$("#loginForm").unbind('validate');
+    	};
+    	
+    	var checkIfLoggedIn = function(){
+    	//	console.log("checkIfLoggedIn");
+    		if($scope.userLoggedIn == true){
+    			$state.transitionTo("root.home");
+    		}
+    	};
+    	
+    	var init = function(){
+    	//	console.log("init");
+
+    		if($scope.userLoggedIn){
+    			return;
+    		}
+    		setupVerification();
+    		$scope.loadingEnd();
+    	};
+    	
+    	init();
 
 		
     }]);

@@ -59,6 +59,28 @@ define(['./app'], function (app) {
     		resolve:{
     		
     		}
+    	}).state('root.logout', {
+    		url: '/logout',
+    		views:{
+    			"mainView@":{
+    				  templateUrl: 'partials/logout.html',
+    		          controller: 'logoutController'
+    			}
+    		},
+    		resolve:{
+    		
+    		}
+    	}).state('root.register', {
+    		url: '/register',
+    		views:{
+    			"mainView@":{
+    				  templateUrl: 'partials/register.html',
+    		          controller: 'registerController'
+    			}
+    		},
+    		resolve:{
+    		
+    		}
     	});
 
     	

@@ -7,5 +7,7 @@
  **/
 define([
 	'./contact-form-post',
-	'./login-form-post'
+	'./login-form-post',
+	'./logout-post',
+	'./register-form-post'
         ], function () {});

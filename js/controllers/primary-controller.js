@@ -46,6 +46,40 @@ define(['./module'], function (controllers) {
     	});
     	
 
+    	/*
+    	 * checks if a user has an active session
+    	 */
+    	$rootScope.userObj = {};
+    	$rootScope.isLoggedInBln = false;
+    	$http({method: 'POST', url: '/api/isLoggedIn'}).success(function(obj, status, headers, config) {
+    	//	console.log("isLoggedInBln successful", obj);
+    		$rootScope.isLoggedInBln = obj.data.userSessionObj.loggedInBln;
+    		if($rootScope.isLoggedInBln == true){
+    			$rootScope.userObj = obj.data.userSessionObj;	
+    		}
+    		console.log("user has session: ", $rootScope.isLoggedInBln);
+    	});
+    	
+    	
+    	/*
+    	 *  gets country codes
+    	 */
+    	$rootScope.countriesArr;
+    	$http({method: 'GET', url: '/media/countries.json'}).success(function(obj, status, headers, config) {
+    	//    console.log("countriesArr successful", obj);	
+    		$rootScope.countriesArr = obj;
+    	});
+    	
+    	/*
+    	 *  gets us cities
+    	 */
+    	$rootScope.citiesArr;
+    	$http({method: 'GET', url: '/media/uscities.json'}).success(function(obj, status, headers, config) {
+    	//    console.log("citiesArr successful", obj);	
+    		$rootScope.citiesArr = obj;
+    	});
+    	
+    	
     	
     	$scope.env;
     	$rootScope.isMobileBln = false;
