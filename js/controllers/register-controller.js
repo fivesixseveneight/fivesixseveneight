@@ -76,33 +76,31 @@ define(['./module'], function (controllers) {
 	    		
 	    		$.validator.addMethod("checkUsername", function(usernameStr, element) {
 	    		//	console.log("checkUsername");
-	    	 
-		    		var dataObj = {
-							username : $scope.username,
-					};
-
-		    		checkUsernamePost.postUsernameFormData(dataObj).then(function(obj){
-					//	console.log("callback post", obj);
-						var dataObj = {};
-						dataObj.messageStr = obj.messageStr;
-						var successBln = obj.successBln;
-						if(successBln == false){
-							validator.showErrors({
-								  "username": dataObj.messageStr
-								});
-						}	
-		    		});
-		    		
+	    			if($scope.username != undefined && $scope.username != ""){
+			    		var dataObj = {
+								username : $scope.username,
+						};
+			    		checkUsernamePost.postUsernameFormData(dataObj).then(function(obj){
+						//	console.log("callback post", obj);
+							var dataObj = {};
+							dataObj.messageStr = obj.messageStr;
+							var successBln = obj.successBln;
+							if(successBln == false){
+								validator.showErrors({
+									  "username": dataObj.messageStr
+									});
+							}	
+			    		});
+	    			}
 		    		return true;
 	    		});
 	    		
 	    		$.validator.addMethod("checkEmail", function(emailStr, element) {
-		    		//	console.log("checkUsername");
-		    	 
-			    		var dataObj = {
+	    		//	console.log("checkUsername");
+	    			if($scope.email != undefined && $scope.email != ""){
+	    				var dataObj = {
 			    				email : $scope.email,
 						};
-
 			    		checkEmailPost.postEmailFormData(dataObj).then(function(obj){
 						//	console.log("callback post", obj);
 							var dataObj = {};
@@ -114,9 +112,9 @@ define(['./module'], function (controllers) {
 									});
 							}	
 			    		});
-			    		
-			    		return true;
-		    		});
+	    			}
+			    	return true;
+		    	});
 	    		
 	    		var validator = $("#registerForm").validate({
 	        		rules: {

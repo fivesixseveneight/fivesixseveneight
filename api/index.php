@@ -214,16 +214,31 @@ $app->post('/checkUsername',  function () use ( $app ) {
 	$output = new stdClass();
 	$params = json_decode($app->request()->getBody());
 	
+	global $db_host;
+	global $db_username;
+	global $db_password;
+	global $db_database;
+	
 	if(isset($params)){
 		$usernameStr = $params -> username;
-	}
-	
-	if(true){
-		$output -> successBln = true;
-		$output -> messageStr = "This username is valid";
-	}else{
-		$output -> successBln = false;
-		$output -> messageStr = "This username is unavailable";
+		// checks for unique username
+		$sqlQueryStr = "SELECT username FROM users WHERE username='$usernameStr'";	
+		$sql_db = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+		if (mysqli_connect_errno()){
+			echo "Failed to connect to MySQL: " . mysqli_connect_error();
+		}
+		$result = mysqli_query($sql_db, $sqlQueryStr);
+		// check if user data has returned
+		$rowsNum = mysqli_num_rows($result);
+		if($rowsNum != 0){
+			$output -> successBln = false;
+			$output -> messageStr = "This username is unavailable";
+		}else{
+			$output -> successBln = true;
+			$output -> messageStr = "This username is available";
+		}
+		$sql_db -> close();
+		$result -> close();
 	}
 	
 	renderJSON( '200', 
@@ -239,16 +254,44 @@ $app->post('/checkEmail',  function () use ( $app ) {
 	$output = new stdClass();
 	$params = json_decode($app->request()->getBody());
 	
-	if(isset($params)){
-		$emailStr = $params -> email;
-	}
+	global $db_host;
+	global $db_username;
+	global $db_password;
+	global $db_database;
 	
-	if(true){
-		$output -> successBln = true;
-		$output -> messageStr = "E-mail address is valid";
+	if(isset($params) && isset($params -> email)){
+		$emailStr = $params -> email;
+		// checks for unique email
+		$sqlQueryStr = "SELECT email FROM users WHERE email='$emailStr'";
+		$sql_db = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+		if (mysqli_connect_errno()){
+			echo "Failed to connect to MySQL: " . mysqli_connect_error();
+		}
+		$result = mysqli_query($sql_db, $sqlQueryStr);
+		// check if user data has returned
+		$rowsNum = mysqli_num_rows($result);
+		if($rowsNum != 0){
+			$output -> successBln = false;
+			$output -> messageStr = "E-mail address already exists";
+		}else{
+			$output -> successBln = true;
+			$output -> messageStr = "E-mail address is valid";
+		}
+		$sql_db -> close();
+		$result -> close();
+		
 	}else{
+		
 		$output -> successBln = false;
-		$output -> messageStr = "This E-mail address is already in use";
+		$output -> messageStr = "Parameter not set";
+		
+		header('HTTP/1.1 401 Unauthorized', true, 401);
+		renderJSON( '401',
+		array( 	'type'=>'POST only',
+		'description'=>'Checks if e-mail exists',
+		'called'=>'/checkEmail' ),
+		$output);
+		exit;
 	}
 	
 	renderJSON( '200',
@@ -270,75 +313,146 @@ $app->post('/register',  function () use ( $app ) {
 				$firstnameStr = $params -> firstname;
 				$lastnameStr = $params -> lastname;
 				$usernameStr = $params -> username;
-
-				// check email not null and unique
-				// check username not null and unique
-				// check password not null
-				// check lastname not null
-				// check firstname not null
+				$errorBln = false;
+				$errorMessageArr = array();
+				$minPasswordLenNum = 8;
+				$maxPasswordLenNum = 100;
+				$maxEmailLenNum = 255;
+				$maxNameLenNum = 35;
+				$maxUsernameLenNum = 30;
 				
-				
-				/*
-				
-				$sqlQueryStr = "SELECT * FROM users WHERE email='$emailStr'";
-								
 				global $db_host;
 				global $db_username;
 				global $db_password;
 				global $db_database;
 				
-				$sql_db = mysqli_connect($db_host, $db_username, $db_password, $db_database);
-				if (mysqli_connect_errno()){
-					echo "Failed to connect to MySQL: " . mysqli_connect_error();
+				//checks password
+				if(!isset($passwordStr)){
+					$errorBln = true;
+				}else{
+					if(strlen($passwordStr) < $minPasswordLenNum){
+						// password too short
+						$errorMessageArr[] = "Password length is too short";
+						$errorBln = true;
+					}
+					if(strlen($passwordStr) > $maxPasswordLenNum){
+						// password too long
+						$errorMessageArr[] = "Password length is too long";
+						$errorBln = true;
+					}
 				}
-
-				$result = mysqli_query($sql_db, $sqlQueryStr);
-
-				// check if user data has returned
-				$rowsNum = mysqli_num_rows($result);
 				
-				// no user found
-				if($rowsNum == 0){
-					$output -> messageStr = "Log in unsuccessful, email not found";
+				if(!isset($emailStr)){
+					$errorBln = true;
+				}else{
+					// check unique and valid email
+					if(strlen($emailStr)>$maxEmailLenNum){
+						// email too long
+						$errorMessageArr[] = "E-mail address is too long";
+						$errorBln = true;
+					}
+					
+					// checks for unique email
+					$sqlQueryStr = "SELECT email FROM users WHERE email='$emailStr'";
+
+					$sql_db = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+					if (mysqli_connect_errno()){
+						echo "Failed to connect to MySQL: " . mysqli_connect_error();
+					}
+					
+					$result = mysqli_query($sql_db, $sqlQueryStr);
+					
+					// check if user data has returned
+					$rowsNum = mysqli_num_rows($result);
+					
+					if($rowsNum != 0){
+						$errorMessageArr[] = "E-mail address already exists";
+						$errorBln = true;
+					};
+					
+					$sql_db -> close();
+					$result -> close();
+				}
+				
+				if(!isset($firstnameStr)){
+					$errorBln = true;
+				}else{
+					if(strlen($firstnameStr)>$maxNameLenNum){
+						// name too long
+						$errorMessageArr[] = "First name is too long";
+						$errorBln = true;
+					}
+				}
+				
+				if(!isset($lastnameStr)){
+					$errorBln = true;
+				}else{
+					if(strlen($lastnameStr)>$maxNameLenNum){
+						// name too long
+						$errorMessageArr[] = "Last name is too long";
+						$errorBln = true;
+					}
+				}
+				
+				if(!isset($usernameStr)){
+					$errorBln = true;
+				}else{
+					
+					if(strlen($usernameStr)>$maxUsernameLenNum){
+						// username too long
+						$errorMessageArr[] = "Username is too long";
+						$errorBln = true;
+					}
+					
+					// checks for unique username
+					$sqlQueryStr = "SELECT username FROM users WHERE username='$usernameStr'";
+					
+					$sql_db = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+					if (mysqli_connect_errno()){
+						echo "Failed to connect to MySQL: " . mysqli_connect_error();
+					}
+						
+					$result = mysqli_query($sql_db, $sqlQueryStr);
+						
+					// check if user data has returned
+					$rowsNum = mysqli_num_rows($result);
+						
+					if($rowsNum != 0){
+						$errorMessageArr[] = "Username is not available";
+						$errorBln = true;
+					};
+						
+					$sql_db -> close();
+					$result -> close();
+				}
+			
+				// check for errors
+				if($errorBln){
+					$output -> errorMessagesArr = $errorMessageArr;
+					$output -> messageStr = "Registration Unsuccessful";
 					$output -> successBln = false;
 					header('HTTP/1.1 401 Unauthorized', true, 401);
-				    renderJSON( '401', 
-		                	array( 	'type'=>'GET only',
-		                					'description'=>'Logs user in',
-		                					'called'=>'/login' ),
-                			$output);
+					renderJSON( '401',
+					array( 	'type'=>'GET only',
+					'description'=>'Registers user',
+					'called'=>'/register' ),
+					$output);
 					exit;
-				//user found
 				}else{
-					$dbUserObj = mysqli_fetch_assoc($result);
+				// if no errors, insert new user
+					$passwordMd5 = md5($passwordStr);
+					$todaysDate = date("Y-m-d");
+					
+					$sqlQueryStr = "INSERT INTO users VALUES ('', '$usernameStr', '$firstnameStr', '$lastnameStr', '$emailStr', '$passwordMd5', '$todaysDate', '0', '', '', '')";
+					
+					$sql_db = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+					if (mysqli_connect_errno()){
+						echo "Failed to connect to MySQL: " . mysqli_connect_error();
+					}
+					
+					$result = mysqli_query($sql_db, $sqlQueryStr);
+
 				}
-	
-				//Verify password
-				if($dbUserObj['password'] == $passwordStr){
-					$output -> messageStr = "Log in successful";
-					$output -> successBln = true;
-				}else{
-					$output -> messageStr = "Log in unsuccessful, incorrect password";
-					$output -> successBln = false;
-					header('HTTP/1.1 401 Unauthorized', true, 401);
-				    renderJSON( '401', 
-		                	array( 	'type'=>'GET only',
-		                					'description'=>'Logs user in',
-		                					'called'=>'/login' ),
-                			$output);
-					exit;	
-				}
-				
-				$sql_db -> close(); 
-				$result -> close(); 
-				
-				$_SESSION['id'] = $dbUserObj['id'];
-				$_SESSION['email'] = $dbUserObj['email'];
-				$_SESSION['username'] = $dbUserObj['username'];
-				$_SESSION['loggedInBln'] = true;
-				
-				$output -> userSessionObj = $_SESSION;
-				*/
 				
                 renderJSON( '200', 
 		                	array( 	'type'=>'POST only',
