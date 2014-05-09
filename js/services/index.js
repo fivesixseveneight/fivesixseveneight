@@ -7,6 +7,8 @@
  **/
 define([
 	'./contact-form-post',
+	'./check-username-post',
+	'./check-email-post',
 	'./login-form-post',
 	'./logout-post',
 	'./register-form-post'

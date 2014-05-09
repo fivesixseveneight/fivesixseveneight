@@ -242,10 +242,38 @@ body{
 * home
 */
 
-.home{
+.home {
 	position: relative;
 }
 
+.register {
+	
+
+}
+
+.register label{
+	margin-bottom: 2px;
+}
+
+.register label.error{
+	margin-bottom: 0px;
+	margin-top: 0px;
+	font-size:10px;
+	color: red;
+}
+
+.register .panel-heading{
+	padding-left: 30px;
+}
+
+.register #registerForm .form-group{
+	height: 80px;
+	margin-bottom: 0px;
+}
+
+.register #registerForm #submitButton{
+	
+}
 
 /*
 UI VIEW ANIMATION

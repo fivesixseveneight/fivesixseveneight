@@ -209,16 +209,76 @@ $app->get('/getUsers',  function () use ( $app ) {
                 			$output);   			
 });
 
+// checks if a username exists
+$app->post('/checkUsername',  function () use ( $app ) {
+	$output = new stdClass();
+	$params = json_decode($app->request()->getBody());
+	
+	if(isset($params)){
+		$usernameStr = $params -> username;
+	}
+	
+	if(true){
+		$output -> successBln = true;
+		$output -> messageStr = "This username is valid";
+	}else{
+		$output -> successBln = false;
+		$output -> messageStr = "This username is unavailable";
+	}
+	
+	renderJSON( '200', 
+				array( 	
+								'type'=>'POST only',
+								'description'=>'Checks if username exists',
+								'called'=>'/checkUsername' ),
+				$output);
+});
 
+// checks if a email exists
+$app->post('/checkEmail',  function () use ( $app ) {
+	$output = new stdClass();
+	$params = json_decode($app->request()->getBody());
+	
+	if(isset($params)){
+		$emailStr = $params -> email;
+	}
+	
+	if(true){
+		$output -> successBln = true;
+		$output -> messageStr = "E-mail address is valid";
+	}else{
+		$output -> successBln = false;
+		$output -> messageStr = "This E-mail address is already in use";
+	}
+	
+	renderJSON( '200',
+				array( 	
+								'type'=>'POST only',
+								'description'=>'Checks if e-mail exists',
+								'called'=>'/checkEmail' ),
+				$output);
+});
+	
+	
+	
 // Registers a user
 $app->post('/register',  function () use ( $app ) {
 				$output = new stdClass();
 				$params = json_decode($app->request()->getBody());
 				$passwordStr = $params -> password;
 				$emailStr = $params -> email;
+				$firstnameStr = $params -> firstname;
+				$lastnameStr = $params -> lastname;
+				$usernameStr = $params -> username;
+
+				// check email not null and unique
+				// check username not null and unique
+				// check password not null
+				// check lastname not null
+				// check firstname not null
 				
-				//	$passwordStr = "password";
-				//	$emailStr = "kendrick.lin@hotmail.com";
+				
+				/*
 				
 				$sqlQueryStr = "SELECT * FROM users WHERE email='$emailStr'";
 								
@@ -278,11 +338,12 @@ $app->post('/register',  function () use ( $app ) {
 				$_SESSION['loggedInBln'] = true;
 				
 				$output -> userSessionObj = $_SESSION;
+				*/
 				
                 renderJSON( '200', 
 		                	array( 	'type'=>'POST only',
-		                					'description'=>'Logs user in',
-		                					'called'=>'/login' ),
+		                					'description'=>'Registers user',
+		                					'called'=>'/register' ),
                 			$output);
 });
 
