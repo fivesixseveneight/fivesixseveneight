@@ -8,6 +8,7 @@ define([
 		'./loading-toggle',
 		'./loading-view-toggle',
 		'./form-submitted-bln',
+		'./form-submit-complete-bln',
 		'./mouse-enter-class',
 		'./mouse-leave-class',
 		'./submit-form-clicked',

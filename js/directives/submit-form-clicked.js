@@ -11,7 +11,7 @@ define(['./module'], function (directives) {
             	
             	var handleProcessing = function(){
             	//	  console.log("handleProcessing");
-            		 $(element).html('');
+            	//	 $(element).html('');
             		 $(element).prop('disabled', true);
             	};
             	

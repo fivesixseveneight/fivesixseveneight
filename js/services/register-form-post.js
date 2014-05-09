@@ -11,10 +11,10 @@ define(['./module'], function (services) {
     		    	//	console.log('postData', postObj);
     		    		$http.post(urlStr, postObj).
     		    	    error(function(dataObj, status, headers, config) {
-    		    	    	console.log("register failure");
+    		    	    //	console.log("register failure");
     		    	      	requestFailed(dataObj);
     		    	      }).then(function (dataObj) {
-        		    		console.log('register success',dataObj.data);
+        		    	//	console.log('register success',dataObj.data);
         		    		requestSuccess(dataObj.data);
         		    	});
     		    	};
@@ -35,8 +35,15 @@ define(['./module'], function (services) {
     		    		var returnObj = {};
     		    		returnObj.messageStr = "register failed";
     		    		returnObj.successBln = false;
-    		    		if(obj.data && obj.data.messageStr){
-    		    			returnObj.messageStr = obj.data.messageStr;
+    		    		if(obj.data){
+    		    			if(obj.data.messageStr){
+        		    			returnObj.messageStr = obj.data.messageStr;
+    		    			}
+    		    			if(obj.data.errorMessagesArr){
+        		    			returnObj.errorMessagesArr = obj.data.errorMessagesArr;
+
+    		    			}
+
     		    		};
     		    		deferred.resolve(returnObj);
     		    	};

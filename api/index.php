@@ -332,12 +332,12 @@ $app->post('/register',  function () use ( $app ) {
 				}else{
 					if(strlen($passwordStr) < $minPasswordLenNum){
 						// password too short
-						$errorMessageArr[] = "Password length is too short";
+						$errorMessageArr['password'] = "Password length is too short";
 						$errorBln = true;
 					}
 					if(strlen($passwordStr) > $maxPasswordLenNum){
 						// password too long
-						$errorMessageArr[] = "Password length is too long";
+						$errorMessageArr['password'] = "Password length is too long";
 						$errorBln = true;
 					}
 				}
@@ -348,7 +348,7 @@ $app->post('/register',  function () use ( $app ) {
 					// check unique and valid email
 					if(strlen($emailStr)>$maxEmailLenNum){
 						// email too long
-						$errorMessageArr[] = "E-mail address is too long";
+						$errorMessageArr['email'] = "E-mail address is too long";
 						$errorBln = true;
 					}
 					
@@ -366,7 +366,7 @@ $app->post('/register',  function () use ( $app ) {
 					$rowsNum = mysqli_num_rows($result);
 					
 					if($rowsNum != 0){
-						$errorMessageArr[] = "E-mail address already exists";
+						$errorMessageArr['email'] = "E-mail address already exists";
 						$errorBln = true;
 					};
 					
@@ -379,7 +379,7 @@ $app->post('/register',  function () use ( $app ) {
 				}else{
 					if(strlen($firstnameStr)>$maxNameLenNum){
 						// name too long
-						$errorMessageArr[] = "First name is too long";
+						$errorMessageArr['firstname'] = "First name is too long";
 						$errorBln = true;
 					}
 				}
@@ -389,7 +389,7 @@ $app->post('/register',  function () use ( $app ) {
 				}else{
 					if(strlen($lastnameStr)>$maxNameLenNum){
 						// name too long
-						$errorMessageArr[] = "Last name is too long";
+						$errorMessageArr['lastname'] = "Last name is too long";
 						$errorBln = true;
 					}
 				}
@@ -400,7 +400,7 @@ $app->post('/register',  function () use ( $app ) {
 					
 					if(strlen($usernameStr)>$maxUsernameLenNum){
 						// username too long
-						$errorMessageArr[] = "Username is too long";
+						$errorMessageArr['username'] = "Username is too long";
 						$errorBln = true;
 					}
 					
@@ -418,7 +418,7 @@ $app->post('/register',  function () use ( $app ) {
 					$rowsNum = mysqli_num_rows($result);
 						
 					if($rowsNum != 0){
-						$errorMessageArr[] = "Username is not available";
+						$errorMessageArr['username'] = "Username is not available";
 						$errorBln = true;
 					};
 						

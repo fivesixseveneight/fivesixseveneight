@@ -4,7 +4,7 @@ define(['./module'], function (controllers) {
      	
     	$scope.pageContent = {};
 
-    	
+    	$scope.validator;
     	$scope.username;
     	$scope.password;
    // 	$scope.password2;
@@ -58,10 +58,8 @@ define(['./module'], function (controllers) {
 			
 			$scope.$broadcast('formProcessingBln');
 			registerFormPost.postregisterFormData(dataObj).then(function(obj){
-				console.log("callback post", obj);
-				var dataObj = {};
-				dataObj.messageStr = obj.messageStr;
-				formSubmittedSuccess(dataObj);
+			//	console.log("callback post", obj);
+				formSubmittedComplete(obj);
 			});
 		};
 		
@@ -86,7 +84,7 @@ define(['./module'], function (controllers) {
 							dataObj.messageStr = obj.messageStr;
 							var successBln = obj.successBln;
 							if(successBln == false){
-								validator.showErrors({
+								$scope.validator.showErrors({
 									  "username": dataObj.messageStr
 									});
 							}	
@@ -107,7 +105,7 @@ define(['./module'], function (controllers) {
 							dataObj.messageStr = obj.messageStr;
 							var successBln = obj.successBln;
 							if(successBln == false){
-								validator.showErrors({
+								$scope.validator.showErrors({
 									  "email": dataObj.messageStr
 									});
 							}	
@@ -116,43 +114,61 @@ define(['./module'], function (controllers) {
 			    	return true;
 		    	});
 	    		
-	    		var validator = $("#registerForm").validate({
+	    		$scope.validator = $("#registerForm").validate({
 	        		rules: {
 	        		/*	phone:{
 	        				phone: true
 	        			},	*/
 	        			username: {
 				            required: true,
-				            checkUsername: true
+				            checkUsername: true,
+				            maxlength: 30
 			    		},
-	        			firstname: "required",
-	        			lastname: "required",
+	        			firstname: {
+	        				required: true,
+				            maxlength: 35
+	        			},
+	        			lastname:  {
+	        				required: true,
+				            maxlength: 35
+	        			},
 	        		//	address: "required",
 	        		//	country: "required",
 	        		//	city: "required",
 	        		//	state: "required",
 	        		//	zip: "required",
-	        			password: "required",
+	        			password: {
+	        				required: true,
+				            minlength: 8,
+				            maxlength: 100
+	        			},
 	        		//	password2: "required",
 	        			email: {
 	        			      required: true,
 	        			      email: true,
-	        			      checkEmail: true
+	        			      checkEmail: true,
+	        			      maxlength: 255
 	        			}
 	        		},
 	        		messages: {
 	        			username: {
 	        				required: "Please enter a username"
 	        			},	 
-	        			firstname: "Please enter your first name",
-	        			lastname: "Please enter your last name",
+	        			firstname: {
+	        				required: "Please enter your first name"
+	        			},
+	        			lastname: {
+	        				required: "Please enter your last name"
+	        			},
 	        		//	address: "Please enter your address",
 	        		//	country: "Please enter your country",
 	        		//	city: "Please enter your city",
 	        		//	state: "Please enter your state",
 	        		//	zip: "Please enter your zip/postal code",
 	        		//	phone: "Please enter a valid phone number",
-	        			password: "Please enter a password",
+	        			password: {
+	        				required: "Please enter a password"
+	        			},
 	        		//	password2: "Please re-enter your password",
 	        			email: {
 	        				required: "Please enter a E-mail address",
@@ -168,10 +184,21 @@ define(['./module'], function (controllers) {
 	    		return $("#registerForm").valid();
 	    	};
 	    	
-	    	var formSubmittedSuccess = function(obj){
-	    	//	console.log("formSubmittedSuccess");
-	  		  	$scope.$broadcast('formSubmittedBln', obj); 
+	    	var formSubmittedComplete = function(obj){
+	    		console.log("formSubmittedComplete", obj);
+	    	 	$scope.$broadcast('formSubmittedBln', obj); 
+	    	 	var errorMessagesArr;
+	    	 	if(obj.errorMessagesArr){
+	    	 		errorMessagesArr = obj.errorMessagesArr;
+	    	 		var errorObj = {};
+	    	 		for(var i in errorMessagesArr){
+	    	 			errorObj[i] = errorMessagesArr[i];
+	    	 			$scope.validator.showErrors(errorObj);
+	    	 		}
+	    	 	}
+	    	 	
 	    	};
+	    	
 			
 	    	var destroy = function(){
 	    	//	console.log("destroy");
