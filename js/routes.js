@@ -6,30 +6,42 @@ define(['./app'], function (app) {
     'use strict';
     return app.config(['$stateProvider','$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
     	
-    	
     	$stateProvider.state('root', {
     		url: '',
     		views:{
-    			'header@' :{
-    	            templateUrl: 'partials/header.html',
-    	            controller: 'headerController'
-    			},
-    			'footer@' :{
-    				templateUrl: 'partials/footer.html',
-     	            controller: 'footerController'
-    			},
-    			"mainView@":{
-    				  templateUrl: 'partials/home.html',
-    		          controller: 'homeController'
-      			}
+    			'@' :{
+    				templateUrl: 'partials/primary.html',
+     	            controller: 'primaryController'
+    			}
     		},
     		resolve:{
-
+    			checkSession: (["$q", "$http",function($q, $http){         
+            		var deferred = $q.defer();
+            		return $http({method: 'POST', url: "/api/isLoggedIn"}).then(function (obj) {
+            			 deferred.resolve();
+                         return obj.data;
+                    });
+            		return deferred.promise;
+            	}])
     		}
-        }).state('root.home', {
+        }).state('root.primary', {
+    		views:{
+    			'header' :{
+		            templateUrl: 'partials/header.html',
+		            controller: 'headerController'
+				},
+				'footer' :{
+					templateUrl: 'partials/footer.html',
+	 	            controller: 'footerController'
+				}
+    		},
+    		resolve:{
+    		
+    		}
+    	}).state('root.primary.home', {
     		url: '/home',
     		views:{
-    			"mainView@":{
+    			"mainView@root":{
     				  templateUrl: 'partials/home.html',
     		          controller: 'homeController'
     			}
@@ -37,10 +49,11 @@ define(['./app'], function (app) {
     		resolve:{
     		
     		}
-    	}).state('root.about', {
+    	})    	
+    	.state('root.primary.about', {
     		url: '/about',
     		views:{
-    			"mainView@":{
+    			"mainView@root":{
     				  templateUrl: 'partials/about.html',
     		          controller: 'homeController'
     			}
@@ -48,10 +61,10 @@ define(['./app'], function (app) {
     		resolve:{
     		
     		}
-    	}).state('root.login', {
+    	}).state('root.primary.login', {
     		url: '/login',
     		views:{
-    			"mainView@":{
+    			"mainView@root":{
     				  templateUrl: 'partials/login.html',
     		          controller: 'loginController'
     			}
@@ -59,10 +72,10 @@ define(['./app'], function (app) {
     		resolve:{
     		
     		}
-    	}).state('root.logout', {
+    	}).state('root.primary.logout', {
     		url: '/logout',
     		views:{
-    			"mainView@":{
+    			"mainView@root":{
     				  templateUrl: 'partials/logout.html',
     		          controller: 'logoutController'
     			}
@@ -70,10 +83,10 @@ define(['./app'], function (app) {
     		resolve:{
     		
     		}
-    	}).state('root.register', {
+    	}).state('root.primary.register', {
     		url: '/register',
     		views:{
-    			"mainView@":{
+    			"mainView@root":{
     				  templateUrl: 'partials/register.html',
     		          controller: 'registerController'
     			}
@@ -81,10 +94,10 @@ define(['./app'], function (app) {
     		resolve:{
     		
     		}
-    	}).state('root.confirmregistration', {
+    	}).state('root.primary.confirmregistration', {
     		url: '/confirmregistration',
     		views:{
-    			"mainView@":{
+    			"mainView@root":{
     				  templateUrl: 'partials/confirmregistration.html',
     		          controller: 'confirmregistrationController'
     			}
@@ -93,7 +106,7 @@ define(['./app'], function (app) {
     		
     		}
     	});
-
+    	 
     	
     	$urlRouterProvider.otherwise('home');
     	

@@ -28,6 +28,26 @@ define([
    	app.config([ '$locationProvider', function($locationProvider){
 	           $locationProvider.html5Mode(false);
 	       }
-	   ]);
+	   ]).run(['$q','$http', '$rootScope' , function($q, $http, $rootScope){
+		   	/*
+			var deferred = $q.defer();
+		    $rootScope.userObj = {};
+	    	$rootScope.isLoggedInBln = false;
+	    	$http({method: 'POST', url: '/api/isLoggedIn'}).success(function(obj, status, headers, config) {
+	    	//	console.log("check isLoggedInBln successful");
+	    		$rootScope.isLoggedInBln = obj.data.userSessionObj.loggedInBln;
+	    		if($rootScope.isLoggedInBln == true){
+	    			$rootScope.userObj = obj.data.userSessionObj;	
+	    			console.log("user session: ", $rootScope.userObj);
+	    		}else{
+	    			console.log("user has session: ", $rootScope.isLoggedInBln);	
+	    		}
+	    		 deferred.resolve();
+	    	});
+	    	
+	    	return deferred.promise;
+	    	*/
+		   
+	   }]);
     return app;
 });

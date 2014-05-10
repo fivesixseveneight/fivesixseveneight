@@ -26,6 +26,6 @@ define(['./module'], function (controllers) {
 
     	$scope.loadingEnd();
 
-    	
+    	init();
     }]);
 });

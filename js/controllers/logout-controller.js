@@ -19,7 +19,7 @@ define(['./module'], function (controllers) {
               if($scope.userLoggedIn){
             	  $scope.logoutSubmit();
               }else{
-            	  $state.transitionTo("root.login");
+            	  $state.transitionTo("root.primary.login");
               }
         });
     		
@@ -45,7 +45,7 @@ define(['./module'], function (controllers) {
     	var formSubmittedSuccess = function(obj){
     		console.log("logout success");
     		$rootScope.isLoggedInBln = false;
-    		$state.transitionTo("root.login");
+    		$state.transitionTo("root.primary.login");
     	};
 		
     	

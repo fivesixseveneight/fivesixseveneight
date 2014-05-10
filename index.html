@@ -24,26 +24,10 @@
   <!--[if lt IE 9]><link rel='stylesheet' href="css/ie8.css"/><![endif]-->
 </head>
 
-<body  ng-controller="primaryController">
-		<div loading-toggle="400" class="loading-img-wrapper active">
-			<div class="loading-wrapper">
-				<div class="loading-logo"></div>
-			</div>
-		</div>
-		  
-		<div id="wrapper" >
-				<!-- Page content -->
-				<div ui-view="header" ></div>
-				
-				<!-- Keep all page content within the page-content inset div! -->
-				<div loading-view-toggle trans-time="400" id="view-wrapper" class="relative" >
-			 			<!-- main content div -->
-						<div class="main-view" ui-view="mainView"></div>
-	            </div>
-			</div>
-		</div>
+<body >
 	
-	<div ui-view="footer" ></div>
+	<div ui-view></div>
+
 	
 	<script src="lib/requirejs/require.js" data-main="js/main.js"></script>
 	

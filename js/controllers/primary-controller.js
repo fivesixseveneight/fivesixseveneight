@@ -1,6 +1,6 @@
 define(['./module'], function (controllers) {
     'use strict';
-    controllers.controller('primaryController', ['$scope','$rootScope', '$sce', '$compile', '$http', function ($scope, $rootScope, $sce, $compile, $http) {
+    controllers.controller('primaryController', ['$scope','$rootScope', '$sce', '$compile', '$http', 'checkSession', function ($scope, $rootScope, $sce, $compile, $http, checkSession) {
        	/*
     	 * This is the primary controller 
     	 */
@@ -46,14 +46,12 @@ define(['./module'], function (controllers) {
     	});
     	
 
+    	console.log("session");
+    	console.log(checkSession);
+    	
     	/*
-    	 * checks if a user has an active session
-    	 */
-    	$rootScope.userObj = {};
+	    $rootScope.userObj = {};
     	$rootScope.isLoggedInBln = false;
-    	
-    	/*
-    	
     	$http({method: 'POST', url: '/api/isLoggedIn'}).success(function(obj, status, headers, config) {
     	//	console.log("check isLoggedInBln successful", obj);
     		$rootScope.isLoggedInBln = obj.data.userSessionObj.loggedInBln;
@@ -63,7 +61,6 @@ define(['./module'], function (controllers) {
     		}else{
     			console.log("user has session: ", $rootScope.isLoggedInBln);	
     		}
-    		$scope.$broadcast('session-checked');
     	});
     	
     	*/

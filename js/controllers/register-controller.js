@@ -234,7 +234,7 @@ define(['./module'], function (controllers) {
 	    	 	if(successBln == true){
 	        		$rootScope.isLoggedInBln = true;
 	        		$rootScope.userObj = obj.userSessionObj;
-	        		$state.go('root.confirmregistration');
+	        		$state.go('root.primary.confirmregistration');
 	    	 	}else{
 	    	 		if(obj.errorMessagesArr){
 		    	 		errorMessagesArr = obj.errorMessagesArr;
