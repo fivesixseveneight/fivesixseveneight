@@ -24,8 +24,13 @@ define(['./module'], function (services) {
     		    		var returnObj = {};
     		    		returnObj.messageStr = "register successful";
     		    		returnObj.successBln = true;
+    		    		
     		    		if(obj.data && obj.data.messageStr){
     		    			returnObj.messageStr = obj.data.messageStr;
+    		    		};
+    		    		
+    		    		if(obj.data && obj.data.userSessionObj){
+    		    			returnObj.userSessionObj = obj.data.userSessionObj;
     		    		};
     		    		deferred.resolve(returnObj);
     		    	};

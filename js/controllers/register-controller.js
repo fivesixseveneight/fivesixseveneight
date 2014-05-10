@@ -226,14 +226,15 @@ define(['./module'], function (controllers) {
 	    	};
 	    	
 	    	var formSubmittedComplete = function(obj){
-	    		console.log("formSubmittedComplete", obj);
+	    	//	console.log("formSubmittedComplete", obj);
 	    	 	$scope.$broadcast('formSubmittedBln', obj); 
 	    	 	var successBln = obj.successBln;
 	    	 	var errorMessagesArr;
 	    	
 	    	 	if(successBln == true){
 	        		$rootScope.isLoggedInBln = true;
-	        		$state.go('root.confirmregistration', {dataObj: obj});
+	        		$rootScope.userObj = obj.userSessionObj;
+	        		$state.go('root.confirmregistration');
 	    	 	}else{
 	    	 		if(obj.errorMessagesArr){
 		    	 		errorMessagesArr = obj.errorMessagesArr;

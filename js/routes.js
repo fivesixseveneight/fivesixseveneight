@@ -19,12 +19,12 @@ define(['./app'], function (app) {
      	            controller: 'footerController'
     			},
     			"mainView@":{
-  				  templateUrl: 'partials/home.html',
-  		          controller: 'homeController'
-    			}
+    				  templateUrl: 'partials/home.html',
+    		          controller: 'homeController'
+      			}
     		},
     		resolve:{
-    		
+
     		}
         }).state('root.home', {
     		url: '/home',
