@@ -81,6 +81,17 @@ define(['./app'], function (app) {
     		resolve:{
     		
     		}
+    	}).state('root.confirmregistration', {
+    		url: '/confirmregistration',
+    		views:{
+    			"mainView@":{
+    				  templateUrl: 'partials/confirmregistration.html',
+    		          controller: 'confirmregistrationController'
+    			}
+    		},
+    		resolve:{
+    		
+    		}
     	});
 
     	

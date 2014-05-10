@@ -11,7 +11,8 @@ define([
     './home-controller',
     './login-controller',
     './logout-controller',
-    './register-controller'
+    './register-controller',
+    './confirmregistration-controller'
 
 
 ], function () {});

@@ -222,7 +222,7 @@ $app->post('/checkUsername',  function () use ( $app ) {
 	if(isset($params)){
 		$usernameStr = $params -> username;
 		// checks for unique username
-		$sqlQueryStr = "SELECT username FROM users WHERE username='$usernameStr'";	
+		$sqlQueryStr = "SELECT usernameStr FROM users WHERE usernameStr='$usernameStr'";	
 		$sql_db = mysqli_connect($db_host, $db_username, $db_password, $db_database);
 		if (mysqli_connect_errno()){
 			echo "Failed to connect to MySQL: " . mysqli_connect_error();
@@ -262,7 +262,7 @@ $app->post('/checkEmail',  function () use ( $app ) {
 	if(isset($params) && isset($params -> email)){
 		$emailStr = $params -> email;
 		// checks for unique email
-		$sqlQueryStr = "SELECT email FROM users WHERE email='$emailStr'";
+		$sqlQueryStr = "SELECT emailStr FROM users WHERE emailStr='$emailStr'";
 		$sql_db = mysqli_connect($db_host, $db_username, $db_password, $db_database);
 		if (mysqli_connect_errno()){
 			echo "Failed to connect to MySQL: " . mysqli_connect_error();
@@ -353,7 +353,7 @@ $app->post('/register',  function () use ( $app ) {
 					}
 					
 					// checks for unique email
-					$sqlQueryStr = "SELECT email FROM users WHERE email='$emailStr'";
+					$sqlQueryStr = "SELECT emailStr FROM users WHERE emailStr='$emailStr'";
 
 					$sql_db = mysqli_connect($db_host, $db_username, $db_password, $db_database);
 					if (mysqli_connect_errno()){
@@ -405,7 +405,7 @@ $app->post('/register',  function () use ( $app ) {
 					}
 					
 					// checks for unique username
-					$sqlQueryStr = "SELECT username FROM users WHERE username='$usernameStr'";
+					$sqlQueryStr = "SELECT usernameStr FROM users WHERE usernameStr='$usernameStr'";
 					
 					$sql_db = mysqli_connect($db_host, $db_username, $db_password, $db_database);
 					if (mysqli_connect_errno()){
@@ -440,10 +440,33 @@ $app->post('/register',  function () use ( $app ) {
 					exit;
 				}else{
 				// if no errors, insert new user
-					$passwordMd5 = md5($passwordStr);
+					$saltStr = generateRandomString();
+					$passwordMd5 = md5($saltStr.$passwordStr);
 					$todaysDate = date("Y-m-d");
-					
-					$sqlQueryStr = "INSERT INTO users VALUES ('', '$usernameStr', '$firstnameStr', '$lastnameStr', '$emailStr', '$passwordMd5', '$todaysDate', '0', '', '', '')";
+					$sqlQueryStr = "INSERT INTO 
+					users(
+						userIdNum,
+						usernameStr,
+						firstnameStr,
+						lastnameStr,
+						emailStr,
+						passwordStr,
+						saltStr,
+						signupDate,
+						activatedBln
+					)
+
+					VALUES (
+						'', 
+						'$usernameStr', 
+						'$firstnameStr', 
+						'$lastnameStr', 
+						'$emailStr', 
+						'$passwordMd5', 
+						'$saltStr', 
+						'$todaysDate', 
+						'0'
+					)";
 					
 					$sql_db = mysqli_connect($db_host, $db_username, $db_password, $db_database);
 					if (mysqli_connect_errno()){
@@ -451,8 +474,84 @@ $app->post('/register',  function () use ( $app ) {
 					}
 					
 					$result = mysqli_query($sql_db, $sqlQueryStr);
-
 				}
+				
+				$output -> messageStr = "Registration Successful";
+				$output -> successBln = true;
+
+				
+
+				
+				/*
+				 * Login after registration
+				 * */
+				
+				$sqlQueryStr = "SELECT * FROM users WHERE emailStr='$emailStr'";
+				
+				$sql_db = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+				if (mysqli_connect_errno()){
+					echo "Failed to connect to MySQL: " . mysqli_connect_error();
+				}
+				
+				$result = mysqli_query($sql_db, $sqlQueryStr);
+				// check if user data has returned
+				$rowsNum = mysqli_num_rows($result);
+				
+				// no user found
+				if($rowsNum == 0 || $rowsNum == null){
+					$output -> messageStr = "Log in unsuccessful, email not found";
+					$output -> successBln = false;
+					header('HTTP/1.1 401 Unauthorized', true, 401);
+					renderJSON( '401',
+					array( 	'type'=>'GET only',
+					'description'=>'Registers user',
+					'called'=>'/register' ),
+					$output);
+					exit;
+					//user found
+				}
+				
+				$dbUserObj = mysqli_fetch_assoc($result);
+				$passwordMd5 =  md5($dbUserObj['saltStr'].$passwordStr);
+				
+				//Verify password
+				
+				if($dbUserObj['passwordStr'] == $passwordMd5){
+					$output -> messageStr = "Registration successful, Login successful";
+					$output -> successBln = true;
+				}else{
+					$output -> messageStr = "Registration successful, Login unsuccessful, incorrect password";
+					$output -> successBln = false;
+					header('HTTP/1.1 401 Unauthorized', true, 401);
+					renderJSON( '401',
+					array( 	'type'=>'GET only',
+					'description'=>'Registers user',
+					'called'=>'/register' ),
+					$output);
+					exit;
+				}
+				
+				$sql_db -> close();
+				$result -> close();
+				
+				$_SESSION['userIdNum'] = $dbUserObj['userIdNum'];
+				$_SESSION['emailStr'] = $dbUserObj['emailStr'];
+				$_SESSION['usernameStr'] = $dbUserObj['usernameStr'];
+				$_SESSION['firstnameStr'] = $dbUserObj['firstnameStr'];
+				$_SESSION['lastnameStr'] = $dbUserObj['lastnameStr'];
+				$_SESSION['publisherBln'] = $dbUserObj['publisherBln'];
+				$_SESSION['advertiserBln'] = $dbUserObj['advertiserBln'];
+				$_SESSION['activatedBln'] = $dbUserObj['activatedBln'];
+				$_SESSION['prevloginDate'] = $dbUserObj['prevloginDate'];
+				$_SESSION['lastloginDate'] = $dbUserObj['lastloginDate'];
+				if($dbUserObj['adminBln'] == true || $dbUserObj['adminBln'] == 1){
+					$_SESSION['adminBln'] = $dbUserObj['adminBln'];
+				}
+				
+				$_SESSION['loggedInBln'] = true;
+				
+				
+				$output -> userSessionObj = $_SESSION;
 				
                 renderJSON( '200', 
 		                	array( 	'type'=>'POST only',
@@ -461,6 +560,7 @@ $app->post('/register',  function () use ( $app ) {
                 			$output);
 });
 
+	
 
 // Checks if a user is logged in
 $app->post('/isLoggedIn',  function () use ( $app ) {
@@ -493,15 +593,12 @@ $app->post('/login',  function () use ( $app ) {
 				$passwordStr = $params -> password;
 				$emailStr = $params -> email;
 				
-				//	$passwordStr = "password";
-				//	$emailStr = "kendrick.lin@hotmail.com";
-				
-				$sqlQueryStr = "SELECT * FROM users WHERE email='$emailStr'";
-								
 				global $db_host;
 				global $db_username;
 				global $db_password;
 				global $db_database;
+
+				$sqlQueryStr = "SELECT * FROM users WHERE emailStr='$emailStr'";
 				
 				$sql_db = mysqli_connect($db_host, $db_username, $db_password, $db_database);
 				if (mysqli_connect_errno()){
@@ -509,12 +606,11 @@ $app->post('/login',  function () use ( $app ) {
 				}
 
 				$result = mysqli_query($sql_db, $sqlQueryStr);
-
 				// check if user data has returned
 				$rowsNum = mysqli_num_rows($result);
-				
+
 				// no user found
-				if($rowsNum == 0){
+				if($rowsNum == 0 || $rowsNum == null){
 					$output -> messageStr = "Log in unsuccessful, email not found";
 					$output -> successBln = false;
 					header('HTTP/1.1 401 Unauthorized', true, 401);
@@ -525,12 +621,14 @@ $app->post('/login',  function () use ( $app ) {
                 			$output);
 					exit;
 				//user found
-				}else{
-					$dbUserObj = mysqli_fetch_assoc($result);
 				}
-	
+
+				$dbUserObj = mysqli_fetch_assoc($result);
+				$passwordMd5 =  md5($dbUserObj['saltStr'].$passwordStr);
+				
 				//Verify password
-				if($dbUserObj['password'] == $passwordStr){
+				
+				if($dbUserObj['passwordStr'] == $passwordMd5){
 					$output -> messageStr = "Log in successful";
 					$output -> successBln = true;
 				}else{
@@ -548,10 +646,21 @@ $app->post('/login',  function () use ( $app ) {
 				$sql_db -> close(); 
 				$result -> close(); 
 				
-				$_SESSION['id'] = $dbUserObj['id'];
-				$_SESSION['email'] = $dbUserObj['email'];
-				$_SESSION['username'] = $dbUserObj['username'];
-				$_SESSION['loggedInBln'] = true;
+				$_SESSION['userIdNum'] = $dbUserObj['userIdNum'];
+				$_SESSION['emailStr'] = $dbUserObj['emailStr'];
+				$_SESSION['usernameStr'] = $dbUserObj['usernameStr'];
+				$_SESSION['firstnameStr'] = $dbUserObj['firstnameStr'];
+				$_SESSION['lastnameStr'] = $dbUserObj['lastnameStr'];
+				$_SESSION['publisherBln'] = $dbUserObj['publisherBln'];
+				$_SESSION['advertiserBln'] = $dbUserObj['advertiserBln'];
+				$_SESSION['activatedBln'] = $dbUserObj['activatedBln'];
+				$_SESSION['prevloginDate'] = $dbUserObj['prevloginDate'];
+				$_SESSION['lastloginDate'] = $dbUserObj['lastloginDate'];
+				if($dbUserObj['adminBln'] == true || $dbUserObj['adminBln'] == 1){
+					$_SESSION['adminBln'] = $dbUserObj['adminBln'];
+				}
+
+				$_SESSION['loggedInBln'] = true;	
 
 				$output -> userSessionObj = $_SESSION;
 				
@@ -569,7 +678,7 @@ $app->post('/logout',  function () use ( $app ) {
 	if (session_status() == PHP_SESSION_NONE) {
 	    session_start();
 	}
-
+	
 	session_destroy();
 	
 	if(session_status() != PHP_SESSION_ACTIVE){
@@ -623,6 +732,18 @@ function fetchSqlQuery($query){
 	$result -> close(); 
 	return $data;
 };
+
+/*
+ * Generates a random string
+ */
+function generateRandomString($length = 64) {
+	$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	$randomString = '';
+	for ($i = 0; $i < $length; $i++) {
+		$randomString .= $characters[rand(0, strlen($characters) - 1)];
+	}
+	return $randomString;
+}
 
 
 /**

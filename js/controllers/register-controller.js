@@ -1,6 +1,6 @@
 define(['./module'], function (controllers) {
     'use strict';
-    controllers.controller('registerController', ['$scope','$rootScope', 'registerFormPost', 'checkUsernamePost', 'checkEmailPost', function ($scope, $rootScope, registerFormPost, checkUsernamePost, checkEmailPost) {
+    controllers.controller('registerController', ['$scope','$rootScope', '$state', 'registerFormPost', 'checkUsernamePost', 'checkEmailPost', function ($scope, $rootScope, $state, registerFormPost, checkUsernamePost, checkEmailPost) {
      	
     	$scope.pageContent = {};
 
@@ -119,7 +119,7 @@ define(['./module'], function (controllers) {
 		    	});
 	    		
 	    		$.validator.addMethod("checkEmailMatch", function(emailStr, element) {
-	    			console.log("check emails match");
+	    		//	console.log("check emails match");
 	    			if($("input[name='email']").val() == $("input[name='email2']").val()){
 						return true;
 					}else{
@@ -226,13 +226,14 @@ define(['./module'], function (controllers) {
 	    	};
 	    	
 	    	var formSubmittedComplete = function(obj){
-	    	//	console.log("formSubmittedComplete", obj);
+	    		console.log("formSubmittedComplete", obj);
 	    	 	$scope.$broadcast('formSubmittedBln', obj); 
 	    	 	var successBln = obj.successBln;
 	    	 	var errorMessagesArr;
 	    	
 	    	 	if(successBln == true){
-	    	 		console.log("redirect");
+	        		$rootScope.isLoggedInBln = true;
+	        		$state.go('root.confirmregistration', {dataObj: obj});
 	    	 	}else{
 	    	 		if(obj.errorMessagesArr){
 		    	 		errorMessagesArr = obj.errorMessagesArr;
@@ -243,11 +244,8 @@ define(['./module'], function (controllers) {
 		    	 		}
 		    	 	}	
 	    	 	}
-	    	 	
-	    	 	
 	    	};
-	    	
-			
+
 	    	var destroy = function(){
 	    	//	console.log("destroy");
 	    		$('#registerForm').data('validator', null);

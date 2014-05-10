@@ -40,9 +40,7 @@ define(['./module'], function (controllers) {
 			$scope.$broadcast('formProcessingBln');
 			loginFormPost.postLoginFormData(dataObj).then(function(obj){
 			//	console.log("callback post", obj);
-				var dataObj = {};
-				dataObj.messageStr = obj.messageStr;
-				formSubmittedSuccess(dataObj);
+				formSubmittedSuccess(obj);
 			});
 		};
 		
@@ -71,11 +69,16 @@ define(['./module'], function (controllers) {
     	};
     	
     	var formSubmittedSuccess = function(obj){
-    		console.log("login success");
-    		$rootScope.isLoggedInBln = true;
+    	//	console.log("formSubmittedSuccess", obj);
   		  	$scope.$broadcast('formSubmittedBln', obj); 
+    		if(obj.successBln){
+        		$rootScope.isLoggedInBln = true;
+    		}else{
+        		$rootScope.isLoggedInBln = false;
+    		}
     	};
 		
+
     	var destroy = function(){
     	//	console.log("destroy");
     		$('#loginForm').data('validator', null);

@@ -52,12 +52,14 @@ define(['./module'], function (controllers) {
     	$rootScope.userObj = {};
     	$rootScope.isLoggedInBln = false;
     	$http({method: 'POST', url: '/api/isLoggedIn'}).success(function(obj, status, headers, config) {
-    	//	console.log("isLoggedInBln successful", obj);
+    	//	console.log("check isLoggedInBln successful", obj);
     		$rootScope.isLoggedInBln = obj.data.userSessionObj.loggedInBln;
     		if($rootScope.isLoggedInBln == true){
     			$rootScope.userObj = obj.data.userSessionObj;	
+    			console.log("user session: ", $rootScope.userObj);
+    		}else{
+    			console.log("user has session: ", $rootScope.isLoggedInBln);	
     		}
-    		console.log("user has session: ", $rootScope.isLoggedInBln);
     	});
     	
     	
