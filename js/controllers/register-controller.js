@@ -7,11 +7,12 @@ define(['./module'], function (controllers) {
     	$scope.validator;
     	$scope.username;
     	$scope.password;
-   // 	$scope.password2;
+    	$scope.password2;
     	$scope.firstname;
     	$scope.lastname;
    // 	$scope.phone;
     	$scope.email;
+    	$scope.email2;
   //  	$scope.companyname = "";
    // 	$scope.address;
    // 	$scope.country = "US";
@@ -35,19 +36,22 @@ define(['./module'], function (controllers) {
     			postFormData();
     		}
     	};
-        	
-        	
+        
+    	
+        
     	// this function obtains all the videos for a given playlist
     	var postFormData = function(){
 		//	console.log('postFormData');
+    		
 			var dataObj = {
 					username : $scope.username,
 					password: $scope.password,
-			//		password2: $scope.password2,
+					password2: $scope.password2,
 					firstname : $scope.firstname,
 					lastname : $scope.lastname,
 			//		phone : $scope.phone,
-					email: $scope.email,
+					email: $("input[name='email']").val(),
+					email2: $("input[name='email2']").val(),
 			//		companyname : $scope.companyname,
 			//		address : $scope.address,
 			//		country : $scope.country,
@@ -94,10 +98,10 @@ define(['./module'], function (controllers) {
 	    		});
 	    		
 	    		$.validator.addMethod("checkEmail", function(emailStr, element) {
-	    		//	console.log("checkUsername");
-	    			if($scope.email != undefined && $scope.email != ""){
+	    		//	console.log("checkEmail");
+	    			if( $("input[name='email']").val() != undefined &&  $("input[name='email']").val() != ""){
 	    				var dataObj = {
-			    				email : $scope.email,
+			    				email :  $("input[name='email']").val(),
 						};
 			    		checkEmailPost.postEmailFormData(dataObj).then(function(obj){
 						//	console.log("callback post", obj);
@@ -113,6 +117,24 @@ define(['./module'], function (controllers) {
 	    			}
 			    	return true;
 		    	});
+	    		
+	    		$.validator.addMethod("checkEmailMatch", function(emailStr, element) {
+	    			console.log("check emails match");
+	    			if($("input[name='email']").val() == $("input[name='email2']").val()){
+						return true;
+					}else{
+						return false;
+					}
+	    		});
+
+				$.validator.addMethod("checkPasswordsMatch", function(passwordStr, element) {
+					if($scope.password == $scope.password2){
+						return true;
+					}else{
+						return false;
+					}
+				});
+
 	    		
 	    		$scope.validator = $("#registerForm").validate({
 	        		rules: {
@@ -142,12 +164,23 @@ define(['./module'], function (controllers) {
 				            minlength: 8,
 				            maxlength: 100
 	        			},
+	        			password2: {
+	        				required: true,
+	        				checkPasswordsMatch: true,
+				            maxlength: 100
+	        			},
 	        		//	password2: "required",
 	        			email: {
 	        			      required: true,
 	        			      email: true,
 	        			      checkEmail: true,
-	        			      maxlength: 255
+	        			      maxlength: 255,
+	        			      checkEmailMatch: true,
+	        			},
+	        			email2: {
+	        			      required: true,
+	        			      email: true,
+	        			      checkEmailMatch: true,
 	        			}
 	        		},
 	        		messages: {
@@ -169,10 +202,18 @@ define(['./module'], function (controllers) {
 	        			password: {
 	        				required: "Please enter a password"
 	        			},
-	        		//	password2: "Please re-enter your password",
+	        			password2: {
+	        				required: "Please re-enter your password",
+	        				checkPasswordsMatch: "Your passwords do not match"
+	        			},
 	        			email: {
 	        				required: "Please enter a E-mail address",
-	       				    email: "Please enter a valid E-mail address"
+	       				    email: "Please enter a valid E-mail address",
+	        				checkEmailMatch: ""
+	        			},
+	        			email2: {
+	        				required: "Please re-enter your E-mail address",
+	        				checkEmailMatch: "Your E-mail addresses do not match"
 	        			}
 	        		}
 	        	});
@@ -185,17 +226,24 @@ define(['./module'], function (controllers) {
 	    	};
 	    	
 	    	var formSubmittedComplete = function(obj){
-	    		console.log("formSubmittedComplete", obj);
+	    	//	console.log("formSubmittedComplete", obj);
 	    	 	$scope.$broadcast('formSubmittedBln', obj); 
+	    	 	var successBln = obj.successBln;
 	    	 	var errorMessagesArr;
-	    	 	if(obj.errorMessagesArr){
-	    	 		errorMessagesArr = obj.errorMessagesArr;
-	    	 		var errorObj = {};
-	    	 		for(var i in errorMessagesArr){
-	    	 			errorObj[i] = errorMessagesArr[i];
-	    	 			$scope.validator.showErrors(errorObj);
-	    	 		}
+	    	
+	    	 	if(successBln == true){
+	    	 		console.log("redirect");
+	    	 	}else{
+	    	 		if(obj.errorMessagesArr){
+		    	 		errorMessagesArr = obj.errorMessagesArr;
+		    	 		var errorObj = {};
+		    	 		for(var i in errorMessagesArr){
+		    	 			errorObj[i] = errorMessagesArr[i];
+		    	 			$scope.validator.showErrors(errorObj);
+		    	 		}
+		    	 	}	
 	    	 	}
+	    	 	
 	    	 	
 	    	};
 	    	

@@ -20,7 +20,7 @@ define(['./module'], function (services) {
     		    	};
     		    	
     		    	var requestSuccess = function(obj){
-    		    		console.log('register requestSuccess',obj);
+    		    	//	console.log('register requestSuccess',obj);
     		    		var returnObj = {};
     		    		returnObj.messageStr = "register successful";
     		    		returnObj.successBln = true;
@@ -31,7 +31,7 @@ define(['./module'], function (services) {
     		    	};
     		    	
     		    	var requestFailed = function(obj){
-    		    		console.log('register requestFailed', obj);
+    		    	//	console.log('register requestFailed', obj);
     		    		var returnObj = {};
     		    		returnObj.messageStr = "register failed";
     		    		returnObj.successBln = false;
