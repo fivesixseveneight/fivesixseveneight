@@ -138,20 +138,23 @@ body{
 }
 
 #header .header-centre{
-	width: 75%;
+	width: auto;
 	position: relative;
 	margin: auto;
-	max-width: 750px;
 }
 
 #header #main-logo{
 	vertical-align: middle;
 	margin: 15px;
-	margin-top: 30px;
-	margin-bottom: 30px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 	width: 50px;
 }
 
+#header .noshow #main-logo{
+	width: 0px;
+	height: 50px;
+}
 
 #header #right-navigation-wrapper{
 	position: absolute;
@@ -197,9 +200,10 @@ body{
 
 #header .divider{
 	height: 1px;
-	margin: 9px 0;
 	overflow: hidden;
-	background-color: rgba(255,255,255,0.1);
+	background-color: rgba(0,0,0,0.1);
+	width: 90%;
+	margin: auto;
 }
 
 #header .navbar-nav{
@@ -210,10 +214,23 @@ body{
 	height: 25px;
 }
 
+#header .dropdown.open a{
+	text-decoration: none;
+	border-bottom: 2px solid #FF3030;
+	color: #000;
+	background-color: transparent;
+
+	
+}
 
 #header .primary-nav li{
 	position: relative;
 	display: inline-block;
+}
+
+#header .primary-nav li{
+	margin-left:10px;
+	margin-right:10px;
 }
 
 #header .primary-nav li a{
@@ -222,14 +239,39 @@ body{
 	position: relative;
 	display: block;
 	font-size: 16px;
-	margin-left:15px;
-	margin-right:15px;
+	margin-left:0px;
+	margin-right:0px;
 	color: #000;
+	text-decoration: none;
 }
 
 #header .primary-nav li a:hover{
 	border-bottom: 2px solid #FF3030;
 	color: #000;
+}
+
+#header .primary-nav .dropdown-menu{
+	right: 0;
+	left: auto;	
+	width: 100%;
+}
+
+#header .primary-nav .dropdown-menu li{
+		display: block;
+}
+
+#header .primary-nav .dropdown-menu li a{
+	background-color: transparent;
+	border-bottom: transparent;
+	background: none;
+}
+
+#header .primary-nav .dropdown-menu li:hover{
+	background-color: #FF3030;
+}	
+
+#header .primary-nav .dropdown-menu li a:hover{
+	color: #fff;	
 }
 
 #header .navbar-collapse{
@@ -323,6 +365,10 @@ FOOTER
 }
 	
 @media (max-width:991px) {
+		
+
+
+	
 	
 }
 
@@ -339,10 +385,7 @@ FOOTER
 		margin-bottom: 15px;
 	}
 		
-		
-	#header .header-centre{
-		width: 100%;
-	}
+
 		
 	#header .navbar-nav{
 	
@@ -418,6 +461,10 @@ FOOTER
 @media (max-height: 600px) {
 	#header {
 		position: relative;
+	}
+	
+	#wrapper {
+	    overflow: visible;
 	}
 	
 	#view-wrapper{

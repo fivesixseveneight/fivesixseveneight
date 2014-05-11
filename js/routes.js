@@ -38,10 +38,10 @@ define(['./app'], function (app) {
     		resolve:{
     		
     		}
-    	}).state('root.primary.home', {
+    	}).state('root.home', {
     		url: '/home',
     		views:{
-    			"mainView@root":{
+    			"@":{
     				  templateUrl: 'partials/home.html',
     		          controller: 'homeController'
     			}
@@ -49,13 +49,155 @@ define(['./app'], function (app) {
     		resolve:{
     		
     		}
-    	})    	
-    	.state('root.primary.about', {
+    	}).state('root.primary.overview', {
+    		url: '/overview',
+    		views:{
+    			"mainView@root":{
+    				  templateUrl: 'partials/overview.html',
+    		          controller: 'overviewController'
+    			}
+    		},
+    		resolve:{
+    		
+    		}
+    	}).state('root.primary.campaign', {
+    		url: '/campaign',
+    		views:{
+    			"mainView@root":{
+    				  templateUrl: 'partials/campaign.html',
+    		          controller: 'campaignController'
+    			}
+    		},
+    		resolve:{
+    		
+    		}
+    	}).state('root.primary.reporting', {
+    		url: '/reporting',
+    		views:{
+    			"mainView@root":{
+    				  templateUrl: 'partials/reporting.html',
+    		          controller: 'reportingController'
+    			}
+    		},
+    		resolve:{
+    		
+    		}
+    	}).state('root.primary.users', {
+    		url: '/users',
+    		views:{
+    			"mainView@root":{
+    				  templateUrl: 'partials/users.html',
+    		          controller: 'usersController'
+    			}
+    		},
+    		resolve:{
+    		
+    		}
+    	}).state('root.primary.profile', {
+    		url: '/profile',
+    		views:{
+    			"mainView@root":{
+    				  templateUrl: 'partials/profile.html',
+    		          controller: 'profileController'
+    			}
+    		},
+    		resolve:{
+    		
+    		}
+    	}).state('root.primary.notifications', {
+    		url: '/notifications',
+    		views:{
+    			"mainView@root":{
+    				  templateUrl: 'partials/notifications.html',
+    		          controller: 'notificationsController'
+    			}
+    		},
+    		resolve:{
+    		
+    		}
+    	}).state('root.primary.messages', {
+    		url: '/messages',
+    		views:{
+    			"mainView@root":{
+    				  templateUrl: 'partials/messages.html',
+    		          controller: 'messagesController'
+    			}
+    		},
+    		resolve:{
+    		
+    		}
+    	}).state('root.primary.settings', {
+    		url: '/settings',
+    		views:{
+    			"mainView@root":{
+    				  templateUrl: 'partials/settings.html',
+    		          controller: 'settingsController'
+    			}
+    		},
+    		resolve:{
+    		
+    		}
+    	}).state('root.primary.tools', {
+    		url: '/tools',
+    		views:{
+    			"mainView@root":{
+    				  templateUrl: 'partials/tools.html',
+    		          controller: 'toolsController'
+    			}
+    		},
+    		resolve:{
+    		
+    		}
+    	}).state('root.primary.funds', {
+    		url: '/funds',
+    		views:{
+    			"mainView@root":{
+    				  templateUrl: 'partials/funds.html',
+    		          controller: 'fundsController'
+    			}
+    		},
+    		resolve:{
+    		
+    		}
+    	}).state('root.primary.about', {
     		url: '/about',
     		views:{
     			"mainView@root":{
     				  templateUrl: 'partials/about.html',
-    		          controller: 'homeController'
+    		          controller: 'aboutController'
+    			}
+    		},
+    		resolve:{
+    		
+    		}
+    	}).state('root.primary.jobs', {
+    		url: '/jobs',
+    		views:{
+    			"mainView@root":{
+    				  templateUrl: 'partials/jobs.html',
+    		          controller: 'jobsController'
+    			}
+    		},
+    		resolve:{
+    		
+    		}
+    	}).state('root.primary.help', {
+    		url: '/help',
+    		views:{
+    			"mainView@root":{
+    				  templateUrl: 'partials/help.html',
+    		          controller: 'helpController'
+    			}
+    		},
+    		resolve:{
+    		
+    		}
+    	}).state('root.primary.terms', {
+    		url: '/terms',
+    		views:{
+    			"mainView@root":{
+    				  templateUrl: 'partials/terms.html',
+    		          controller: 'termsController'
     			}
     		},
     		resolve:{

@@ -91,7 +91,7 @@ define(['./module'], function (controllers) {
     	var checkIfLoggedIn = function(){
     	//	console.log("checkIfLoggedIn");
     		if($scope.userLoggedIn == true){
-    			$state.transitionTo("root.primary.home");
+    			$state.transitionTo("root.primary.overview");
     		}
     	};
     	

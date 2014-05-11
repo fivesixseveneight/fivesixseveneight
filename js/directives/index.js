@@ -12,6 +12,7 @@ define([
 		'./mouse-enter-class',
 		'./mouse-leave-class',
 		'./submit-form-clicked',
+		'./window-resize',
 		'./mouse-click-toggle-class'
 		
         ], function () {});
