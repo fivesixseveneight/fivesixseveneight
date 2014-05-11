@@ -577,6 +577,19 @@ $app->post('/isLoggedIn',  function () use ( $app ) {
 			$_SESSION['loggedInBln'] = false;
 		}
 		
+		if($_SESSION['loggedInBln'] == false){
+			$_SESSION['userIdNum'] = "-1";
+			$_SESSION['emailStr'] = "";
+			$_SESSION['usernameStr'] = "Guest";
+			$_SESSION['firstnameStr'] = "";
+			$_SESSION['lastnameStr'] = "";
+			$_SESSION['publisherBln'] = "0";
+			$_SESSION['advertiserBln'] = "0";
+			$_SESSION['activatedBln'] = "0";
+			$_SESSION['prevloginDate'] = "";
+			$_SESSION['lastloginDate'] = "";
+		}
+		
 		$output -> userSessionObj = $_SESSION;
 			
             renderJSON( '200', 
@@ -696,7 +709,23 @@ $app->post('/logout',  function () use ( $app ) {
                 			$output);
 					exit;	
 	}
-
+	
+	session_unset();
+	$_SESSION['loggedInBln'] = false;
+	$_SESSION['userIdNum'] = "-1";
+	$_SESSION['emailStr'] = "";
+	$_SESSION['usernameStr'] = "Guest";
+	$_SESSION['firstnameStr'] = "";
+	$_SESSION['lastnameStr'] = "";
+	$_SESSION['publisherBln'] = "0";
+	$_SESSION['advertiserBln'] = "0";
+	$_SESSION['activatedBln'] = "0";
+	$_SESSION['prevloginDate'] = "";
+	$_SESSION['lastloginDate'] = "";
+	
+	
+	$output -> userSessionObj = $_SESSION;
+	
 	renderJSON( '200', 
 	    	array( 	'type'=>'POST only',
 	    					'description'=>'Logs user out',

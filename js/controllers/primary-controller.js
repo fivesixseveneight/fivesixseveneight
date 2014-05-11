@@ -45,25 +45,6 @@ define(['./module'], function (controllers) {
     	//	console.log("state start success", event, toState);
     	});
     	
-
-    	console.log("session");
-    	console.log(checkSession);
-    	
-    	/*
-	    $rootScope.userObj = {};
-    	$rootScope.isLoggedInBln = false;
-    	$http({method: 'POST', url: '/api/isLoggedIn'}).success(function(obj, status, headers, config) {
-    	//	console.log("check isLoggedInBln successful", obj);
-    		$rootScope.isLoggedInBln = obj.data.userSessionObj.loggedInBln;
-    		if($rootScope.isLoggedInBln == true){
-    			$rootScope.userObj = obj.data.userSessionObj;	
-    			console.log("user session: ", $rootScope.userObj);
-    		}else{
-    			console.log("user has session: ", $rootScope.isLoggedInBln);	
-    		}
-    	});
-    	
-    	*/
     	
     	/*
     	 *  gets country codes
@@ -118,8 +99,22 @@ define(['./module'], function (controllers) {
     	
     	var init = function(){
     		detectEnvironment();	
+    		setSession();
     	};
     	
+    	var setSession = function(){
+    	//	console.log("setSession");
+    		var userObj = checkSession.data;
+    		console.log("userObj", userObj);
+    		$rootScope.userObj = userObj.userSessionObj;
+        	if($rootScope.userObj.loggedInBln == true){
+        		$rootScope.isLoggedInBln = true;
+        	}else{
+        		$rootScope.isLoggedInBln = false;
+        	}
+        //	console.log("$rootScope.isLoggedInBln", $rootScope.userObj);
+    	};
+
     	init();
     	
     }]);

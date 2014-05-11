@@ -72,6 +72,9 @@ define(['./module'], function (controllers) {
     	//	console.log("formSubmittedSuccess", obj);
   		  	$scope.$broadcast('formSubmittedBln', obj); 
     		if(obj.successBln){
+    			$rootScope.userObj = obj.userSessionObj;
+        		console.log("user session", $rootScope.userObj);
+        		console.log("login success");
         		$rootScope.isLoggedInBln = true;
     		}else{
         		$rootScope.isLoggedInBln = false;

@@ -36,13 +36,13 @@ define(['./module'], function (controllers) {
 		//	console.log('postFormData');
 			logoutPost.postLogout().then(function(obj){
 			//	console.log("callback post", obj);
-				var dataObj = {};
-				dataObj.messageStr = obj.messageStr;
-				formSubmittedSuccess(dataObj);
+				formSubmittedSuccess(obj);
 			});
 		};
 		
     	var formSubmittedSuccess = function(obj){
+    		$rootScope.userObj = obj.userSessionObj;
+    		console.log("user session", $rootScope.userObj);
     		console.log("logout success");
     		$rootScope.isLoggedInBln = false;
     		$state.transitionTo("root.primary.login");
