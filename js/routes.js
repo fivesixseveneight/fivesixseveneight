@@ -7,7 +7,6 @@ define(['./app'], function (app) {
     return app.config(['$stateProvider','$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
     	
     	$stateProvider.state('root', {
-    		url: '',
     		views:{
     			'@' :{
     				templateUrl: 'partials/primary.html',
@@ -198,6 +197,28 @@ define(['./app'], function (app) {
     			"mainView@root":{
     				  templateUrl: 'partials/terms.html',
     		          controller: 'termsController'
+    			}
+    		},
+    		resolve:{
+    		
+    		}
+    	}).state('root.primary.admin', {
+    		url: '/admin',
+    		views:{
+    			"mainView@root":{
+    				  templateUrl: 'partials/admin.html',
+    		          controller: 'adminController'
+    			}
+    		},
+    		resolve:{
+    		
+    		}
+    	}).state('root.primary.flagged', {
+    		url: '/flagged',
+    		views:{
+    			"mainView@root":{
+    				  templateUrl: 'partials/flagged.html',
+    		          controller: 'flaggedController'
     			}
     		},
     		resolve:{

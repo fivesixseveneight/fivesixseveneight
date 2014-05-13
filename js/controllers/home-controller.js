@@ -4,7 +4,7 @@ define(['./module'], function (controllers) {
      	
     	$scope.pageContent = {};
   
-
+    	
     	
     }]);
 });

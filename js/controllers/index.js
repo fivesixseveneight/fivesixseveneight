@@ -10,6 +10,8 @@ define([
     './primary-controller',
     './home-controller',
     './campaign-controller',
+    './admin-controller',
+    './flagged-controller',
     './reporting-controller',
     './users-controller',
     './profile-controller',
