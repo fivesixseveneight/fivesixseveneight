@@ -43,16 +43,18 @@
 
 
 html{
-	font-family: "ProximaNova-Regular", "Arial", "Helvetica", "Sans-serif";
+	font-family: "ProximaNova-Light", "Arial", "Helvetica", "Sans-serif";
 	height: 100%;
 }
       
 html a{
 	text-decoration: none;
+	color: #333;
 }
 
 html a:hover{
 	text-decoration: none;
+	color: #333;
 }
 
 body{
@@ -227,7 +229,7 @@ body{
 }
 
 #header #main-navbar-menu{
-	margin: 17px;
+	margin: 11px;
 	padding: 10px;
 	position: relative;
 }
@@ -338,6 +340,12 @@ body{
 	margin-bottom: 0px;
 }
 
+.title{
+	border-bottom: 1px solid rgba(0,0,0,1);
+	margin-bottom: 10px;
+	font-size: 40px;
+	display: inline-block;
+}
 
 
 /*
@@ -386,6 +394,61 @@ body{
 	margin-bottom: 20px;
 }
 
+
+.overview{
+	font-size: 24px;
+}
+
+.overview .overview-top-content{
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.overview .overview-row-wrapper{
+	margin-bottom: 10px;
+}
+
+.overview .overview-left-col{
+	display: inline-block;
+	min-width: 360px;
+	margin-right: 20px;
+	margin-bottom: 5px;
+	font-family: "ProximaNova-Regular";
+}
+
+.overview .overview-right-col{
+	display: inline-block;
+	min-width: 360px;
+	
+}
+
+.overview .overview-campaign-title-wrapper{
+	font-size: 35px;
+	padding: 10px;
+}
+
+.overview .overview-campaign-title-wrapper:hover{
+	background-color: #FF3030;
+	color: #fff;
+}
+
+.overview .collapse{
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.overview .collapsing{
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+
+
+
+/*
+Register
+*/
+
 .register {
 	
 
@@ -402,7 +465,8 @@ UI VIEW ANIMATION
 #view-wrapper{
 	z-index: 0;
 	height: 100%;
-	margin-top: 110px;
+	margin-top: 85px;
+
 }
 
 [ui-view].main-view{
@@ -421,7 +485,7 @@ FOOTER
 	
 #footer{
 	height: auto;
-	position: fixed;
+	position: relative;
 	bottom: 0;
 	padding: 2px;
 	padding-left: 5px;
@@ -457,10 +521,23 @@ FOOTER
 		height: 200px;
 	}
 	
+	.title{
+		font-size: 30px;
+	}
+	.overview{
+		font-size: 18px;
+	}
+	
+	.overview .overview-campaign-title-wrapper{
+		font-size: 25px;
+	}
+		
+	
+	
 	
 	#header #main-logo{
-		margin-top: 15px;
-		margin-bottom: 15px;
+		margin-top: 10px;
+		margin-bottom: 9px;
 	}
 		
 
@@ -512,7 +589,7 @@ FOOTER
 	}
 
 	#view-wrapper{
-		margin-top: 80px;
+		margin-top: 85px;
 	}
 		
 }
@@ -546,7 +623,7 @@ FOOTER
 	}
 	
 	#view-wrapper{
-		margin-top: 0px;
+		margin-top: 15px;
 	}
 }
 
