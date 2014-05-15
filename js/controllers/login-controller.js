@@ -73,7 +73,7 @@ define(['./module'], function (controllers) {
   		  	$scope.$broadcast('formSubmittedBln', obj); 
     		if(obj.successBln){
     			$rootScope.userObj = obj.userSessionObj;
-        		console.log("user session", $rootScope.userObj);
+        	//	console.log("user session", $rootScope.userObj);
         		console.log("login success");
         		$rootScope.isLoggedInBln = true;
     		}else{
@@ -89,7 +89,7 @@ define(['./module'], function (controllers) {
     	};
     	
     	var checkIfLoggedIn = function(){
-    	//	console.log("checkIfLoggedIn");
+    	//	console.log("login checkIfLoggedIn", $rootScope.isLoggedInBln);
     		if($scope.userLoggedIn == true){
     			$state.transitionTo("root.primary.overview");
     		}

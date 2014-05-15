@@ -12,8 +12,6 @@ define(['./module'], function (controllers) {
     			windowResized();
     	   	});
     		
-    		
-    	 
     	   	
     	   	
     		

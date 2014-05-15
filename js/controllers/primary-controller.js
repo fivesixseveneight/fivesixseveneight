@@ -104,17 +104,22 @@ define(['./module'], function (controllers) {
     	
     	var setSession = function(){
     	//	console.log("setSession");
+    		
+    		if($rootScope.isLoggedInBln != undefined){
+    			return;
+    		}
     		var userObj = checkSession.data;
-    		console.log("userObj", userObj);
+    		console.log("setsession:: userObj", userObj);
     		$rootScope.userObj = userObj.userSessionObj;
         	if($rootScope.userObj.loggedInBln == true){
         		$rootScope.isLoggedInBln = true;
         	}else{
         		$rootScope.isLoggedInBln = false;
         	}
-        //	console.log("$rootScope.isLoggedInBln", $rootScope.userObj);
+        	
+       // 	console.log("$rootScope.isLoggedInBln", $rootScope.userObj);
     	};
-
+    	
     	init();
     	
     }]);
