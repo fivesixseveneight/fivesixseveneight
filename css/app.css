@@ -49,6 +49,12 @@
 	background: red;
 }
 
+.selectmenuReset{
+	vertical-align: middle !important;
+	margin-bottom: 0px !important;
+	
+}
+
 html{
 	font-family: "ProximaNova-Light", "Arial", "Helvetica", "Sans-serif";
 	height: 100%;
@@ -477,11 +483,17 @@ Users
 	padding: 10px;
 }
 
-.selectmenuReset{
-	vertical-align: middle !important;
-	margin-bottom: 0px !important;
-	
+.users .filters-container{
+	width: 270px;
+	display: inline-block;
+	vertical-align: top;
 }
+
+.users .users-container{
+	display: inline-block;
+	vertical-align: top;
+}
+
 
 /*
 Register
@@ -560,6 +572,7 @@ FOOTER
 	.title{
 		font-size: 30px;
 	}
+	
 	.overview{
 		font-size: 18px;
 	}
@@ -568,8 +581,6 @@ FOOTER
 		font-size: 25px;
 	}
 		
-	
-	
 	
 	#header #main-logo{
 		margin-top: 10px;
@@ -627,7 +638,17 @@ FOOTER
 	#view-wrapper{
 		margin-top: 85px;
 	}
+	
+	.users .filters-container{
+		width: 100%;
+	}
+	
+	.users .users-container{
 		
+	}
+	
+	
+	
 }
 
 /* mobile */

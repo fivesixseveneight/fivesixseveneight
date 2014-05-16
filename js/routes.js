@@ -96,7 +96,7 @@ define(['./app'], function (app) {
     	}).state('root.primary.users.advertisers', {
     		url: 'advertisers/',
     		views:{
-    			"usersView@root.primary.users":{
+    			"subFilterView@root.primary.users":{
     				  templateUrl: 'partials/findadvertisers.html',
     		          controller: 'findadvertisersController'
     			}
@@ -107,7 +107,7 @@ define(['./app'], function (app) {
     	}).state('root.primary.users.publishers', {
     		url: 'publishers/',
     		views:{
-    			"usersView@root.primary.users":{
+    			"subFilterView@root.primary.users":{
     				  templateUrl: 'partials/findpublishers.html',
     		          controller: 'findpublishersController'
     			}
