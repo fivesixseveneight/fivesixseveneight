@@ -11,10 +11,12 @@ require.config({
         'angular-route': '../lib/angular-route/angular-ui-router',
         'angular-sanitize': '../lib/angular-sanitize/angular-sanitize',
         'angular-animate': '../lib/angular-animate/angular-animate',
+        'angular-slider': "../lib/angular-slider/ngslider.min",
         'domReady': '../lib/requirejs-domready/domReady',
         'jquery': "../lib/jquery/jquery",
         'jqueryValidate': "../lib/jquery/jquery.validate",
-	    'bootstrap': "../lib/bootstrap/js/bootstrap.min"
+	    'bootstrap': "../lib/bootstrap/js/bootstrap.min",
+	    'bootstrap-select': "../lib/bootstrap-select/bootstrap-select"
     },
 
     /**
@@ -34,8 +36,14 @@ require.config({
         'angular-sanitize': {
             deps: ['angular']
         },
+        'angular-slider': {
+            deps: ['angular']
+        },
         'bootstrap': {
             deps: ['jquery']
+        },
+        'bootstrap-select': {
+            deps: ['bootstrap']
         },
         'jqueryValidate': {
             deps: ['jquery']

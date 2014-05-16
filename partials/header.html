@@ -30,6 +30,9 @@
 				       		 	<li><a ui-sref="root.primary.profile">Profile</a></li>
 				        		<li><a ui-sref="root.primary.notifications">Notifications</a></li>
 				        		<li><a ui-sref="root.primary.messages">Messages</a></li>
+				        		<li class="divider"></li>
+				       		 	<li><a ui-sref="root.primary.admin">Admin</a></li>
+				        		<li><a ui-sref="root.primary.flagged">Flagged</a></li>
 				       		 	<li class="divider"></li>
 				        		<li><a ui-sref="root.primary.settings">Settings</a></li>
 				        		<li><a ui-sref="root.primary.funds">Add/Transfer Funds</a></li>
@@ -43,6 +46,9 @@
 					 	<li ng-if="isLoggedInBln && windowWidth <= 767"><a ui-sref="root.primary.profile">Profile</a></li>
 		        		<li ng-if="isLoggedInBln && windowWidth <= 767"><a ui-sref="root.primary.notifications">Notifications</a></li>
 		        		<li ng-if="isLoggedInBln && windowWidth <= 767"><a ui-sref="root.primary.messages">Messages</a></li>
+		       		 	<li ng-if="isLoggedInBln && windowWidth <= 767" class="divider"></li>
+		       		 	<li ng-if="isLoggedInBln && windowWidth <= 767"><a ui-sref="root.primary.admin">Admin</a></li>
+		        		<li ng-if="isLoggedInBln && windowWidth <= 767"><a ui-sref="root.primary.flagged">Flagged</a></li>
 		       		 	<li ng-if="isLoggedInBln && windowWidth <= 767" class="divider"></li>
 		        		<li ng-if="isLoggedInBln && windowWidth <= 767"><a ui-sref="root.primary.settings">Settings</a></li>
 		        		<li ng-if="isLoggedInBln && windowWidth <= 767"><a ui-sref="root.primary.funds">Add/Transfer Funds</a></li>

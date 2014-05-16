@@ -1,3 +1,108 @@
 <div class="users">
-users Content
+
+<div class="filters-container">
+	
+	<div>
+		
+		<div>
+			Connections
+		</div>
+		
+		<div class="btn-group showUsersWrapper" data-toggle="buttons">
+		  <label class="btn btn-primary active">
+		  <input type="radio" name="showUsers" value="0" checked>Show all users<br>
+		  </label>
+		  <label class="btn btn-primary">
+		  <input type="radio" name="showUsers" value="1">Show users I am connected to<br>
+		  </label>
+		  <label class="btn btn-primary">
+		  <input type="radio" name="showUsers" value="2">Show users I am not connected to<br>
+		  </label>
+		</div>
+
+
+
+		<div>
+			Show User Type
+		</div>
+		
+		<div class="btn-group showUsersWrapper" data-toggle="buttons">
+		  <label class="btn btn-primary active">
+		  <input type="radio" name="showType" value="0" checked>Advertisers<br>
+		  </label>
+		  <label class="btn btn-primary">
+		  <input type="radio" name="showType" value="1">Publishers<br>
+		  </label>
+		</div>
+		
+		
+		
+		<div>
+			Filters
+		</div>
+
+		<div>Total number of campaigns:</div>
+		<div class="slider-container">
+	    	<input ng-model="value"  type="text" id="campaignSlider" slider options="options" />
+		</div>
+		
+		
+		<div>
+		<span>Last active within</span>
+		<select class="selectpicker selectmenuReset">
+		    <option>1</option>
+		    <option>7</option>
+		    <option>15</option>
+		    <option>30</option>
+		    <option>60</option>
+		    <option>90</option>
+		</select>
+		<span>day(s) ago</span>
+		</div>
+		
+		<div>
+			
+			<div>Location</div>
+			
+			<div class="input-group">
+		      <input type="text" class="form-control" placeholder="Location">
+		      <span class="input-group-btn">
+		        <button class="btn btn-default" type="button">Submit</button>
+		      </span>
+		    </div>
+			
+			<div>Market</div>
+		    <div class="input-group">
+		      <input type="text" class="form-control" placeholder="Market">
+		      <span class="input-group-btn">
+		        <button class="btn btn-default" type="button">Submit</button>
+		      </span>
+		    </div>
+		
+			<div>Keywords</div>
+		    <div class="input-group">
+		      <input type="text" class="form-control" placeholder="Keywords">
+		      <span class="input-group-btn">
+		        <button class="btn btn-default" type="button">Submit</button>
+		      </span>
+		    </div>
+		
+		</div>
+
+	
+		
+		
+		
+	</div>
+	
+</div>
+
+
+<div class="users-container">
+
+
+</div>
+
+
+
 </div>

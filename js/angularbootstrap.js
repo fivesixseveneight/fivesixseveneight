@@ -9,7 +9,8 @@ define([
     'routes',
     'jquery',
     'jqueryValidate',
-    'bootstrap'
+    'bootstrap',
+    'bootstrap-select'
 ], function (require, ng) {
     'use strict';
     /*

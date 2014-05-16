@@ -41,6 +41,13 @@
 	     url('../fonts/ProximaNova/Semibold/proxima-nova-semibold-webfont.eot?#iefix') format('embedded-opentype');
 }
 
+.btn-primary:active, .btn-primary.active{
+	background-color: #154976;
+}
+
+.jslider_round .jslider-bg i, .jslider_round .jslider-pointer{
+	background: red;
+}
 
 html{
 	font-family: "ProximaNova-Light", "Arial", "Helvetica", "Sans-serif";
@@ -442,6 +449,39 @@ body{
 	padding-right: 15px;
 }
 
+/*
+Users
+*/
+
+.users{
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.users .showUsersWrapper{
+	display: block;
+}
+
+.users .showUsersWrapper .btn{
+	float: none;
+	display: block;
+	border-radius: 0px;
+	margin: 0px;
+	width: 100%;
+	margin-bottom: 1px;
+	padding: 10px;
+}
+
+.users .slider-container{
+	position: relative;
+	padding: 10px;
+}
+
+.selectmenuReset{
+	vertical-align: middle !important;
+	margin-bottom: 0px !important;
+	
+}
 
 /*
 Register
@@ -449,7 +489,6 @@ Register
 
 .register {
 	
-
 }
 
 .register .panel-heading{
@@ -623,4 +662,6 @@ FOOTER
 		margin-top: 15px;
 	}
 }
+
+
 
