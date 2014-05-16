@@ -29,7 +29,9 @@ define([
     './logout-controller',
     './register-controller',
     './findadvertisers-controller',
+    './foundadvertisers-controller',
     './findpublishers-controller',
+    './foundpublishers-controller',
     './confirmregistration-controller'
 
 

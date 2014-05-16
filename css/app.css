@@ -49,12 +49,6 @@
 	background: red;
 }
 
-.selectmenuReset{
-	vertical-align: middle !important;
-	margin-bottom: 0px !important;
-	
-}
-
 html{
 	font-family: "ProximaNova-Light", "Arial", "Helvetica", "Sans-serif";
 	height: 100%;
@@ -492,6 +486,13 @@ Users
 .users .users-container{
 	display: inline-block;
 	vertical-align: top;
+	margin-left: 10px;
+}
+
+.users .selectmenuReset{
+	vertical-align: middle !important;
+	margin-bottom: 0px !important;
+	width: 65px !important;
 }
 
 

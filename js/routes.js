@@ -97,8 +97,12 @@ define(['./app'], function (app) {
     		url: 'advertisers/',
     		views:{
     			"subFilterView@root.primary.users":{
-    				  templateUrl: 'partials/findadvertisers.html',
-    		          controller: 'findadvertisersController'
+  				  templateUrl: 'partials/findadvertisers.html',
+  		          controller: 'findadvertisersController'
+    			},
+    			"usersfoundView@root.primary.users":{
+  				  templateUrl: 'partials/foundadvertisers.html',
+  		          controller: 'foundadvertisersController'
     			}
     		},
     		resolve:{
@@ -110,7 +114,11 @@ define(['./app'], function (app) {
     			"subFilterView@root.primary.users":{
     				  templateUrl: 'partials/findpublishers.html',
     		          controller: 'findpublishersController'
-    			}
+    			},
+    			"usersfoundView@root.primary.users":{
+    				  templateUrl: 'partials/foundpublishers.html',
+    		          controller: 'foundpublishersController'
+      			}
     		},
     		resolve:{
     		

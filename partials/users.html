@@ -2,8 +2,12 @@
 
 <div class="filters-container">
 	
-	<div>
+		<div>
+			Filters
+		</div>
 		
+		</br>
+	
 		<div>
 			Connections
 		</div>
@@ -20,16 +24,14 @@
 		  </label>
 		</div>
 
-
-
 		<div>
 			Show User Type
 		</div>
 		
 		<div class="btn-group showUsersWrapper" data-toggle="buttons">
 		    <a ui-sref="root.primary.users.advertisers">
-		    	<label class="btn btn-primary active">
-				<input type="radio" name="showType" value="0" checked>Advertisers<br>
+		    	<label class="btn btn-primary">
+				<input type="radio" name="showType" value="0">Advertisers<br>
 		  		</label>
 		  	</a>
 			<a ui-sref="root.primary.users.publishers"> 
@@ -38,14 +40,9 @@
 				</label>
 			</a>
 		</div>
-		
-		
-		
-		<div>
-			Filters
-		</div>
+				
 
-		<div>Total number of campaigns:</div>
+		<div>Total number of campaigns</div>
 		<div class="slider-container">
 	    	<input ng-model="campaigns"  type="text" id="campaignSlider" slider options="campaignsOptions" />
 		</div>
@@ -61,53 +58,44 @@
 		    <option>60</option>
 		    <option>90</option>
 		</select>
+		
 		<span>day(s) ago</span>
 		</div>
 		
-		<div>
-			
-			<div>Location</div>
-			
-			<div class="input-group">
-		      <input type="text" class="form-control" placeholder="Location">
-		      <span class="input-group-btn">
-		        <button class="btn btn-default" type="button">Submit</button>
-		      </span>
-		    </div>
-			
-			<div>Market</div>
-		    <div class="input-group">
-		      <input type="text" class="form-control" placeholder="Market">
-		      <span class="input-group-btn">
-		        <button class="btn btn-default" type="button">Submit</button>
-		      </span>
-		    </div>
+		<div>Location</div>
 		
-			<div>Keywords</div>
-		    <div class="input-group">
-		      <input type="text" class="form-control" placeholder="Keywords">
-		      <span class="input-group-btn">
-		        <button class="btn btn-default" type="button">Submit</button>
-		      </span>
-		    </div>
+		<div class="input-group">
+	      <input type="text" class="form-control" placeholder="Location">
+	      <span class="input-group-btn">
+	        <button class="btn btn-default" type="button">Submit</button>
+	      </span>
+	    </div>
 		
-		</div>
-
+		<div>Market</div>
+	    <div class="input-group">
+	      <input type="text" class="form-control" placeholder="Market">
+	      <span class="input-group-btn">
+	        <button class="btn btn-default" type="button">Submit</button>
+	      </span>
+	    </div>
 	
+		<div>Keywords</div>
+	    <div class="input-group">
+	      <input type="text" class="form-control" placeholder="Keywords">
+	      <span class="input-group-btn">
+	        <button class="btn btn-default" type="button">Submit</button>
+	      </span>
+	    </div>
 		
-		
-		
-	</div>
 	
-	<div ui-view="subFilterView">
 
-	</div>
+		<div ui-view="subFilterView"></div>
 
 
 </div>
 
 
-<div class="users-container" ui-view="usersView">
+<div class="users-container" ui-view="usersfoundView">
 
 </div>
 
