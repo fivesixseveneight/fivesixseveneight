@@ -104,6 +104,17 @@ define(['./app'], function (app) {
     		resolve:{
     		
     		}
+    	}).state('root.primary.users.publishers', {
+    		url: 'publishers/',
+    		views:{
+    			"usersView@root.primary.users":{
+    				  templateUrl: 'partials/findpublishers.html',
+    		          controller: 'findpublishersController'
+    			}
+    		},
+    		resolve:{
+    		
+    		}
     	}).state('root.primary.profile', {
     		url: '/profile/',
     		views:{
@@ -286,6 +297,8 @@ define(['./app'], function (app) {
     	$urlRouterProvider.otherwise('home');
     	$urlRouterProvider.when('/users', '/users/advertisers');
     	$urlRouterProvider.when('/users/', '/users/advertisers');
+    	$urlRouterProvider.when('/users', '/users/publishers');
+    	$urlRouterProvider.when('/users/', '/users/publishers');
     	
         $urlRouterProvider.rule(function($injector, $location) {
             var path = $location.path()

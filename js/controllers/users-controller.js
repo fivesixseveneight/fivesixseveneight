@@ -3,13 +3,18 @@ define(['./module'], function (controllers) {
     controllers.controller('usersController', ['$scope','$rootScope', function ($scope, $rootScope) {
      	
     	$scope.pageContent = {};
-    	$scope.value = "";
-		$scope.options = "";    
-	
+    	$scope.campaigns = "";
+		$scope.campaignsOptions = "";    
+		
+		var init = function(){
+			sliderFunction();
+			$('.selectpicker').selectpicker({});
+		};
+		
     	var sliderFunction = function(){
     	//	console.log("slider function");
-    		 $scope.value = "0;1000";
-    		 $scope.options = {       
+    		 $scope.campaigns = "0;1000";
+    		 $scope.campaignsOptions = {       
     		    from: 0,
     		    to: 1000,
     		    step: 10,
@@ -17,17 +22,9 @@ define(['./module'], function (controllers) {
     		 };
     	};
     	
-    	
-        $('.selectpicker').selectpicker({
 
-        });
-        
-        
-    	sliderFunction();
-     	
-    	
-    	console.log("loading end 1.1");
     	$scope.loadingEnd();
-    	console.log("loading end 1.2");
+    	init();
+    	
     }]);
 });

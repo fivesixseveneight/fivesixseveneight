@@ -27,12 +27,16 @@
 		</div>
 		
 		<div class="btn-group showUsersWrapper" data-toggle="buttons">
-		  <label class="btn btn-primary active">
-		  <input type="radio" name="showType" value="0" checked>Advertisers<br>
-		  </label>
-		  <label class="btn btn-primary">
-		  <input type="radio" name="showType" value="1">Publishers<br>
-		  </label>
+		    <a ui-sref="root.primary.users.advertisers">
+		    	<label class="btn btn-primary active">
+				<input type="radio" name="showType" value="0" checked>Advertisers<br>
+		  		</label>
+		  	</a>
+			<a ui-sref="root.primary.users.publishers"> 
+				<label class="btn btn-primary">
+				<input type="radio" name="showType" value="1">Publishers<br>
+				</label>
+			</a>
 		</div>
 		
 		
@@ -43,7 +47,7 @@
 
 		<div>Total number of campaigns:</div>
 		<div class="slider-container">
-	    	<input ng-model="value"  type="text" id="campaignSlider" slider options="options" />
+	    	<input ng-model="campaigns"  type="text" id="campaignSlider" slider options="campaignsOptions" />
 		</div>
 		
 		
@@ -102,6 +106,7 @@
 
 </div>
 
+</br>
 
 
 </div>
