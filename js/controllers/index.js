@@ -7,13 +7,13 @@
 define([
     './footer-controller',
     './header-controller',
+    './users-controller',
     './primary-controller',
     './home-controller',
     './campaign-controller',
     './admin-controller',
     './flagged-controller',
     './reporting-controller',
-    './users-controller',
     './profile-controller',
     './notifications-controller',
     './messages-controller',
@@ -28,6 +28,8 @@ define([
     './login-controller',
     './logout-controller',
     './register-controller',
+    './findadvertisers-controller',
+    './findpublishers-controller',
     './confirmregistration-controller'
 
 

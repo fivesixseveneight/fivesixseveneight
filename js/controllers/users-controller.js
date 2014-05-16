@@ -7,7 +7,8 @@ define(['./module'], function (controllers) {
 		$scope.options = "";    
     	
     	var sliderFunction = function(){
-    		 $scope.value = "0;1000+";
+    	//	console.log("slider function");
+    		 $scope.value = "0;1000";
     		 $scope.options = {       
     		    from: 0,
     		    to: 1000,
@@ -23,6 +24,8 @@ define(['./module'], function (controllers) {
         
         
     	sliderFunction();
+
+    	console.log("loading end 1");
     	$scope.loadingEnd();
     	
     }]);

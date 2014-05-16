@@ -4,7 +4,7 @@
  */
 define(['./app'], function (app) {
     'use strict';
-    return app.config(['$stateProvider','$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+    return app.config(['$stateProvider','$urlRouterProvider', 'stateHelperProvider', function ($stateProvider, $urlRouterProvider, stateHelperProvider) {
     	
     	$stateProvider.state('root', {
     		views:{
@@ -38,7 +38,7 @@ define(['./app'], function (app) {
     		
     		}
     	}).state('root.home', {
-    		url: '/home',
+    		url: '/home/',
     		views:{
     			"@":{
     				  templateUrl: 'partials/home.html',
@@ -49,7 +49,7 @@ define(['./app'], function (app) {
     		
     		}
     	}).state('root.primary.overview', {
-    		url: '/overview',
+    		url: '/overview/',
     		views:{
     			"mainView@root":{
     				  templateUrl: 'partials/overview.html',
@@ -60,7 +60,7 @@ define(['./app'], function (app) {
     		
     		}
     	}).state('root.primary.campaign', {
-    		url: '/campaign',
+    		url: '/campaign/',
     		views:{
     			"mainView@root":{
     				  templateUrl: 'partials/campaign.html',
@@ -71,7 +71,7 @@ define(['./app'], function (app) {
     		
     		}
     	}).state('root.primary.reporting', {
-    		url: '/reporting',
+    		url: '/reporting/',
     		views:{
     			"mainView@root":{
     				  templateUrl: 'partials/reporting.html',
@@ -82,7 +82,8 @@ define(['./app'], function (app) {
     		
     		}
     	}).state('root.primary.users', {
-    		url: '/users',
+    		url: '/users/',
+    		abstract: true,
     		views:{
     			"mainView@root":{
     				  templateUrl: 'partials/users.html',
@@ -90,10 +91,22 @@ define(['./app'], function (app) {
     			}
     		},
     		resolve:{
+    	
+    			
+    		}
+    	}).state('root.primary.users.advertisers', {
+    		url: 'advertisers/',
+    		views:{
+    			"usersView@root.primary.users":{
+    				  templateUrl: 'partials/findadvertisers.html',
+    		          controller: 'findadvertisersController'
+    			}
+    		},
+    		resolve:{
     		
     		}
     	}).state('root.primary.profile', {
-    		url: '/profile',
+    		url: '/profile/',
     		views:{
     			"mainView@root":{
     				  templateUrl: 'partials/profile.html',
@@ -104,7 +117,7 @@ define(['./app'], function (app) {
     		
     		}
     	}).state('root.primary.notifications', {
-    		url: '/notifications',
+    		url: '/notifications/',
     		views:{
     			"mainView@root":{
     				  templateUrl: 'partials/notifications.html',
@@ -115,7 +128,7 @@ define(['./app'], function (app) {
     		
     		}
     	}).state('root.primary.messages', {
-    		url: '/messages',
+    		url: '/messages/',
     		views:{
     			"mainView@root":{
     				  templateUrl: 'partials/messages.html',
@@ -126,7 +139,7 @@ define(['./app'], function (app) {
     		
     		}
     	}).state('root.primary.settings', {
-    		url: '/settings',
+    		url: '/settings/',
     		views:{
     			"mainView@root":{
     				  templateUrl: 'partials/settings.html',
@@ -137,7 +150,7 @@ define(['./app'], function (app) {
     		
     		}
     	}).state('root.primary.tools', {
-    		url: '/tools',
+    		url: '/tools/',
     		views:{
     			"mainView@root":{
     				  templateUrl: 'partials/tools.html',
@@ -148,7 +161,7 @@ define(['./app'], function (app) {
     		
     		}
     	}).state('root.primary.funds', {
-    		url: '/funds',
+    		url: '/funds/',
     		views:{
     			"mainView@root":{
     				  templateUrl: 'partials/funds.html',
@@ -159,7 +172,7 @@ define(['./app'], function (app) {
     		
     		}
     	}).state('root.primary.about', {
-    		url: '/about',
+    		url: '/about/',
     		views:{
     			"mainView@root":{
     				  templateUrl: 'partials/about.html',
@@ -170,7 +183,7 @@ define(['./app'], function (app) {
     		
     		}
     	}).state('root.primary.jobs', {
-    		url: '/jobs',
+    		url: '/jobs/',
     		views:{
     			"mainView@root":{
     				  templateUrl: 'partials/jobs.html',
@@ -181,7 +194,7 @@ define(['./app'], function (app) {
     		
     		}
     	}).state('root.primary.help', {
-    		url: '/help',
+    		url: '/help/',
     		views:{
     			"mainView@root":{
     				  templateUrl: 'partials/help.html',
@@ -192,7 +205,7 @@ define(['./app'], function (app) {
     		
     		}
     	}).state('root.primary.terms', {
-    		url: '/terms',
+    		url: '/terms/',
     		views:{
     			"mainView@root":{
     				  templateUrl: 'partials/terms.html',
@@ -203,7 +216,7 @@ define(['./app'], function (app) {
     		
     		}
     	}).state('root.primary.admin', {
-    		url: '/admin',
+    		url: '/admin/',
     		views:{
     			"mainView@root":{
     				  templateUrl: 'partials/admin.html',
@@ -214,7 +227,7 @@ define(['./app'], function (app) {
     		
     		}
     	}).state('root.primary.flagged', {
-    		url: '/flagged',
+    		url: '/flagged/',
     		views:{
     			"mainView@root":{
     				  templateUrl: 'partials/flagged.html',
@@ -225,7 +238,7 @@ define(['./app'], function (app) {
     		
     		}
     	}).state('root.primary.login', {
-    		url: '/login',
+    		url: '/login/',
     		views:{
     			"mainView@root":{
     				  templateUrl: 'partials/login.html',
@@ -236,7 +249,7 @@ define(['./app'], function (app) {
     		
     		}
     	}).state('root.primary.logout', {
-    		url: '/logout',
+    		url: '/logout/',
     		views:{
     			"mainView@root":{
     				  templateUrl: 'partials/logout.html',
@@ -247,7 +260,7 @@ define(['./app'], function (app) {
     		
     		}
     	}).state('root.primary.register', {
-    		url: '/register',
+    		url: '/register/',
     		views:{
     			"mainView@root":{
     				  templateUrl: 'partials/register.html',
@@ -258,7 +271,7 @@ define(['./app'], function (app) {
     		
     		}
     	}).state('root.primary.confirmregistration', {
-    		url: '/confirmregistration',
+    		url: '/confirmregistration/',
     		views:{
     			"mainView@root":{
     				  templateUrl: 'partials/confirmregistration.html',
@@ -272,6 +285,33 @@ define(['./app'], function (app) {
     	 
     	
     	$urlRouterProvider.otherwise('home');
+    	$urlRouterProvider.when('/users', '/users/advertisers');
+    	$urlRouterProvider.when('/users/', '/users/advertisers');
     	
+        $urlRouterProvider.rule(function($injector, $location) {
+            var path = $location.path()
+              // Note: misnomer. This returns a query object, not a search string
+              , search = $location.search()
+              , params
+              ;
+
+            // check to see if the path already ends in '/'
+            if (path[path.length - 1] === '/') {
+              return;
+            }
+
+            // If there was no search string / query params, return with a `/`
+            if (Object.keys(search).length === 0) {
+              return path + '/';
+            }
+
+            // Otherwise build the search string and return a `/?` prefix
+            params = [];
+            angular.forEach(search, function(v, k){
+              params.push(k + '=' + v);
+            });
+            return path + '/?' + params.join('&');
+          });
+        
     }]);
 });

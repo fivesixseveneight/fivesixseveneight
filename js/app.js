@@ -5,6 +5,7 @@
 define([
     'angular',
     'angular-route',
+    'angular-statehelper',
     'angular-animate',
     'angular-sanitize',
     'angular-slider',
@@ -15,7 +16,8 @@ define([
     
 ], function (
 		angular,
-		angularRoute, 
+		angularRoute,
+		angularStateHelper,
 		angularAnimate, 
 		angularSanitize, 
 		angularSlider, 
@@ -25,7 +27,7 @@ define([
 		services) {
     'use strict';
     
-   var app = angular.module('app', ['app.controllers','app.directives','app.filters', 'app.services', 'ui.router', 'ngAnimate', 'ngSanitize', 'ngSlider']);
+   var app = angular.module('app', ['app.controllers','app.directives','app.filters', 'app.services', 'ui.router', 'ui.router.stateHelper','ngAnimate', 'ngSanitize', 'ngSlider']);
 	   
    	app.config([ '$locationProvider', function($locationProvider){
 	           $locationProvider.html5Mode(false);

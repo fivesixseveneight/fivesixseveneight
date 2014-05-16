@@ -9,6 +9,7 @@ require.config({
     paths: {
         'angular': '../lib/angular/angular',
         'angular-route': '../lib/angular-route/angular-ui-router',
+        'angular-statehelper': '../lib/angular-route/statehelper',
         'angular-sanitize': '../lib/angular-sanitize/angular-sanitize',
         'angular-animate': '../lib/angular-animate/angular-animate',
         'angular-slider': "../lib/angular-slider/ngslider.min",
@@ -29,6 +30,9 @@ require.config({
         },
         'angular-route': {
             deps: ['angular']
+        },
+        'angular-statehelper': {
+            deps: ['angular-route']
         },
         'angular-animate': {
             deps: ['angular']
