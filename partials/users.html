@@ -8,10 +8,7 @@
 		
 		</br>
 	
-		<div>
-			Connections
-		</div>
-		
+
 		<div class="btn-group showUsersWrapper" data-toggle="buttons">
 		  <label class="btn btn-primary active">
 		  <input type="radio" name="showUsers" value="0" checked>Show all users<br>
@@ -23,11 +20,9 @@
 		  <input type="radio" name="showUsers" value="2">Show users I am not connected to<br>
 		  </label>
 		</div>
-
-		<div>
-			Show User Type
-		</div>
 		
+		</br>
+
 		<div class="btn-group showUsersWrapper" data-toggle="buttons">
 		    <a ui-sref="root.primary.users.advertisers">
 		    	<label class="btn btn-primary">
@@ -40,13 +35,39 @@
 				</label>
 			</a>
 		</div>
-				
-
-		<div>Total number of campaigns</div>
-		<div class="slider-container">
-	    	<input ng-model="campaigns"  type="text" id="campaignSlider" slider options="campaignsOptions" />
-		</div>
 		
+		</br>
+		
+		<div>Location</div>
+		
+		<div class="input-group">
+	      <input type="text" class="form-control" placeholder="Location">
+	      <span class="input-group-btn">
+	        <button class="btn btn-default" type="button">Submit</button>
+	      </span>
+	    </div>
+	    
+		</br>
+		
+		<div>Market</div>
+	    <div class="input-group">
+	      <input type="text" class="form-control" placeholder="Market">
+	      <span class="input-group-btn">
+	        <button class="btn btn-default" type="button">Submit</button>
+	      </span>
+	    </div>
+	    
+		</br>
+	
+		<div>Keywords</div>
+	    <div class="input-group">
+	      <input type="text" class="form-control" placeholder="Keywords">
+	      <span class="input-group-btn">
+	        <button class="btn btn-default" type="button">Submit</button>
+	      </span>
+	    </div>
+
+		</br>
 		
 		<div>
 		<span>Last active within</span>
@@ -62,33 +83,14 @@
 		<span>day(s) ago</span>
 		</div>
 		
-		<div>Location</div>
-		
-		<div class="input-group">
-	      <input type="text" class="form-control" placeholder="Location">
-	      <span class="input-group-btn">
-	        <button class="btn btn-default" type="button">Submit</button>
-	      </span>
-	    </div>
-		
-		<div>Market</div>
-	    <div class="input-group">
-	      <input type="text" class="form-control" placeholder="Market">
-	      <span class="input-group-btn">
-	        <button class="btn btn-default" type="button">Submit</button>
-	      </span>
-	    </div>
-	
-		<div>Keywords</div>
-	    <div class="input-group">
-	      <input type="text" class="form-control" placeholder="Keywords">
-	      <span class="input-group-btn">
-	        <button class="btn btn-default" type="button">Submit</button>
-	      </span>
-	    </div>
-		
-	
+		</br>
+			
+		<div>Total number of campaigns</div>
+		<div class="slider-container">
+	    	<input ng-model="campaigns"  type="text" id="campaignSlider" slider options="campaignsOptions" />
+		</div>
 
+		
 		<div ui-view="subFilterView"></div>
 
 
@@ -100,6 +102,6 @@
 </div>
 
 </br>
-
+</br>
 
 </div>
