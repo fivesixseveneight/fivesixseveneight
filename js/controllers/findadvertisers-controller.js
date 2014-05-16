@@ -2,18 +2,12 @@ define(['./module'], function (controllers) {
     'use strict';
     controllers.controller('findadvertisersController', ['$scope','$rootScope', function ($scope, $rootScope) {
      	
-    	var init = function(){
-    	console.log("findAdvertisersController init");
-    		
-    	};
+    	console.log("loading end 2.1");
     	
     	$scope.pageContent = {};
   
-    	console.log("loading end 2");
     	$scope.loadingEnd();
-    	init();
+    	console.log("loading end 2.2");
 
-    	
-    	
     }]);
 });

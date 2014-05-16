@@ -5,7 +5,7 @@ define(['./module'], function (controllers) {
     	$scope.pageContent = {};
     	$scope.value = "";
 		$scope.options = "";    
-    	
+	
     	var sliderFunction = function(){
     	//	console.log("slider function");
     		 $scope.value = "0;1000";
@@ -24,9 +24,10 @@ define(['./module'], function (controllers) {
         
         
     	sliderFunction();
-
-    	console.log("loading end 1");
-    	$scope.loadingEnd();
+     	
     	
+    	console.log("loading end 1.1");
+    	$scope.loadingEnd();
+    	console.log("loading end 1.2");
     }]);
 });

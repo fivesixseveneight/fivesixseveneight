@@ -91,8 +91,7 @@ define(['./app'], function (app) {
     			}
     		},
     		resolve:{
-    	
-    			
+
     		}
     	}).state('root.primary.users.advertisers', {
     		url: 'advertisers/',
