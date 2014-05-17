@@ -41,7 +41,7 @@ define(['./app'], function (app) {
     		url: '/home/',
     		views:{
     			"@":{
-    				  templateUrl: 'partials/home.html',
+    				  templateUrl: 'partials/home/home.html',
     		          controller: 'homeController'
     			}
     		},
@@ -52,7 +52,7 @@ define(['./app'], function (app) {
     		url: '/overview/',
     		views:{
     			"mainView@root":{
-    				  templateUrl: 'partials/overview.html',
+    				  templateUrl: 'partials/overview/overview.html',
     		          controller: 'overviewController'
     			}
     		},
@@ -64,7 +64,7 @@ define(['./app'], function (app) {
     		abstract: true,
     		views:{
     			"mainView@root":{
-    				  templateUrl: 'partials/campaign.html',
+    				  templateUrl: 'partials/campaign/campaign.html',
     		          controller: 'campaignController'
     			}
     		},
@@ -75,7 +75,7 @@ define(['./app'], function (app) {
     		url: 'mycampaigns/',
     		views:{
     			"campaignOptionWrapper@root.primary.campaign":{
-    				  templateUrl: 'partials/mycampaigns.html',
+    				  templateUrl: 'partials/campaign/mycampaigns.html',
     		          controller: 'mycampaignsController'
     			}
     		},
@@ -86,7 +86,7 @@ define(['./app'], function (app) {
     		url: 'newcampaign/',
     		views:{
     			"campaignOptionWrapper@root.primary.campaign":{
-    				  templateUrl: 'partials/newcampaign.html',
+    				  templateUrl: 'partials/campaign/newcampaign.html',
     		          controller: 'newcampaignController'
     			}
     		},
@@ -97,7 +97,7 @@ define(['./app'], function (app) {
     		url: 'search/',
     		views:{
     			"campaignOptionWrapper@root.primary.campaign":{
-    				  templateUrl: 'partials/searchcampaigns.html',
+    				  templateUrl: 'partials/campaign/searchcampaigns.html',
     		          controller: 'searchcampaignsController'
     			}
     		},
@@ -108,7 +108,7 @@ define(['./app'], function (app) {
     		url: 'requests/',
     		views:{
     			"campaignOptionWrapper@root.primary.campaign":{
-    				  templateUrl: 'partials/requestscampaigns.html',
+    				  templateUrl: 'partials/campaign/requestscampaigns.html',
     		          controller: 'campaignrequestsController'
     			}
     		},
@@ -119,7 +119,7 @@ define(['./app'], function (app) {
     		url: '/reporting/',
     		views:{
     			"mainView@root":{
-    				  templateUrl: 'partials/reporting.html',
+    				  templateUrl: 'partials/reporting/reporting.html',
     		          controller: 'reportingController'
     			}
     		},
@@ -131,7 +131,7 @@ define(['./app'], function (app) {
     		abstract: true,
     		views:{
     			"mainView@root":{
-    				  templateUrl: 'partials/users.html',
+    				  templateUrl: 'partials/users/users.html',
     		          controller: 'usersController'
     			}
     		},
@@ -142,11 +142,11 @@ define(['./app'], function (app) {
     		url: 'advertisers/',
     		views:{
     			"subFilterView@root.primary.users":{
-  				  templateUrl: 'partials/findadvertisers.html',
+  				  templateUrl: 'partials/users/findadvertisers.html',
   		          controller: 'findadvertisersController'
     			},
     			"usersfoundView@root.primary.users":{
-  				  templateUrl: 'partials/foundadvertisers.html',
+  				  templateUrl: 'partials/users/foundadvertisers.html',
   		          controller: 'foundadvertisersController'
     			}
     		},
@@ -157,11 +157,11 @@ define(['./app'], function (app) {
     		url: 'publishers/',
     		views:{
     			"subFilterView@root.primary.users":{
-    				  templateUrl: 'partials/findpublishers.html',
+    				  templateUrl: 'partials/users/findpublishers.html',
     		          controller: 'findpublishersController'
     			},
     			"usersfoundView@root.primary.users":{
-    				  templateUrl: 'partials/foundpublishers.html',
+    				  templateUrl: 'partials/users/foundpublishers.html',
     		          controller: 'foundpublishersController'
       			}
     		},
@@ -172,7 +172,7 @@ define(['./app'], function (app) {
     		url: '/profile/',
     		views:{
     			"mainView@root":{
-    				  templateUrl: 'partials/profile.html',
+    				  templateUrl: 'partials/profile/profile.html',
     		          controller: 'profileController'
     			}
     		},
@@ -183,7 +183,7 @@ define(['./app'], function (app) {
     		url: '/notifications/',
     		views:{
     			"mainView@root":{
-    				  templateUrl: 'partials/notifications.html',
+    				  templateUrl: 'partials/notifications/notifications.html',
     		          controller: 'notificationsController'
     			}
     		},
@@ -194,7 +194,7 @@ define(['./app'], function (app) {
     		url: '/messages/',
     		views:{
     			"mainView@root":{
-    				  templateUrl: 'partials/messages.html',
+    				  templateUrl: 'partials/messages/messages.html',
     		          controller: 'messagesController'
     			}
     		},
@@ -205,7 +205,7 @@ define(['./app'], function (app) {
     		url: '/settings/',
     		views:{
     			"mainView@root":{
-    				  templateUrl: 'partials/settings.html',
+    				  templateUrl: 'partials/settings/settings.html',
     		          controller: 'settingsController'
     			}
     		},
@@ -216,7 +216,7 @@ define(['./app'], function (app) {
     		url: '/tools/',
     		views:{
     			"mainView@root":{
-    				  templateUrl: 'partials/tools.html',
+    				  templateUrl: 'partials/tools/tools.html',
     		          controller: 'toolsController'
     			}
     		},
@@ -227,7 +227,7 @@ define(['./app'], function (app) {
     		url: '/funds/',
     		views:{
     			"mainView@root":{
-    				  templateUrl: 'partials/funds.html',
+    				  templateUrl: 'partials/funds/funds.html',
     		          controller: 'fundsController'
     			}
     		},
@@ -238,7 +238,7 @@ define(['./app'], function (app) {
     		url: '/about/',
     		views:{
     			"mainView@root":{
-    				  templateUrl: 'partials/about.html',
+    				  templateUrl: 'partials/about/about.html',
     		          controller: 'aboutController'
     			}
     		},
@@ -249,7 +249,7 @@ define(['./app'], function (app) {
     		url: '/jobs/',
     		views:{
     			"mainView@root":{
-    				  templateUrl: 'partials/jobs.html',
+    				  templateUrl: 'partials/jobs/jobs.html',
     		          controller: 'jobsController'
     			}
     		},
@@ -260,7 +260,7 @@ define(['./app'], function (app) {
     		url: '/help/',
     		views:{
     			"mainView@root":{
-    				  templateUrl: 'partials/help.html',
+    				  templateUrl: 'partials/help/help.html',
     		          controller: 'helpController'
     			}
     		},
@@ -271,7 +271,7 @@ define(['./app'], function (app) {
     		url: '/terms/',
     		views:{
     			"mainView@root":{
-    				  templateUrl: 'partials/terms.html',
+    				  templateUrl: 'partials/terms/terms.html',
     		          controller: 'termsController'
     			}
     		},
@@ -282,7 +282,7 @@ define(['./app'], function (app) {
     		url: '/admin/',
     		views:{
     			"mainView@root":{
-    				  templateUrl: 'partials/admin.html',
+    				  templateUrl: 'partials/admin/admin.html',
     		          controller: 'adminController'
     			}
     		},
@@ -293,7 +293,7 @@ define(['./app'], function (app) {
     		url: '/flagged/',
     		views:{
     			"mainView@root":{
-    				  templateUrl: 'partials/flagged.html',
+    				  templateUrl: 'partials/flagged/flagged.html',
     		          controller: 'flaggedController'
     			}
     		},
@@ -326,7 +326,7 @@ define(['./app'], function (app) {
     		url: '/register/',
     		views:{
     			"mainView@root":{
-    				  templateUrl: 'partials/register.html',
+    				  templateUrl: 'partials/register/register.html',
     		          controller: 'registerController'
     			}
     		},
@@ -337,7 +337,7 @@ define(['./app'], function (app) {
     		url: '/confirmregistration/',
     		views:{
     			"mainView@root":{
-    				  templateUrl: 'partials/confirmregistration.html',
+    				  templateUrl: 'partials/register/confirmregistration.html',
     		          controller: 'confirmregistrationController'
     			}
     		},
