@@ -7,36 +7,55 @@
 define([
     './footer-controller',
     './header-controller',
-    './users-controller',
     './primary-controller',
-    './home-controller',
-    './campaign-controller',
-    './mycampaigns-controller',
-    './campaignrequests-controller',
-    './newcampaign-controller',
-    './searchcampaigns-controller',
-    './admin-controller',
-    './flagged-controller',
-    './reporting-controller',
-    './profile-controller',
-    './notifications-controller',
-    './messages-controller',
-    './settings-controller',
-    './tools-controller',
-    './funds-controller',
-    './overview-controller',
-    './jobs-controller',
-    './help-controller',
-    './terms-controller',
-    './about-controller',
-    './login-controller',
-    './logout-controller',
-    './register-controller',
-    './findadvertisers-controller',
-    './foundadvertisers-controller',
-    './findpublishers-controller',
-    './foundpublishers-controller',
-    './confirmregistration-controller'
+  
+    './about/about-controller',
+    './admin/admin-controller',
+    
+    './campaign/campaign-controller',
+    './campaign/mycampaigns-controller',
+    './campaign/campaignrequests-controller',
+    './campaign/newcampaign-controller',
+    './campaign/searchcampaigns-controller',
+    
+    './flagged/flagged-controller',
+    
+    './funds/funds-controller',
+    
+    './help/help-controller',
+    
+    './home/home-controller',
+    
+    './jobs/jobs-controller',
+ 
+    './login/login-controller',
+    
+    './logout/logout-controller',
+    
+    './messages/messages-controller',
+    
+    './notifications/notifications-controller',
+    
+    './overview/overview-controller',
+    
+    './profile/profile-controller',
+    
+    './registration/confirmregistration-controller',
+    './registration/register-controller',
+
+    './reporting/reporting-controller',
+    
+    './settings/settings-controller',
+    
+    './terms/terms-controller',
+    
+    './tools/tools-controller',
+     
+    './users/findadvertisers-controller',
+    './users/findpublishers-controller',
+    './users/foundadvertisers-controller',
+    './users/foundpublishers-controller',
+    './users/users-controller'
 
 
 ], function () {});
