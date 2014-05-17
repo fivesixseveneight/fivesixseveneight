@@ -61,10 +61,55 @@ define(['./app'], function (app) {
     		}
     	}).state('root.primary.campaign', {
     		url: '/campaign/',
+    		abstract: true,
     		views:{
     			"mainView@root":{
     				  templateUrl: 'partials/campaign.html',
     		          controller: 'campaignController'
+    			}
+    		},
+    		resolve:{
+    		
+    		}
+    	}).state('root.primary.campaign.mycampaigns', {
+    		url: 'mycampaigns/',
+    		views:{
+    			"campaignOptionWrapper@root.primary.campaign":{
+    				  templateUrl: 'partials/mycampaigns.html',
+    		          controller: 'mycampaignsController'
+    			}
+    		},
+    		resolve:{
+    		
+    		}
+    	}).state('root.primary.campaign.newcampaign', {
+    		url: 'newcampaign/',
+    		views:{
+    			"campaignOptionWrapper@root.primary.campaign":{
+    				  templateUrl: 'partials/newcampaign.html',
+    		          controller: 'newcampaignController'
+    			}
+    		},
+    		resolve:{
+    		
+    		}
+    	}).state('root.primary.campaign.search', {
+    		url: 'search/',
+    		views:{
+    			"campaignOptionWrapper@root.primary.campaign":{
+    				  templateUrl: 'partials/searchcampaigns.html',
+    		          controller: 'searchcampaignsController'
+    			}
+    		},
+    		resolve:{
+    		
+    		}
+    	}).state('root.primary.campaign.requests', {
+    		url: 'requests/',
+    		views:{
+    			"campaignOptionWrapper@root.primary.campaign":{
+    				  templateUrl: 'partials/requestscampaigns.html',
+    		          controller: 'campaignrequestsController'
     			}
     		},
     		resolve:{
@@ -305,8 +350,13 @@ define(['./app'], function (app) {
     	$urlRouterProvider.otherwise('home');
     	$urlRouterProvider.when('/users', '/users/advertisers');
     	$urlRouterProvider.when('/users/', '/users/advertisers');
+    	
     	$urlRouterProvider.when('/users', '/users/publishers');
     	$urlRouterProvider.when('/users/', '/users/publishers');
+    	
+    	$urlRouterProvider.when('/campaign', '/campaign/search');
+    	$urlRouterProvider.when('/campaign/', '/campaign/search');
+    	
     	
         $urlRouterProvider.rule(function($injector, $location) {
             var path = $location.path()

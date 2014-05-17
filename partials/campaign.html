@@ -1,3 +1,43 @@
 <div class="campaign">
-campaign Content
+
+<div class="filters-container">
+	
+		<div class="btn-group showCampaignsWrapper" data-toggle="buttons">
+		  <a ui-sref="root.primary.campaign.mycampaigns">
+			  <label class="btn btn-primary active">
+			  <input type="radio" name="showCampaigns" value="0" checked>View my campaigns<br>
+			  </label>
+		  </a>
+		  <a ui-sref="root.primary.campaign.newcampaign">
+			  <label class="btn btn-primary">
+			  <input type="radio" name="showCampaigns" value="1">Create new ad campaign<br>
+			  </label>
+		  </a>
+		  <a ui-sref="root.primary.campaign.requests">
+			  <label class="btn btn-primary">
+			  <input type="radio" name="showCampaigns" value="2">Pending campaign requests<br>
+			  </label>
+		  </a>
+		  <a ui-sref="root.primary.campaign.search">
+			  <label class="btn btn-primary">
+			  <input type="radio" name="showCampaigns" value="3">Search for campaigns<br>
+			  </label>
+		  </a>
+		</div>
+		
+		</br>
+	
+		<div ui-view="subFilterView"></div>
+
+
+</div>
+
+
+<div class="campaigns-container" ui-view="campaignOptionWrapper">
+
+</div>
+
+</br>
+</br>
+
 </div>

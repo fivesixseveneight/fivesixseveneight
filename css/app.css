@@ -634,6 +634,25 @@ Users
 	width: 65px !important;
 }
 
+/*
+Campaign
+*/
+
+
+.campaign .showCampaignsWrapper{
+	display: block;
+}
+
+.campaign .showCampaignsWrapper .btn{
+	float: none;
+	display: block;
+	border-radius: 0px;
+	margin: 0px;
+	width: 100%;
+	margin-bottom: 1px;
+	padding: 10px;
+}
+
 
 /*
 Register
