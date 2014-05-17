@@ -13,10 +13,10 @@ define([
     './admin/admin-controller',
     
     './campaign/campaign-controller',
-    './campaign/mycampaigns-controller',
-    './campaign/campaignrequests-controller',
-    './campaign/newcampaign-controller',
-    './campaign/searchcampaigns-controller',
+    './campaign/mycampaigns/mycampaigns-controller',
+    './campaign/newcampaign/newcampaign-controller',
+    './campaign/requests/campaignrequests-controller',
+    './campaign/search/searchcampaigns-controller',
     
     './flagged/flagged-controller',
     
