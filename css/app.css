@@ -66,8 +66,11 @@ html a:hover{
 
 body{
 	height: 100%;
+	background-color: #000;
 }
-
+body .body-wrapper{
+	background-color: #fff;
+}
 
 .display-none{
 	display: none;
@@ -308,7 +311,9 @@ body{
 }
 
 #header .primary-nav .dropdown-menu li{
-		display: block;
+	display: block;
+	margin-left: 0px;
+	margin-right: 0px;	
 }
 
 #header .primary-nav .dropdown-menu li a{
@@ -459,7 +464,6 @@ Profile
 }
 
 .profile .profileTopWrapper{
-	border: 1px solid #ededed;
 	margin-left: 15px;
 	margin-right: 15px;
 }
@@ -470,7 +474,7 @@ Profile
 	height: 300px;
 	display: inline-block;
 	vertical-align: top;
-	border-right: 1px solid #ededed;
+	border: 1px solid #ededed;
 }
 
 .profile .profileImage{
@@ -696,14 +700,26 @@ FOOTER
 	position: relative;
 	bottom: 0;
 	padding: 2px;
-	padding-left: 5px;
-	padding-right: 5px;
+	padding-top: 15px;
+	padding-bottom: 15px;
 	font-size: 12px;
 	color: #fff;
 	background: #000;
 	border-top: 1px solid rgba(255,255,255,0.1);
 }
 
+#footer li{
+	padding: 10px;
+}
+
+#footer li:hover{
+	background-color: #FF3030;
+}
+
+#footer ul a{
+	color: #fff;
+	font-size: 15px;
+}
 
 @media (max-width:1499px) {
 
@@ -792,6 +808,8 @@ FOOTER
 	#header .primary-nav li{
 		float: none;
 		display: block;
+		margin-left: 0px;
+		margin-right: 0px;	
 	}
 
 	#view-wrapper{
@@ -829,7 +847,7 @@ FOOTER
 }
 
 
-@media (max-height: 600px) {
+@media (max-height: 680px) {
 	#header {
 		position: relative;
 	}
