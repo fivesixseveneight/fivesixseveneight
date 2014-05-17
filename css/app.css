@@ -417,6 +417,7 @@ body{
 
 .overview .overview-left-col{
 	display: inline-block;
+	vertical-align:top;
 	min-width: 360px;
 	margin-right: 20px;
 	margin-bottom: 5px;
@@ -425,6 +426,7 @@ body{
 
 .overview .overview-right-col{
 	display: inline-block;
+	vertical-align:top;
 	min-width: 360px;
 	
 }
@@ -448,6 +450,143 @@ body{
 	padding-left: 15px;
 	padding-right: 15px;
 }
+
+/*
+Profile
+*/
+.profile{
+	
+}
+
+.profile .profileTopWrapper{
+	border: 1px solid #ededed;
+	margin-left: 15px;
+	margin-right: 15px;
+}
+
+.profile .profileImageWrapper{
+	padding: 10px;
+	width: 300px;
+	height: 300px;
+	display: inline-block;
+	vertical-align: top;
+	border-right: 1px solid #ededed;
+}
+
+.profile .profileImage{
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.profile .profileTopSubWrapper{
+	padding: 10px;
+	font-size: 15px;
+	
+	display: inline-block;
+	vertical-align: top;
+	/*
+	text-align: center;
+	*/
+}
+
+.profile .profileBottomWrapper{
+	margin-bottom: 50px;
+	
+}
+
+.profile .profileBio{
+	padding-left: 30px;
+	padding-right: 15px;
+	display: inline-block;
+	vertical-align: top;
+	width: 33%;
+}
+
+.profile .profileBio .profile-section-title{
+	margin-top: 20px;
+}
+
+.profile .profile-advertise-stats-wrapper,
+.profile .profile-publisher-stats-wrapper{
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.profile .profileStats{
+	display: inline-block;
+	vertical-align: top;
+	width: 66%;
+}
+
+
+
+.profile .profile-title{
+	margin-bottom: 10px;
+	font-family: "ProximaNova-Regular";
+}
+
+.profile .profile-sub-title{
+	margin-bottom: 10px;
+}
+
+
+.profile .profile-section-title{
+	margin-top: 20px;
+	margin-bottom: 30px;
+	font-size: 20px;
+	font-family: "ProximaNova-Regular";
+}
+
+.profile .profile-row-wrapper{
+	margin-bottom: 10px;
+}
+
+.profile .profile-left-col{
+	vertical-align:top;
+	display: inline-block;
+	min-width: 360px;
+	margin-right: 20px;
+	margin-bottom: 5px;
+	font-family: "ProximaNova-Regular";
+}
+
+.profile .profile-right-col{
+	vertical-align:top;
+	display: inline-block;
+	min-width: 360px;
+	
+}
+
+.profile #publishingCampaignAccordion .profile-title,
+.profile #advertisingCampaignAccordion .profile-title{
+	padding: 15px;
+	margin-bottom: 0px;
+}
+
+.profile #publishingCampaignAccordion .profile-row-wrapper,
+.profile #advertisingCampaignAccordion .profile-row-wrapper{
+	margin-bottom: 0px;
+}
+
+
+
+.profile #publishingCampaignAccordion .profile-title:hover,
+.profile #advertisingCampaignAccordion .profile-title:hover{
+	background-color: #FF3030;
+	color: #fff;
+}
+
+.profile .collapse{
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.profile .collapsing{
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+
 
 /*
 Users
