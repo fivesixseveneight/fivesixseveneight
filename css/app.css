@@ -462,6 +462,7 @@ Profile
 .profile{
 	text-align: center;
 	margin-bottom: 50px;
+	padding: 0px;
 }
 
 .profile .profileTopWrapper{
@@ -477,35 +478,20 @@ Profile
 	padding: 15px;
 	margin-left: 15px;
 	margin-right: 15px;
-	margin-bottom: 15px;
 	width: 300px;
 	display: inline-block;
 	vertical-align: top;
-	border: 1px solid #ededed;
+	border: 1px solid rgba(0,0,0,0.1);
 	max-width: 90%;
 }
 
-.profile .profileEditButton{
-	vertical-align: top;
-	padding: 15px;
-	padding-top: 0px;
-	display: inline-block;
-	cursor: pointer;
-	font-family: "ProximaNova-Semibold";
-	font-size: 20px;
-	position: absolute;
-	right: 0px;
-}
 
-.profile .profileEditButton:hover{
-	color: #FF3030;	
-}
 
 .profile .profileImage{
 	max-width: 100%;
 	max-height: 100%;
 	width: 100%;
-	border: 1px solid #ededed;
+	border: 1px solid rgba(0,0,0,0.1);
 }
 
 .profile .profileBottomWrapper{
@@ -514,16 +500,47 @@ Profile
 	display: inline-block;
 	vertical-align: top;
 	padding: 0px;
+	border-left: 1px solid rgba(0,0,0,0.1);
+}
+
+.profile .profileQuickBio{
+	vertical-align: top;
+	padding: 15px;
+	padding-bottom: 0px;
 }
 
 .profile .profileBio{
 	padding: 15px;
 	padding-top: 0px;
+	text-align: left;
+}
+
+.profile .profileBioTitle{
+	position: relative;
+	margin-top: 15px;
+	margin-bottom: 20px;
+	padding: 0px;
 }
 
 .profile .profileBio .profile-section-title{
-	margin-top: 20px;
+	margin: 0px;
+	display: inline-block;
+	vertical-align: top;
+	padding: 0px;
 }
+
+.profile .profileEditButton{
+	cursor: pointer;
+	font-family: "ProximaNova-Semibold";
+	font-size: 20px;
+	float: right;
+	padding: 0px;
+}
+
+.profile .profileEditButton:hover{
+	color: #FF3030;	
+}
+
 
 .profile .profile-advertise-stats-wrapper,
 .profile .profile-publisher-stats-wrapper{
@@ -750,10 +767,7 @@ FOOTER
 
 @media (max-width:1499px) {
 
-	.profile .profileEditButton{
-		position: relative;
-		right: auto;	
-	}
+
 	
 }
 
@@ -858,8 +872,21 @@ FOOTER
 		
 	}
 	
+	.profile .profileTopWrapper{
+		text-align: center;
+	}
 	
+	.profile .profileQuickBio{
+		text-align: center;
+	}
 	
+	.profile .profileEditButton {
+		float: left; 
+	}
+
+	.profile .profileBottomWrapper{
+		border-left: none;
+	}
 }
 
 /* mobile */
