@@ -315,7 +315,7 @@ define(['./app'], function (app) {
     		url: '/logout/',
     		views:{
     			"mainView@root":{
-    				  templateUrl: 'partials/login/logout.html',
+    				  templateUrl: 'partials/logout/logout.html',
     		          controller: 'logoutController'
     			}
     		},
