@@ -2,73 +2,134 @@
 	
 	
 	<div class="profileTopWrapper col-xs-12 col-sm-offset-1 col-sm-5 col-md-offset-2 col-md-4" >
-		<div class="profileImageWrapper">
+		<div class="profileImageWrapper col-xs-12">
 			<img class="profileImage"  src="img/profile/default.png"/>
 		</div>
 	
-		<div class="profileQuickBio">
-			<div class="profileName">
-				Username
+		<div class="profileQuickBio col-xs-12">
+			
+			<div ng-if="!editBln" >
+				<div>{{userObj.usernameStr}}</div>
+				
+				<div>{{userObj.firstnameStr}}</div>
+				
+				<div>{{userObj.lastnameStr}}</div>
+				
+				<div>{{userObj.companyStr}}</div>
+				
+				<div>{{userObj.websiteStr}}</div>
+				
+				<div>{{userObj.facebookStr}}</div>
+				
+				<div>{{userObj.twitterStr}}</div>
+				
+				<div>{{userObj.youtubeStr}}</div>
+				
+				<div>{{userObj.instagramStr}}</div>
+				
+				<div>{{userObj.googleplusStr}}</div>
+				
+				<div>{{userObj.vineStr}}</div>
+				
+				<div>{{userObj.pinterestStr}}</div>
+				
+				<div>Active Campaigns {{userObj.activeCampaignNum}}</div>
+				
+				<div>Connections {{userObj.connectionsNum}}</div>
+				
+				<div>Last Active {{userObj.lactActiveDate}} </div>
+				
+				<div>Date Joined {{userObj.joinedDate}}</div>
+				
+				
+		
 			</div>
 			
-			<div>
-				Company
+			<div ng-if="editBln" >
+						
+				<div class="form-group col-xs-12">
+					<label>First Name</label>
+			    	<input type="text" ng-model="userObj.firstnameStr" class="form-control" placeholder="First Name">
+			    </div>
+			    
+			    <div class="form-group col-xs-12">
+					<label>Last Name</label>
+			    	<input type="text" ng-model="userObj.lastnameStr" class="form-control" placeholder="Last Name">
+			    </div>
+			    
+			    <div class="form-group col-xs-12">
+					<label>Company </label>
+			    	<input type="text" ng-model="userObj.companyStr" class="form-control" placeholder="Company">
+			    </div>
+			    
+			    <div class="form-group col-xs-12">
+					<label>Website</label>
+			    	<input type="text" ng-model="userObj.websiteStr" class="form-control" placeholder="Website">
+			    </div>
+			  
+			    
 			</div>
 			
-			<div>
-				Website
-			</div>
 			
-			<div>
-				Social Media Links
-			</div>
-			
-			<div>
-				# Active Campaigns
-			</div>
-			
-			<div>
-				# Connections
-			</div>
-			
-			<div>
-				Last Active
-			</div>
-			
-			<div>
-				Date Joined
-			</div>
+		
 			
 				
 		</div>
 			
-		<div class="profileBio">
+		<div class="profileBio col-xs-12">
 		
 			<div class="profileBioTitle col-xs-12">
 				<div class="profile-section-title col-xs-8 col-sm-offset-0 col-sm-8 col-md-9">About me</div>
 				
-				<div class="profileEditButton col-xs-offset-2 col-xs-2 col-sm-offset-1 col-sm-3 col-md-offset-1 col-md-2">Edit</div>	
-			</div>
-			<div class="profileSupportCampaign">
-				<div class="profile-title">Campaigns I support</div>
-				<div class="profile-sub-title"> test </div>
+				<div ng-if="!editBln" ng-click="editProfile()" class="profileEditButton col-xs-offset-2 col-xs-2 col-sm-offset-1 col-sm-3 col-md-offset-1 col-md-2">Edit</div>	
+			
 			</div>
 			
-			<div>
-				<div class="profile-title">My Primary Audience</div>
-				<div class="profile-sub-title"> test</div>
-			</div>
+		
 			
-			<div>
-				<div class="profile-title">Locations</div>
-				<div class="profile-sub-title"> test</div>
-			</div>
+			<div class="form-group col-xs-12">
+				<label>Campaigns I support</label>
+				<div ng-if="editBln">
+		    		<textarea ng-model="aboutObj.supportStr" class="form-control" placeholder=""></textarea>
+		   		</div>
+		   		<div ng-if="!editBln">
+   		 			<div class="profile-sub-title">{{aboutObj.supportStr}}</div>
+   		 		</div>
+		    </div>
+		    
+		    	
+			<div class="form-group col-xs-12">
+				<label>My Primary Audience</label>
+				<div ng-if="editBln">
+		    	<textarea ng-model="aboutObj.audienceStr" class="form-control" placeholder=""></textarea>
+		   		</div>
+   		 		<div ng-if="!editBln">
+   		 			<div class="profile-sub-title">{{aboutObj.audienceStr}}</div>
+   		 		</div>
+		    </div>
+			    	
+			<div class="form-group col-xs-12">
+				<label>Locations</label>
+				<div ng-if="editBln">
+		    	<input ng-model="aboutObj.locationsStr" class="form-control" placeholder="Locations"/>
+		   		</div>
+   		 		<div ng-if="!editBln">
+   		 			<div class="profile-sub-title">{{aboutObj.locationsStr}}</div>
+   		 		</div>
+		    </div>
 			
-			<div>
-				
-				<div class="profile-title">Markets</div>
-				<div class="profile-sub-title"> test</div>
-			</div>
+			<div class="form-group col-xs-12">
+				<label>Markets</label>
+				<div ng-if="editBln">
+		    	<input ng-model="aboutObj.marketsStr" class="form-control" placeholder="Markets"/>
+		   		</div>
+   		 		<div ng-if="!editBln">
+   		 			<div class="profile-sub-title">{{aboutObj.marketsStr}}</div>
+   		 		</div>
+		    </div>
+			
+
+			
 		</div>
 		
 		

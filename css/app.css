@@ -465,6 +465,11 @@ Profile
 	padding: 0px;
 }
 
+
+.profile .form-group{
+	padding: 0px;
+}
+
 .profile .profileTopWrapper{
 	position: relative;
 	display: inline-block;
@@ -472,6 +477,7 @@ Profile
 	max-width: 100%;
 	vertical-align: top;
 	padding: 0px;
+	border-right: 1px solid #cdcdcd;
 }
 
 .profile .profileImageWrapper{
@@ -500,7 +506,8 @@ Profile
 	display: inline-block;
 	vertical-align: top;
 	padding: 0px;
-	border-left: 1px solid rgba(0,0,0,0.1);
+	border-left: 1px solid #cdcdcd;
+	margin-left: -1px;
 }
 
 .profile .profileQuickBio{
@@ -509,10 +516,21 @@ Profile
 	padding-bottom: 0px;
 }
 
+
 .profile .profileBio{
 	padding: 15px;
 	padding-top: 0px;
 	text-align: left;
+}
+
+.profile .profileBio .form-group{
+	height: auto;
+	margin-bottom: 15px;
+}
+
+.profile .profileBio textarea{
+	resize: vertical;
+	max-height: 300px;
 }
 
 .profile .profileBioTitle{
@@ -540,7 +558,6 @@ Profile
 .profile .profileEditButton:hover{
 	color: #FF3030;	
 }
-
 
 .profile .profile-advertise-stats-wrapper,
 .profile .profile-publisher-stats-wrapper{
@@ -884,8 +901,13 @@ FOOTER
 		float: left; 
 	}
 
+	.profile .profileTopWrapper{
+		border-right: none;
+	}
+
 	.profile .profileBottomWrapper{
 		border-left: none;
+		margin-left: 0px;
 	}
 }
 
