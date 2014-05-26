@@ -909,6 +909,13 @@ FOOTER
 		border-left: none;
 		margin-left: 0px;
 	}
+	
+		
+	.profile .profileImageWrapper{
+		float: none;
+	}
+		
+		
 }
 
 /* mobile */
