@@ -807,15 +807,13 @@ function sendActivationEmailById($userIdNum){
 	$messageStr .= "https://www.stage.fivesixseveneight.co/#/activateaccount/".$codeStr;
 	$messageStr .= "</div>";
 		
-	//	$to      = 'kendrick.lin@hotmail.com';
-	$to      = 'kendrick.lin@alumni.utoronto.ca';
+	$to      = 'kendrick.lin@hotmail.com';
+	// $to      = 'kendrick.lin@alumni.utoronto.ca';
 	$subject = 'Please activate your account at www.fivesixseveneight.com';
 	$message = $messageStr;
 	$headers = 'From: no-reply@kendricklin.com \r\n' .
-			'Reply-To: fivesixseveneight \r\n' .
-		    'MIME-Version: 1.0 \r\n'.
-		    'Content-Type: text/html; charset=ISO-8859-1 \r\n'.
-		    'X-Mailer: PHP/' . phpversion();
+			'Reply-To: no-reply@kendricklin.com \r\n' .
+		    'Content-Type: text/html; charset=ISO-8859-1 \r\n';
 	$sendMailSuccessBln = mail($to, $subject, $message, $headers);
 	
 	
