@@ -813,7 +813,7 @@ function sendActivationEmailById($userIdNum){
 	$message = $messageStr;
 	$headers = 'From: no-reply@kendricklin.com \r\n' .
 			'Reply-To: no-reply@kendricklin.com \r\n' .
-		    'Content-Type: text/html; charset=ISO-8859-1 \r\n';
+		    'Content-type: text/html \r\n';
 	$sendMailSuccessBln = mail($to, $subject, $message, $headers);
 	
 	
