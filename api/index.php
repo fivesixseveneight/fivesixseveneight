@@ -807,8 +807,8 @@ function sendActivationEmailById($userIdNum){
 	$messageStr .= "https://www.stage.fivesixseveneight.co/#/activateaccount/".$codeStr;
 	$messageStr .= "</div>";
 		
-	$to      = 'kendrick.lin@hotmail.com';
-	// $to      = 'kendrick.lin@alumni.utoronto.ca';
+	//$to      = 'kendrick.lin@hotmail.com';
+	$to      = 'kendrick.lin@alumni.utoronto.ca';
 	$subject = 'Please activate your account at www.fivesixseveneight.com';
 	$message = $messageStr;
 	$headers = 'From: no-reply@kendricklin.com \r\n' .
