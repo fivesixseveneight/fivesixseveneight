@@ -812,7 +812,9 @@ function sendActivationEmailById($userIdNum){
 	$message = $messageStr;
 	$headers = 'From: no-reply@kendricklin.com \r\n' .
 			'Reply-To: fivesixseveneight \r\n' .
-			'X-Mailer: PHP/' . phpversion();
+		    'MIME-Version: 1.0 \r\n'.
+		    'Content-Type: text/html; charset=ISO-8859-1 \r\n'.
+		    'X-Mailer: PHP/' . phpversion();
 	$sendMailSuccessBln = mail($to, $subject, $message, $headers);
 	
 	
