@@ -57,6 +57,7 @@ html{
 html a{
 	text-decoration: none;
 	color: #333;
+	cursor: pointer;
 }
 
 html a:hover{
@@ -359,6 +360,10 @@ body .body-wrapper{
 	display: inline-block;
 }
 
+.padded-body{
+	padding: 15px;	
+	
+}
 
 /*
 * home
@@ -408,7 +413,7 @@ body .body-wrapper{
 
 
 .overview{
-	font-size: 24px;
+	
 }
 
 .overview .overview-top-content{
@@ -516,6 +521,9 @@ Profile
 	padding-bottom: 0px;
 }
 
+.profile .profileBioDetails{
+	margin-bottom: 5px;
+}
 
 .profile .profileBio{
 	padding: 15px;
@@ -730,6 +738,36 @@ Register
 .register .panel-heading{
 	padding-left: 30px;
 }
+
+.confirmregistration .form-group{
+	padding: 0px;
+	height: auto;
+}
+
+.confirmregistration #confirmRegisterForm .form-group{
+	height: 80px;
+}
+
+
+.confirmregistration .panel-body{
+	padding: 0px;
+}
+
+.confirmregistration a {
+	padding: 10px;
+	padding-left: 15px;
+	padding-right: 15px;
+	
+	
+	display: block;
+}
+
+.confirmregistration a:hover {
+	background-color: #FF3030;
+	color: #fff;
+}
+
+
 
 /*
 UI VIEW ANIMATION

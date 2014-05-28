@@ -10,6 +10,8 @@ define(['./module'], function (controllers) {
     			loadingBln: true
     	};
     	
+    	$rootScope.activatedBln = false;
+    	
     	/*
     	 * determines if we need to show the loading icon/sequence or not
     	 */
@@ -111,7 +113,14 @@ define(['./module'], function (controllers) {
     		var userObj = checkSession.data;
     		console.log("setsession:: userObj", userObj);
     		$rootScope.userObj = userObj.userSessionObj;
-        	if($rootScope.userObj.loggedInBln == true){
+    		
+    		if($rootScope.userObj.activatedBln == "1"){
+    			$rootScope.activatedBln = true;
+    		}else{
+    			$rootScope.activatedBln = false;
+    		}
+    		
+    		if($rootScope.userObj.loggedInBln == true){
         		$rootScope.isLoggedInBln = true;
         	}else{
         		$rootScope.isLoggedInBln = false;

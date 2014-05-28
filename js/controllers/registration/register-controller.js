@@ -88,9 +88,11 @@ define(['../module'], function (controllers) {
 							dataObj.messageStr = obj.messageStr;
 							var successBln = obj.successBln;
 							if(successBln == false){
+								if($scope.validator != undefined){
 								$scope.validator.showErrors({
 									  "username": dataObj.messageStr
 									});
+								}
 							}	
 			    		});
 	    			}
@@ -251,7 +253,7 @@ define(['../module'], function (controllers) {
 	    	//	console.log("destroy");
 	    		$('#registerForm').data('validator', null);
 	    		$("#registerForm").unbind('validate');
-	    	
+	    		$scope.validator = undefined;
 	    	};
 	    	
 

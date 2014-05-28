@@ -9,37 +9,39 @@
 		<div class="profileQuickBio col-xs-12">
 			
 			<div ng-if="!editBln" >
-				<div>{{userObj.usernameStr}}</div>
+			
 				
-				<div>{{userObj.firstnameStr}}</div>
+				<div ng-if="userObj.usernameStr" class="profileBioDetails" >{{userObj.usernameStr}}</div>
 				
-				<div>{{userObj.lastnameStr}}</div>
+				<div ng-if="userObj.firstnameStr" class="profileBioDetails" >{{userObj.firstnameStr}}</div>
 				
-				<div>{{userObj.companyStr}}</div>
+				<div ng-if="userObj.lastnameStr" class="profileBioDetails" >{{userObj.lastnameStr}}</div>
 				
-				<div>{{userObj.websiteStr}}</div>
+				<div ng-if="userObj.companyStr" class="profileBioDetails" >{{userObj.companyStr}}</div>
+								
+				<div ng-if="userObj.websiteStr" class="profileBioDetails" >{{userObj.websiteStr}}</div>
 				
-				<div>{{userObj.facebookStr}}</div>
+				<div ng-if="userObj.facebookStr" class="profileBioDetails" >{{userObj.facebookStr}}</div>
 				
-				<div>{{userObj.twitterStr}}</div>
+				<div ng-if="userObj.twitterStr" class="profileBioDetails" >{{userObj.twitterStr}}</div>
 				
-				<div>{{userObj.youtubeStr}}</div>
+				<div ng-if="userObj.youtubeStr" class="profileBioDetails" >{{userObj.youtubeStr}}</div>
 				
-				<div>{{userObj.instagramStr}}</div>
+				<div ng-if="userObj.instagramStr" class="profileBioDetails" >{{userObj.instagramStr}}</div>
 				
-				<div>{{userObj.googleplusStr}}</div>
+				<div ng-if="userObj.googleplusStr" class="profileBioDetails" >{{userObj.googleplusStr}}</div>
 				
-				<div>{{userObj.vineStr}}</div>
+				<div ng-if="userObj.vineStr" class="profileBioDetails" >{{userObj.vineStr}}</div>
 				
-				<div>{{userObj.pinterestStr}}</div>
+				<div ng-if="userObj.pinterestStr" class="profileBioDetails" >{{userObj.pinterestStr}}</div>
 				
-				<div>Active Campaigns {{userObj.activeCampaignNum}}</div>
+				<div ng-if="userObj.activeCampaignNum" class="profileBioDetails" >Active Campaigns {{userObj.activeCampaignNum}}</div>
 				
-				<div>Connections {{userObj.connectionsNum}}</div>
+				<div ng-if="userObj.connectionsNum" class="profileBioDetails" >Connections {{userObj.connectionsNum}}</div>
 				
-				<div>Last Active {{userObj.lactActiveDate}} </div>
+				<div ng-if="userObj.lactActiveDate" class="profileBioDetails" >Last Active {{userObj.lactActiveDate}} </div>
 				
-				<div>Date Joined {{userObj.joinedDate}}</div>
+				<div ng-if="userObj.joinedDate" class="profileBioDetails" >Date Joined {{userObj.joinedDate}}</div>
 				
 				
 		
@@ -128,17 +130,12 @@
    		 		</div>
 		    </div>
 			
-
-			
+			<div ng-if="editBln">
+				<button id="submitButton" type="submit" ng-click="saveProfile()" submit-form-clicked form-submit-complete-bln class="btn btn-sm btn-default">Submit</button>
+  		 	</div>
 		</div>
-		
-		
-		
-		
-		
 	</div>
 		
-	
 	<div class="profileBottomWrapper col-xs-12 col-sm-6 col-md-offset-0 col-md-5">
 		<div class="profileCampaigntitle col-xs-12">User Stats</div>
 		

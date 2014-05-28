@@ -8,7 +8,7 @@ define(['../module'], function (controllers) {
     	
     	$scope.editBln = false;
     	
-      	$scope.userObj.usernameStr = "usrnm";
+      	$scope.userObj.usernameStr = "username";
       	$scope.userObj.firstnameStr = "firstname";
       	$scope.userObj.lastnameStr = "lastname";
     	$scope.userObj.companyStr = "companyStr";
@@ -35,9 +35,15 @@ define(['../module'], function (controllers) {
     	
     	
     	$scope.editProfile = function(){
-    	//	console.log("edit profile");
-    		$scope.editBln = true;
-    		
+        		console.log("edit profile");
+        		$scope.editBln = true;
+        		
+    	};
+        	
+    	$scope.saveProfile = function(){
+        		console.log("save profile");
+        		$scope.editBln = false;
+        		
     	};
     	
     	var init = function(){
