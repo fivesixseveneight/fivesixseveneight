@@ -1,6 +1,6 @@
 define(['../module'], function (controllers) {
     'use strict';
-    controllers.controller('confirmregistrationController', ['$scope','$rootScope', '$state', 'checkEmailPost', function ($scope, $rootScope, $state, checkEmailPost) {
+    controllers.controller('confirmregistrationController', ['$scope','$rootScope', '$state', 'checkEmailPost', 'emailUpdatePost', function ($scope, $rootScope, $state, checkEmailPost, emailUpdatePost) {
      	
     	$scope.pageContent = {};
     	$scope.userObj = {};
@@ -9,7 +9,7 @@ define(['../module'], function (controllers) {
     	$scope.userObj.newEmailStr = "";
     	$scope.userObj.newEmail2Str = "";
     	$scope.userObj.firstnameStr = "";
-    	
+    	$scope.userObj.userIdNum = "";
     	
     	$scope.editBln = false;
     	
@@ -32,6 +32,7 @@ define(['../module'], function (controllers) {
     		$scope.userObj.emailStr = $rootScope.userObj.emailStr;
     		$scope.userObj.newEmailStr = $rootScope.userObj.emailStr;
         	$scope.userObj.firstnameStr = $rootScope.userObj.firstnameStr;
+        	$scope.userObj.userIdNum = $rootScope.userObj.userIdNum;
     	};
     	
     	var checkActivated = function(){
@@ -72,16 +73,17 @@ define(['../module'], function (controllers) {
     	//	console.log("updateEmailSuccess");
     		
     		destroyValidate();
-    	
+    		
     		$scope.userObj.emailStr = $scope.userObj.newEmailStr;
     		$rootScope.userObj.emailStr = $scope.userObj.newEmailStr;
     		$scope.editBln = false;
     	};
     	
     	
-     	$scope.confirmRegisterSubmit = function(){
-        //    	console.log("confirmRegisterSubmit");
-            	setupVerification();
+     	$scope.confirmRegisterSubmit = function(){ 
+     	//	console.log("confirmRegisterSubmit");
+     		setupVerification();
+     		
             	if(verfiyBeforeSubmit()){
         			//	console.log('setup ajax request');
         			postFormData();
@@ -90,25 +92,24 @@ define(['../module'], function (controllers) {
 	  
 	    // this function obtains all the videos for a given playlist
 	   	var postFormData = function(){
-			console.log('postFormData');
+		//	console.log('postFormData');
    		
 			var dataObj = {
+					userIdNum: $scope.userObj.userIdNum,
 					email: $("input[name='email']").val(),
 					email2: $("input[name='email2']").val()
 			};
 			
 			$scope.$broadcast('formProcessingBln');
-			
-			updateEmailSuccess();	
-			//update email
-			
-			
-			
-			
-			return;
-			registerFormPost.postregisterFormData(dataObj).then(function(obj){
-			//	console.log("callback post", obj);
-				formSubmittedComplete(obj);
+
+			emailUpdatePost.postEmailData(dataObj).then(function(obj){
+				console.log("callback post", obj);
+				if(obj.successBln){
+					updateEmailSuccess();	
+				}else{
+					
+				}
+					
 			});
 		};
 		

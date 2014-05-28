@@ -9,6 +9,7 @@
 					<div class="form-group col-md-12">
 					
 						<div class="padded-body">
+						
 							<div ng-if="!editBln">
 								<div>Thank you <strong>{{userObj.firstnameStr}}</strong> for registering.</div>
 								</br>
@@ -16,9 +17,8 @@
 							</div>
 							
 							
+							<form ng-if="editBln" id="confirmRegisterForm" ng-submit="confirmRegisterSubmit()" action="" method="post">
 							
-								<form ng-if="editBln" id="confirmRegisterForm" ng-submit="confirmRegisterSubmit()" action="" method="post">
-								
 								<div class="form-group col-md-12">
 									<label for="email">Please enter your updated email</label>
 									<input name="email" type="email" ng-model="userObj.newEmailStr" class="form-control" maxlength="255" placeholder="Email">						
@@ -29,23 +29,23 @@
 									<input name="email2" type="email" ng-model="userObj.newEmail2Str" class="form-control" maxlength="255" placeholder="Retype E-mail">
 								</div>
 					
-					
 								</br>
+								
 								<button type="submit" class="btn btn-sm btn-default">Submit</button>
 								<button type="submit" ng-click="cancelChangeEmail()"   class="btn btn-sm btn-default">Cancel</button>
-								
-								</form>
+							
+							</form>
 							
 	
 						</div>
 						
 						<div ng-if="!editBln">
 							<a ng-click="resendEmail()" >
-							Resend activation email
+							&#9658; Resend activation email
 							</a>
 							
 							<a ng-click="changeEmail()" >
-							Update email
+							&#9658; Update email
 							</a>
 						</div>
 					</div>

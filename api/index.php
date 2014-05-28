@@ -55,50 +55,97 @@ $app->get('/test',  function () use ( $app ) {
 
 
 
+/*
+ * update emails for confirming newly registered users
+ * who arent activated yet
+ */
 
+// Updates users email
+$app->post('/update-email-form',  function () use ( $app ) {
+	$output = new stdClass();
+	$emailValidBln = false;
+	$userIdValidBln = false;
+	$userActivatedBln = false;
+	$emailUpdatedObj;
+	$userObj;
+	$params = json_decode($app->request()->getBody());
+	$errorBln = false;
+	$errorMsgStr = "";
+	
+	if(isset($params) && isset($params -> email) && isset($params -> email2) && isset($params -> userIdNum)){
+		$userIdNum = $params -> userIdNum;
+		$emailStr = $params -> email;
+		$email2Str = $params -> email2;
+		
+		// checks if emails are equal
+		if($emailStr == $email2Str){
+			$emailValidBln = checkEmailExists($emailStr) -> successBln;
+			// checks if email exists
+			if($emailValidBln){
+				$userIdValidBln = checkUserIdExists($userIdNum) -> successBln;
+				//checks if user id exists
+				if($userIdValidBln){
+					$userObj = getUserById($userIdNum); 
+					//gets user data 
+					if($userObj->successBln){
+						$userActivatedBln = $userObj -> userObj['activatedBln'];
+						// checks if user is activated already
+						if(!$userActivatedBln){
+							//query to update email
+							$emailUpdatedObj = updateUserEmail($userIdNum, $emailStr);
+							// update email
+							if($emailUpdatedObj->successBln){
+								// SUCCESS!
+								// send activation email
+								sendActivationEmailById($userIdNum);
+							}else{
+								$errorBln = true;
+								$errorMsgStr = "There was an error in SQL update, can not update email address";
+							}
+						}else{
+							$errorBln = true;
+							$errorMsgStr = "User already activated, can not update email address";
+						}
+					}
+				}else{
+					$errorBln = true;
+					$errorMsgStr = "User Id does not exist, can not update email address";
+				}
+			}else{
+				$errorBln = true;
+				$errorMsgStr = "Email address not valid, can not update email address";
+			}
+		}else{
+			$errorBln = true;
+			$errorMsgStr = "Emails do not match, can not update email address";
+		}
+	}else{
+		$errorBln = true;
+		$errorMsgStr = "Parameters are missing, can not update email address";
+	}
+	
+	if($errorBln == true){
+		$output -> successBln = false;
+		$output -> messageStr = $errorMsgStr;
+		header('HTTP/1.1 401 Unauthorized', true, 401);
+		renderJSON( '401',
+		array( 	'type'=>'POST only',
+		'description'=>'Updates a users email address',
+		'called'=>'/update-email-form' ),
+		$output);
+		exit;
+	}
 
-
-// Contact
-$app->get('/contact-page',  function () use ( $app ) {
-				$wp_query = new WP_Query(array(				 
-				   'pagename' => 'page-contact',
-    	           'posts_per_page' => -1
-    	        ));            	      	
-    	        
-    	      	$output 			= new stdClass();
-    	      	$queried_object 	= new stdClass();
-    	        $queried_object 	= $wp_query->queried_object;
-	     		$output->id 		= $queried_object->ID;
-				$output->title 		= $queried_object->post_title;
-				$output->content 	= $queried_object->post_content;
-                renderJSON( '200', 
-		                	array( 	'type'=>'GET only',
-		                					'description'=>'Contact Page Endpoint',
-		                					'called'=>'/contact-page' ),
-                			$output);
+	$output -> successBln = true;
+	renderJSON( '200',
+	array( 	'type'=>'GET only',
+	'description'=>'Updates a users email address',
+	'called'=>'/update-email-form' ),
+	$output);
+	
 });
-
-$app->get('/contact-posts',  function () use ( $app ) {
-				$wp_query = new WP_Query(array(				 
-				   'category_name' => 'cat-contact',
-    	           'posts_per_page' => -1
-    	        ));            	      	
-    	      	$output = array();
-    	        foreach ( $wp_query->posts as &$value ) {
-    	     		$tmp 				= new stdClass();
-    	     		$tmp->id 			= $value->ID;
-  					$tmp->title 		= $value->post_title;
-  					$tmp->content 		= $value->post_content;
-  					$output[] 			= $tmp;
-  					$tmp 				= null;
-  				}
-                renderJSON( '200', 
-		                	array( 	'type'=>'GET only',
-		                					'description'=>'Contact Posts Endpoint',
-		                					'called'=>'/contact-posts' ),
-                			$output);
-});
-
+	
+	
 // SEND AN EMAIL OUT
 $app->post('/contact-form',  function () use ( $app ) {
 				$output = "Success";
@@ -249,42 +296,22 @@ $app->post('/checkUsername',  function () use ( $app ) {
 				$output);
 });
 
+
+
 // checks if a email exists
 $app->post('/checkEmail',  function () use ( $app ) {
 	$output = new stdClass();
 	$params = json_decode($app->request()->getBody());
+
 	
-	global $db_host;
-	global $db_username;
-	global $db_password;
-	global $db_database;
 	
 	if(isset($params) && isset($params -> email)){
 		$emailStr = $params -> email;
-		// checks for unique email
-		$sqlQueryStr = "SELECT emailStr FROM users WHERE emailStr='$emailStr'";
-		$sql_db = mysqli_connect($db_host, $db_username, $db_password, $db_database);
-		if (mysqli_connect_errno()){
-			echo "Failed to connect to MySQL: " . mysqli_connect_error();
-		}
-		$result = mysqli_query($sql_db, $sqlQueryStr);
-		// check if user data has returned
-		$rowsNum = mysqli_num_rows($result);
-		if($rowsNum != 0){
-			$output -> successBln = false;
-			$output -> messageStr = "E-mail address already exists";
-		}else{
-			$output -> successBln = true;
-			$output -> messageStr = "E-mail address is valid";
-		}
-		$sql_db -> close();
-		$result -> close();
+		$output = checkEmailExists($emailStr);
 		
 	}else{
-		
 		$output -> successBln = false;
 		$output -> messageStr = "Parameter not set";
-		
 		header('HTTP/1.1 401 Unauthorized', true, 401);
 		renderJSON( '401',
 		array( 	'type'=>'POST only',
@@ -293,7 +320,7 @@ $app->post('/checkEmail',  function () use ( $app ) {
 		$output);
 		exit;
 	}
-	
+		
 	renderJSON( '200',
 				array( 	
 								'type'=>'POST only',
@@ -479,9 +506,6 @@ $app->post('/register',  function () use ( $app ) {
 				$output -> messageStr = "Registration Successful";
 				$output -> successBln = true;
 
-				
-
-				
 				/*
 				 * Login after registration
 				 * */
@@ -736,9 +760,7 @@ $app->post('/logout',  function () use ( $app ) {
 
 /*
 *	fetchSqlQuery
-*	
 *	fetches data from database
-*	
 */
 
 function fetchSqlQuery($query){
@@ -761,6 +783,208 @@ function fetchSqlQuery($query){
 	$result -> close(); 
 	return $data;
 };
+
+/*
+*	Send activation email to a user via their user id number
+*/
+function sendActivationEmailById($userIdNum){
+	$output = new stdClass();
+	$emailStr;
+	$nameStr;
+	global $db_host;
+	global $db_username;
+	global $db_password;
+	global $db_database;
+	
+	$userObj = getUserById($userIdNum) -> userObj;
+
+	$emailStr = $userObj['emailStr'];
+	$nameStr = $userObj['firstnameStr'];
+	$codeStr = "1234";
+
+	$messageStr = $nameStr." please activate your account by clicking on the link below";
+	
+
+	
+	$to      = 'kendrick.lin@hotmail.com';
+	$subject = 'Please activate your account at www.fivesixseveneight.com';
+	$message = $messageStr;
+	$headers = 'From: no-reply@kendricklin.com \r\n' .
+			'Reply-To: no-reply@kendricklin.com' . "\r\n" .
+			'X-Mailer: PHP/' . phpversion();
+	$sendMailSuccessBln = mail($to, $subject, $message, $headers);
+	
+	
+};
+
+
+/*
+*	getUserById
+*	gets user data by id
+*/
+
+function getUserById($userIdNum){
+	$output = new stdClass();
+	global $db_host;
+	global $db_username;
+	global $db_password;
+	global $db_database;
+	
+	
+	$sqlQueryStr = "SELECT * FROM users WHERE userIdNum='$userIdNum'";
+	
+	$sql_db = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+	if (mysqli_connect_errno()){
+		echo "Failed to connect to MySQL: " . mysqli_connect_error();
+	}
+	
+	$result = mysqli_query($sql_db, $sqlQueryStr);
+	// check if user data has returned
+	$rowsNum = mysqli_num_rows($result);
+	
+	// no user found
+	if($rowsNum == 0 || $rowsNum == null){
+		$output -> successBln = false;
+	}else{
+		$output -> successBln = true;
+		$dbUserObj = mysqli_fetch_assoc($result);
+		$output -> userObj = $dbUserObj;
+	}
+	
+	$sql_db -> close();
+	$result -> close();
+	
+	return $output;
+}
+
+/*
+*	checkUserIdExists
+*
+*	Checks if a user Id  exists
+*/
+
+function checkUserIdExists($userIdNum){
+	$output = new stdClass();
+	global $db_host;
+	global $db_username;
+	global $db_password;
+	global $db_database;
+
+	
+	if(isset($userIdNum)){
+
+		// checks for unique email
+		$sqlQueryStr = "SELECT userIdNum FROM users WHERE userIdNum='$userIdNum'";
+		$sql_db = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+		if (mysqli_connect_errno()){
+			echo "Failed to connect to MySQL: " . mysqli_connect_error();
+		}
+		$result = mysqli_query($sql_db, $sqlQueryStr);
+		// check if user data has returned
+		$rowsNum = mysqli_num_rows($result);
+
+		if($rowsNum != 0){
+			$output -> successBln = true;
+			$output -> messageStr = "UserId in use";
+		}else{
+			$output -> successBln = false;
+			$output -> messageStr = "UserId is not valid";
+		}
+		$sql_db -> close();
+		$result -> close();
+
+	}else{
+
+		$output -> successBln = false;
+		$output -> messageStr = "UserId parameter not set";
+
+	}
+
+	return $output;
+};
+
+
+
+/*
+*	updateUserEmail
+*	updates user's email by user id
+*/
+
+function updateUserEmail($userIdNum, $emailStr){
+	$output = new stdClass();
+	global $db_host;
+	global $db_username;
+	global $db_password;
+	global $db_database;
+
+	if(isset($emailStr) && isset($userIdNum)){
+
+		// checks for unique email
+		$sqlQueryStr = "UPDATE users SET emailStr= '$emailStr' WHERE userIdNum='$userIdNum'";
+		
+		$sql_db = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+		if (mysqli_connect_errno()){
+			echo "Failed to connect to MySQL: " . mysqli_connect_error();
+		}
+		$result = mysqli_query($sql_db, $sqlQueryStr);
+		$output -> successBln = true;
+		$output -> result = $result;
+		$sql_db -> close();
+	}else{
+		$output -> successBln = false;
+		$output -> messageStr = "Could not update email";
+	}
+
+	return $output;
+};
+
+
+
+/*
+*	checkEmailExists
+*
+*	Checks if an email exists
+*/
+
+function checkEmailExists($emailStr){
+	$output = new stdClass();
+	global $db_host;
+	global $db_username;
+	global $db_password;
+	global $db_database;
+	
+	if(isset($emailStr)){
+
+		// checks for unique email
+		$sqlQueryStr = "SELECT emailStr FROM users WHERE emailStr='$emailStr'";
+		$sql_db = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+		if (mysqli_connect_errno()){
+			echo "Failed to connect to MySQL: " . mysqli_connect_error();
+		}
+		$result = mysqli_query($sql_db, $sqlQueryStr);
+		// check if user data has returned
+		$rowsNum = mysqli_num_rows($result);
+		
+		if($rowsNum != 0){
+			$output -> successBln = false;
+			$output -> messageStr = "E-mail address already in use";
+		}else{
+			$output -> successBln = true;
+			$output -> messageStr = "E-mail address is valid";
+		}
+		$sql_db -> close();
+		$result -> close();
+
+	}else{
+		
+		$output -> successBln = false;
+		$output -> messageStr = "E-mail parameter not set";
+	
+	}
+	
+	return $output;
+};
+
 
 /*
  * Generates a random string
