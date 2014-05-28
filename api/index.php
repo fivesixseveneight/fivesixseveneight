@@ -810,8 +810,8 @@ function sendActivationEmailById($userIdNum){
 	$to      = 'kendrick.lin@hotmail.com';
 	$subject = 'Please activate your account at www.fivesixseveneight.com';
 	$message = $messageStr;
-	$headers = 'From: fivesixseveneight \r\n' .
-			'Reply-To: no-reply@kendricklin.com' . "\r\n" .
+	$headers = 'From: no-reply@kendricklin.com \r\n' .
+			'Reply-To: fivesixseveneight \r\n' .
 			'X-Mailer: PHP/' . phpversion();
 	$sendMailSuccessBln = mail($to, $subject, $message, $headers);
 	
