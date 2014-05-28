@@ -800,16 +800,17 @@ function sendActivationEmailById($userIdNum){
 
 	$emailStr = $userObj['emailStr'];
 	$nameStr = $userObj['firstnameStr'];
-	$codeStr = "1234";
+	$codeStr = $userObj['saltStr'];
 
 	$messageStr = $nameStr." please activate your account by clicking on the link below";
-	
-
-	
+	$messageStr .= "<div>";
+	$messageStr .= "https://www.stage.fivesixseveneight.co/#/activateaccount/".$codeStr;
+	$messageStr .= "</div>";
+		
 	$to      = 'kendrick.lin@hotmail.com';
 	$subject = 'Please activate your account at www.fivesixseveneight.com';
 	$message = $messageStr;
-	$headers = 'From: no-reply@kendricklin.com \r\n' .
+	$headers = 'From: fivesixseveneight \r\n' .
 			'Reply-To: no-reply@kendricklin.com' . "\r\n" .
 			'X-Mailer: PHP/' . phpversion();
 	$sendMailSuccessBln = mail($to, $subject, $message, $headers);
