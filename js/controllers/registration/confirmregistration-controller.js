@@ -1,6 +1,6 @@
 define(['../module'], function (controllers) {
     'use strict';
-    controllers.controller('confirmregistrationController', ['$scope','$rootScope', '$state', 'checkEmailPost', 'emailUpdatePost', function ($scope, $rootScope, $state, checkEmailPost, emailUpdatePost) {
+    controllers.controller('confirmregistrationController', ['$scope','$rootScope', '$state', 'checkEmailPost', 'emailUpdatePost', 'activationEmailPost', function ($scope, $rootScope, $state, checkEmailPost, emailUpdatePost, activationEmailPost) {
      	
     	$scope.pageContent = {};
     	$scope.userObj = {};
@@ -56,7 +56,32 @@ define(['../module'], function (controllers) {
     	
     	$scope.resendEmail = function(){
     		console.log("resendEmail");
+    		
+
+			var dataObj = {
+					userIdNum: $scope.userObj.userIdNum
+			};
+			
+			$scope.$broadcast('formProcessingBln');
+
+			activationEmailPost.postActivateEmailData(dataObj).then(function(obj){
+				console.log("callback post", obj);
+				if(obj.successBln){
+					
+				}else{
+					
+				}
+					
+			});
     	};
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
     	
     	$scope.changeEmail = function(){
     	//	console.log("changeEmail");

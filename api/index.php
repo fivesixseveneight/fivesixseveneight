@@ -53,7 +53,23 @@ $app->get('/test',  function () use ( $app ) {
                 			$output);
 });
 
+/*
+* sends an activation email to the user
+*/
 
+$app->post('/activate-email',  function () use ( $app ) {
+	$output = new stdClass();
+	$params = json_decode($app->request()->getBody());
+	
+	if(isset($params) && isset($params -> userIdNum)){
+		$userIdNum = $params -> userIdNum;
+		// checks the user id in the session and makes sure it's who the user is
+		if(checkUserIdConsistent($userIdNum)){
+			sendActivationEmailById($userIdNum);
+		}
+	}
+	
+});
 
 /*
  * update emails for confirming newly registered users
@@ -73,55 +89,63 @@ $app->post('/update-email-form',  function () use ( $app ) {
 	$errorMsgStr = "";
 	
 	if(isset($params) && isset($params -> email) && isset($params -> email2) && isset($params -> userIdNum)){
-		$userIdNum = $params -> userIdNum;
-		$emailStr = $params -> email;
-		$email2Str = $params -> email2;
+		$userIdNum = $params -> userIdNum; // 
 		
-		// checks if emails are equal
-		if($emailStr == $email2Str){
-			$emailValidBln = checkEmailExists($emailStr) -> successBln;
-			// checks if email exists
-			if($emailValidBln){
-				$userIdValidBln = checkUserIdExists($userIdNum) -> successBln;
-				//checks if user id exists
-				if($userIdValidBln){
-					$userObj = getUserById($userIdNum); 
-					//gets user data 
-					if($userObj->successBln){
-						$userActivatedBln = $userObj -> userObj['activatedBln'];
-						// checks if user is activated already
-						if(!$userActivatedBln){
-							//query to update email
-							$emailUpdatedObj = updateUserEmail($userIdNum, $emailStr);
-							// update email
-							if($emailUpdatedObj->successBln){
-								// SUCCESS!
-								// send activation email
-								sendActivationEmailById($userIdNum);
+		// checks the user id in the session and makes sure it's who the user is
+		if(checkUserIdConsistent($userIdNum)){
+			$emailStr = $params -> email;
+			$email2Str = $params -> email2;
+			
+			// checks if emails are equal
+			if($emailStr == $email2Str){
+				$emailValidBln = checkEmailExists($emailStr) -> successBln;
+				// checks if email exists
+				if($emailValidBln){
+					$userIdValidBln = checkUserIdExists($userIdNum) -> successBln;
+					//checks if user id exists
+					if($userIdValidBln){
+						$userObj = getUserById($userIdNum); 
+						//gets user data 
+						if($userObj->successBln){
+							$userActivatedBln = $userObj -> userObj['activatedBln'];
+							// checks if user is activated already
+							if(!$userActivatedBln){
+								//query to update email
+								$emailUpdatedObj = updateUserEmail($userIdNum, $emailStr);
+								// update email
+								if($emailUpdatedObj->successBln){
+									// SUCCESS!
+									// send activation email
+									sendActivationEmailById($userIdNum);
+								}else{
+									$errorBln = true;
+									$errorMsgStr = "There was an error in SQL update, can not update email address";
+								}
 							}else{
 								$errorBln = true;
-								$errorMsgStr = "There was an error in SQL update, can not update email address";
+								$errorMsgStr = "User already activated, can not update email address";
 							}
-						}else{
-							$errorBln = true;
-							$errorMsgStr = "User already activated, can not update email address";
 						}
+					}else{
+						$errorBln = true;
+						$errorMsgStr = "User Id does not exist, can not update email address";
 					}
 				}else{
 					$errorBln = true;
-					$errorMsgStr = "User Id does not exist, can not update email address";
+					$errorMsgStr = "Email address not valid, can not update email address";
 				}
 			}else{
 				$errorBln = true;
-				$errorMsgStr = "Email address not valid, can not update email address";
+				$errorMsgStr = "Emails do not match, can not update email address";
 			}
 		}else{
 			$errorBln = true;
-			$errorMsgStr = "Emails do not match, can not update email address";
+			$errorMsgStr = "Parameters are missing, can not update email address";
 		}
-	}else{
+	
+	}else{	
 		$errorBln = true;
-		$errorMsgStr = "Parameters are missing, can not update email address";
+		$errorMsgStr = "User id's don't match, can not update email address";
 	}
 	
 	if($errorBln == true){
@@ -804,8 +828,7 @@ function sendActivationEmailById($userIdNum){
 
 	$messageStr = $nameStr." please activate your account by clicking on the link below";
 
-	$messageStr .= "https://www.stage.fivesixseveneight.co/#/activateaccount/".$codeStr;
-
+	$messageStr .= "http://www.stage.fivesixseveneight.co/#/activateaccount/".$codeStr;
 		
 	$to      = 'kendrick.lin@hotmail.com';
 	//$to      = 'kendrick.lin@alumni.utoronto.ca';
@@ -1000,6 +1023,18 @@ function generateRandomString($length = 64) {
 	return $randomString;
 }
 
+/*
+ * checks user id to determine if they are consistent with the user in the session
+ * this is used to avoid malicious queries
+ */
+
+function checkUserIdConsistent($userIdNum){
+	if($userIdNum == $_SESSION['userIdNum']){
+		return true;
+	}else{
+		return false;
+	}
+}
 
 /**
  * Render View - JSON output

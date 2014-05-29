@@ -344,6 +344,17 @@ define(['./app'], function (app) {
     		resolve:{
     		
     		}
+    	}).state('root.primary.activateaccount', {
+    		url: '/activateaccount/:id',
+    		views:{
+    			"mainView@root":{
+    				  templateUrl: 'partials/register/activateregistration.html',
+    		          controller: 'activateregistrationController'
+    			}
+    		},
+    		resolve:{
+    		
+    		}
     	});
     	 
     	

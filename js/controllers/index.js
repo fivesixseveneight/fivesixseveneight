@@ -40,6 +40,7 @@ define([
     
     './profile/profile-controller',
     
+    './registration/activateregistration-controller',
     './registration/confirmregistration-controller',
     './registration/register-controller',
 

@@ -6,6 +6,7 @@
  * which avails each service of, for example, the `config` constants object.
  **/
 define([
+    './activation-email-post',
 	'./contact-form-post',
 	'./check-username-post',
 	'./check-email-post',
