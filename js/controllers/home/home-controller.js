@@ -7,7 +7,8 @@ define(['../module'], function (controllers) {
     	$scope.email;
     	$scope.password;
     	$scope.userLoggedIn = $rootScope.isLoggedInBln;
-
+    	$scope.messageStr = "";
+    	
     	$scope.$on('$destroy', function() {
         //  console.log("destroy scope");
             destroy();
@@ -24,6 +25,7 @@ define(['../module'], function (controllers) {
         // 	console.log("loginSubmit");
     		if(verfiyBeforeSubmit()){
     	//		console.log('setup ajax request');
+    			$scope.messageStr = "Logging in...";
     			postFormData();
     		}
     	};
@@ -78,6 +80,7 @@ define(['../module'], function (controllers) {
         		$rootScope.isLoggedInBln = true;
     		}else{
         		$rootScope.isLoggedInBln = false;
+        		$scope.messageStr = obj.messageStr;
     		}
     	};
 		

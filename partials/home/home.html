@@ -1,6 +1,5 @@
 <div class="home">
 
-	
 	<div class="home-background"></div>
 	<div class="fake-height"></div>
 	
@@ -23,6 +22,12 @@
 							<input name="password" type="password" ng-model="password" class="form-control" placeholder="Password">
 						</div>
 			
+						<div ng-if="messageStr">
+								{{messageStr}}
+								</br>
+								</br>
+						</div>
+						
 						<button id="submitButton" type="submit" submit-form-clicked form-submit-complete-bln class="btn btn-sm btn-default">Sign in</button>
 						<a ui-sref="root.primary.register" ><button type="button"  class="btn btn-sm btn-default">Register</button></a>
 					</form>

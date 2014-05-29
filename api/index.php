@@ -76,8 +76,7 @@ $app->post('/recover-password',  function () use ($app) {
 		//if email does exist
 		}else{
 			
-			// send email
-			
+			// send email to recover password
 			// create a password recovery key
 			
 		}
@@ -629,7 +628,8 @@ $app->post('/register',  function () use ( $app ) {
 				
 				// no user found
 				if($rowsNum == 0 || $rowsNum == null){
-					$output -> messageStr = "Log in unsuccessful, email not found";
+				//	$output -> messageStr = "Log in unsuccessful, email not found";
+					$output -> messageStr = "Log in unsuccessful";
 					$output -> successBln = false;
 					header('HTTP/1.1 401 Unauthorized', true, 401);
 					renderJSON( '401',
@@ -898,7 +898,9 @@ $app->post('/login',  function () use ( $app ) {
 
 				// no user found
 				if($rowsNum == 0 || $rowsNum == null){
-					$output -> messageStr = "Log in unsuccessful, email not found";
+				//	$output -> messageStr = "Log in unsuccessful, email not found";
+					$output -> messageStr = "Log in unsuccessful";
+						
 					$output -> successBln = false;
 					header('HTTP/1.1 401 Unauthorized', true, 401);
 				    renderJSON( '401', 

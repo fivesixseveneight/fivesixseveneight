@@ -322,6 +322,17 @@ define(['./app'], function (app) {
     		resolve:{
     		
     		}
+    	}).state('root.primary.recoverpassword', {
+    		url: '/recoverpassword/',
+    		views:{
+    			"mainView@root":{
+    				  templateUrl: 'partials/login/recoverpassword.html',
+    		          controller: 'recoverpasswordController'
+    			}
+    		},
+    		resolve:{
+    		
+    		}
     	}).state('root.primary.logout', {
     		url: '/logout/',
     		views:{

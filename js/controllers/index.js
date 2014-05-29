@@ -30,6 +30,7 @@ define([
    
     './login/forgotpassword-controller',
     './login/login-controller',
+    './login/recoverpassword-controller',
     
     './logout/logout-controller',
     
