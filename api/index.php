@@ -767,7 +767,26 @@ $app->post('/isLoggedIn',  function () use ( $app ) {
 		
 		if(isset($_SESSION)){
 			if(isset($_SESSION['loggedInBln']) && $_SESSION['loggedInBln'] == true){
-					
+				
+				// we force an update to the users's session
+				$userIdNum = $_SESSION['userIdNum'];
+				
+				$dbUserObj = getUserById($userIdNum) -> userObj;
+				
+				$_SESSION['userIdNum'] = $dbUserObj['userIdNum'];
+				$_SESSION['emailStr'] = $dbUserObj['emailStr'];
+				$_SESSION['usernameStr'] = $dbUserObj['usernameStr'];
+				$_SESSION['firstnameStr'] = $dbUserObj['firstnameStr'];
+				$_SESSION['lastnameStr'] = $dbUserObj['lastnameStr'];
+				$_SESSION['publisherBln'] = $dbUserObj['publisherBln'];
+				$_SESSION['advertiserBln'] = $dbUserObj['advertiserBln'];
+				$_SESSION['activatedBln'] = $dbUserObj['activatedBln'];
+				$_SESSION['prevloginDate'] = $dbUserObj['prevloginDate'];
+				$_SESSION['lastloginDate'] = $dbUserObj['lastloginDate'];
+				if($dbUserObj['adminBln'] == true || $dbUserObj['adminBln'] == 1){
+					$_SESSION['adminBln'] = $dbUserObj['adminBln'];
+				}
+				
 			}else{
 				$_SESSION['loggedInBln'] = false;
 			}
@@ -959,7 +978,9 @@ $app->post('/updateUserSession',  function () use ( $app ) {
 		$_SESSION['activatedBln'] = $dbUserObj['activatedBln'];
 		$_SESSION['prevloginDate'] = $dbUserObj['prevloginDate'];
 		$_SESSION['lastloginDate'] = $dbUserObj['lastloginDate'];
-		
+		if($dbUserObj['adminBln'] == true || $dbUserObj['adminBln'] == 1){
+			$_SESSION['adminBln'] = $dbUserObj['adminBln'];
+		}
 		$output -> userSessionObj = $_SESSION;
 		
 		
