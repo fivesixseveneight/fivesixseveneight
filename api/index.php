@@ -637,10 +637,56 @@ $app->post('/register',  function () use ( $app ) {
 
 // Checks if a user is logged in
 $app->post('/activate-account',  function () use ( $app ) {
-
 	$output = new stdClass();
-
 	
+	$errorBln = false;
+	$errorMsgStr = "";
+	
+	$params = json_decode($app->request()->getBody());
+	$keyStr = $params -> activationIdNum;
+	
+	$decrypted = encrypt_decrypt('decrypt', $keyStr);
+	$activationObj;
+	
+	// if the user id and salt are found
+	try {
+		$userIdNum = explode(" ", $decrypted)[0];
+		$saltStr = explode(" ", $decrypted)[1];
+		
+		$activationObj = activateAccount($userIdNum, $saltStr);
+		
+		// $output -> activationObj = $activationObj;
+		
+		// was activation successful?
+		if($activationObj -> successBln){
+			// user activation successful
+		}else{
+			$errorBln = true;
+			$errorMsgStr = $activationObj -> messageStr;
+		}
+
+		// if there's no user id and salt found
+	} catch (Exception $e) {
+		$userIdNum = "";
+		$saltStr = "";
+		$errorBln = true;
+	//	$errorMsgStr = "Error matching activation key to user id, activation unsuccessful";
+	}
+
+	if($errorBln == true){
+		$output -> successBln = false;
+		$output -> messageStr = $errorMsgStr;
+		header('HTTP/1.1 401 Unauthorized', true, 401);
+		renderJSON( '401',
+		array( 	'type'=>'POST only',
+		'description'=>'Activates a users account',
+		'called'=>'/activate-account' ),
+		$output);
+		exit;
+	}
+	
+	$output -> messageStr = "Activation successful";
+	$output -> successBln = true;
 	
 	renderJSON( '200',
 	array( 	'type'=>'POST only',
@@ -649,8 +695,70 @@ $app->post('/activate-account',  function () use ( $app ) {
 	$output);
 });
 
+/*
+ * activates an account based on user id and it's salt
+ */
+function activateAccount($userIdNum, $saltStr){
 	
+	$output = new stdClass();
+	global $db_host;
+	global $db_username;
+	global $db_password;
+	global $db_database;
+
+	if(isset($userIdNum) && isset($saltStr)){
+
+		// checks for unique email
+		$sqlQueryStr = "SELECT userIdNum, saltStr, activatedBln FROM users WHERE userIdNum='$userIdNum'";
+		$sql_db = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+		if (mysqli_connect_errno()){
+			echo "Failed to connect to MySQL: " . mysqli_connect_error();
+		}
+		
+		$result = mysqli_query($sql_db, $sqlQueryStr);
+		// check if user data has returned
+		$rowsNum = mysqli_num_rows($result);
+		
+		if($rowsNum != 0){
+			$dbUserObj = mysqli_fetch_assoc($result);
+			
+			// checks if user id and salts line up
+			if($dbUserObj['saltStr'] == $saltStr && $dbUserObj['userIdNum'] == $userIdNum){
+				
+				// checks if user is already activated
+				if($dbUserObj['activatedBln'] == "0"){
+					$output -> activatedBln = $dbUserObj['activatedBln'] ;
+					
+					$sqlQueryStr = "UPDATE users SET activatedBln='1' WHERE userIdNum='$userIdNum'";
+					$result2 = mysqli_query($sql_db, $sqlQueryStr);
+					
+					$output -> successBln = true;
+					$output -> messageStr = "User Activated";
+					
+				}else{
+					$output -> successBln = false;
+				//	$output -> messageStr = "User already activated";
+				}
+			}else{
+				$output -> successBln = false;
+			//	$output -> messageStr = "User id found but keys dont match";
+			}
+		}else{
+			$output -> successBln = false;
+		//	$output -> messageStr = "User id not found";
+		}
+		$sql_db -> close();
+		$result -> close();
 	
+	}else{
+		$output -> successBln = false;
+	//	$output -> messageStr = "Keys not set for user activation";
+	}
+	
+	return $output;
+};
+
+
 
 // Checks if a user is logged in
 $app->post('/isLoggedIn',  function () use ( $app ) {

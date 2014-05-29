@@ -796,7 +796,7 @@ Register
 
 .activateregistration .form-group{
 	padding: 0px;
-	height: 80px;
+	height: auto;
 }
 
 

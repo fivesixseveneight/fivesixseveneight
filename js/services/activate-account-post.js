@@ -33,7 +33,7 @@ define(['./module'], function (services) {
     		    	var requestFailed = function(obj){
     		    	//	console.log('requestFailed', obj);
     		    		var returnObj = {};
-    		    		returnObj.messageStr = "";
+    		    		returnObj.messageStr = "Something went wrong and we couldn't activate your account. Please contact us to assist you.";
     		    		returnObj.successBln = false;
     		    		if(obj.data && obj.data.messageStr){
     		    			returnObj.messageStr = obj.data.messageStr;

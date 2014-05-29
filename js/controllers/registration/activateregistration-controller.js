@@ -33,11 +33,11 @@ define(['../module'], function (controllers) {
 			};
 			
         	activateAccountPost.postActivateAccountData(dataObj).then(function(obj){
-				console.log("callback post", obj);
+			//	console.log("callback post", obj);
 				if(obj.successBln){
 					activateAccountSuccess();
 	        	}else{
-	        		activateAccountFailed();
+	        		activateAccountFailed(obj);
 	        	}
 			});
 
@@ -45,13 +45,13 @@ define(['../module'], function (controllers) {
         };
         	
         var activateAccountSuccess = function(){
-        	console.log("activateAccountSuccess");
+        //	console.log("activateAccountSuccess");
         	$scope.messageStr = "Thank you for activating your account.";
         };
         
-        var activateAccountFailed = function(){
-        	console.log("activateAccountFailed");
-        	$scope.messageStr = "Something went wrong. We couldn't activate your account";
+        var activateAccountFailed = function(obj){
+        //	console.log("activateAccountFailed");
+        	$scope.messageStr = obj.messageStr;
         };
         
     	var destroy = function(){
