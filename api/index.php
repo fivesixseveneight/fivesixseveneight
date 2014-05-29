@@ -737,7 +737,7 @@ function activateAccount($userIdNum, $saltStr){
 					
 				}else{
 					$output -> successBln = false;
-				//	$output -> messageStr = "User already activated";
+					$output -> messageStr = "User already activated";
 				}
 			}else{
 				$output -> successBln = false;
