@@ -59,6 +59,9 @@ $app->get('/test',  function () use ( $app ) {
 
 $app->post('/activate-email',  function () use ( $app ) {
 	$output = new stdClass();
+	$errorBln = false;
+	$errorMsgStr = "";
+	
 	$params = json_decode($app->request()->getBody());
 	
 	if(isset($params) && isset($params -> userIdNum)){
@@ -67,7 +70,29 @@ $app->post('/activate-email',  function () use ( $app ) {
 		if(checkUserIdConsistent($userIdNum)){
 			sendActivationEmailById($userIdNum);
 		}
+	}else{
+		$errorBln = true;
+		$errorMsgStr = "User Id's dont match";
 	}
+	
+	if($errorBln == true){
+		$output -> successBln = false;
+		$output -> messageStr = $errorMsgStr;
+		header('HTTP/1.1 401 Unauthorized', true, 401);
+		renderJSON( '401',
+		array( 	'type'=>'POST only',
+		'description'=>'Sends an activation email to the user',
+		'called'=>'/activate-email' ),
+		$output);
+		exit;
+	}
+		
+	$output -> successBln = true;
+	renderJSON( '200',
+	array( 	'type'=>'POST only',
+	'description'=>'Sends an activation email to the user',
+	'called'=>'/activate-email' ),
+	$output);
 	
 });
 
