@@ -1,15 +1,18 @@
 define(['../module'], function (controllers) {
     'use strict';
-    controllers.controller('confirmregistrationController', ['$scope','$rootScope', '$state', 'checkEmailPost', 'emailUpdatePost', 'activationEmailPost', function ($scope, $rootScope, $state, checkEmailPost, emailUpdatePost, activationEmailPost) {
+    controllers.controller('confirmregistrationController', ['$scope','$rootScope', '$state', 'checkEmailPost', 'emailUpdatePost', 'activationEmailPost', 'updateSessionPost', function ($scope, $rootScope, $state, checkEmailPost, emailUpdatePost, activationEmailPost, updateSessionPost) {
      	
     	$scope.pageContent = {};
     	$scope.userObj = {};
-
+    	
     	$scope.userObj.emailStr = "";
     	$scope.userObj.newEmailStr = "";
     	$scope.userObj.newEmail2Str = "";
     	$scope.userObj.firstnameStr = "";
     	$scope.userObj.userIdNum = "";
+    	$scope.errorBln = false;
+    	$scope.activationMessageStr = "";
+    	$rootScope.justRegisteredBln = false;
     	
     	$scope.editBln = false;
     	
@@ -23,7 +26,7 @@ define(['../module'], function (controllers) {
     	//	console.log("init");
     		checkActivated();
     		setup();
-    	
+    		
     		$scope.loadingEnd();
     	};
     	
@@ -33,13 +36,18 @@ define(['../module'], function (controllers) {
     		$scope.userObj.newEmailStr = $rootScope.userObj.emailStr;
         	$scope.userObj.firstnameStr = $rootScope.userObj.firstnameStr;
         	$scope.userObj.userIdNum = $rootScope.userObj.userIdNum;
+        
+        	
+        	$scope.activationMessageStr = "Hey there "+$scope.userObj.firstnameStr+", you need to activate your account to continue.";
+        	if($rootScope.justRegisteredBln){
+        		justRegistered();
+        	}
     	};
     	
     	var checkActivated = function(){
     	//	console.log("checkActivated");
     		// if user is logged in
     		if($rootScope.isLoggedInBln){
-    			
     			//if user is activated
     			if($rootScope.activatedBln){
     				//redirect to overview if we are are already activated
@@ -54,34 +62,38 @@ define(['../module'], function (controllers) {
     		}
     	};
     	
+    	var justRegistered = function(){
+    	//	console.log("justRegistered");
+        	$scope.activationMessageStr = "Thank you for registering "+$scope.userObj.firstnameStr+".";
+    	};
+    	
+    	var activationError = function(){
+    	//	console.log("activationError");
+    		$scope.activationMessageStr = "Oops, something went wrong on our end. Please get in touch with one of us and we'll resolve the issue shortly.";
+    		$scope.errorBln = true;
+    	};
+    	
     	$scope.resendEmail = function(){
-    		console.log("resendEmail");
+    	//	console.log("resendEmail");
     		
-
 			var dataObj = {
 					userIdNum: $scope.userObj.userIdNum
 			};
 			
-			$scope.$broadcast('formProcessingBln');
-
 			activationEmailPost.postActivateEmailData(dataObj).then(function(obj){
-				console.log("callback post", obj);
+			//	console.log("callback post", obj);
 				if(obj.successBln){
-					
+					emailResent();
 				}else{
-					
+					activationError();
 				}
-					
 			});
     	};
     	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
+    	var emailResent = function(){
+    	//	console.log("emailResent");
+    		$scope.activationMessageStr = "Thank you "+$scope.userObj.firstnameStr+", we have resent the activation email to you.";
+    	};
     	
     	$scope.changeEmail = function(){
     	//	console.log("changeEmail");
@@ -93,26 +105,43 @@ define(['../module'], function (controllers) {
     		$scope.editBln = false;
     	};	
     	
-
+    	// event handler for when the email has been updated successfully
     	var updateEmailSuccess = function(){
     	//	console.log("updateEmailSuccess");
-    		
     		destroyValidate();
-    		
-    		$scope.userObj.emailStr = $scope.userObj.newEmailStr;
-    		$rootScope.userObj.emailStr = $scope.userObj.newEmailStr;
-    		$scope.editBln = false;
+    		updateUserSession();
     	};
     	
+    	//event handler for updating the user session
+    	var updateUserSession = function(){
+    	//	console.log("updateUserSession");
+    		var dataObj = {
+					userIdNum: $scope.userObj.userIdNum
+			};
+			
+    		updateSessionPost.postUpdateSessionData(dataObj).then(function(obj){
+			//	console.log("callback post", obj);
+				$rootScope.userObj = obj.userSessionObj;
+				updateUserSessionSuccess();
+			});
+    	};
     	
-     	$scope.confirmRegisterSubmit = function(){ 
+    	var updateUserSessionSuccess = function(){
+    	//	console.log("updateUserSessionSuccess");
+    		$scope.userObj.emailStr = $scope.userObj.newEmailStr;
+    		$rootScope.userObj.emailStr = $scope.userObj.newEmailStr;
+    		
+    		$scope.editBln = false;
+    		$scope.activationMessageStr = "Thank you for updating your email "+$scope.userObj.firstnameStr+", we have sent the activation email to your updated email address.";
+    	};
+    	
+    	$scope.confirmRegisterSubmit = function(){
      	//	console.log("confirmRegisterSubmit");
-     		setupVerification();
-     		
-            	if(verfiyBeforeSubmit()){
-        			//	console.log('setup ajax request');
-        			postFormData();
-        		}
+ 			setupVerification();
+        	if(verfiyBeforeSubmit()){
+    			//	console.log('setup ajax request');
+    			postFormData();
+    		}
        };
 	  
 	    // this function obtains all the videos for a given playlist
@@ -125,14 +154,13 @@ define(['../module'], function (controllers) {
 					email2: $("input[name='email2']").val()
 			};
 			
-			$scope.$broadcast('formProcessingBln');
 
 			emailUpdatePost.postEmailData(dataObj).then(function(obj){
-				console.log("callback post", obj);
+			//	console.log("callback post", obj);
 				if(obj.successBln){
 					updateEmailSuccess();	
 				}else{
-					
+					activationError();
 				}
 					
 			});

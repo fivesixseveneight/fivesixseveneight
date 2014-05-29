@@ -11,9 +11,9 @@
 						<div class="padded-body">
 						
 							<div ng-if="!editBln">
-								<div>Thank you <strong>{{userObj.firstnameStr}}</strong> for registering.</div>
+								<div>{{activationMessageStr}}</div>
 								</br>
-								<div>Please check your inbox at {{userObj.emailStr}} to activate your registration.</div>
+								<div ng-if="!errorBln">Please check your inbox at {{userObj.emailStr}} to activate your registration.</div>
 							</div>
 							
 							
@@ -38,15 +38,16 @@
 							
 	
 						</div>
-						
-						<div ng-if="!editBln">
-							<a ng-click="resendEmail()" >
-							&#9658; Resend activation email
-							</a>
-							
-							<a ng-click="changeEmail()" >
-							&#9658; Update email
-							</a>
+						<div ng-if="!errorBln">
+							<div ng-if="!editBln" >
+								<a ng-click="resendEmail()" >
+								&#9658; Resend activation email
+								</a>
+								
+								<a ng-click="changeEmail()" >
+								&#9658; Update email
+								</a>
+							</div>
 						</div>
 					</div>
 					

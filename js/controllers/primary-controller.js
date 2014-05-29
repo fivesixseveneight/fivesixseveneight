@@ -128,7 +128,7 @@ define(['./module'], function (controllers) {
         	
        // 	console.log("$rootScope.isLoggedInBln", $rootScope.userObj);
     	};
-    	
+    	    	
     	init();
     	
     }]);

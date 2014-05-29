@@ -13,5 +13,6 @@ define([
 	'./email-update-post',
 	'./login-form-post',
 	'./logout-post',
-	'./register-form-post'
+	'./register-form-post',
+	'./update-session-post'
         ], function () {});

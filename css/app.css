@@ -41,12 +41,33 @@
 	     url('../fonts/ProximaNova/Semibold/proxima-nova-semibold-webfont.eot?#iefix') format('embedded-opentype');
 }
 
+.btn-primary {
+	background-image: -webkit-linear-gradient(top,#FF8C8C 0,#FF3030 100%);
+	background-image: linear-gradient(to bottom,#FF8C8C 0,#FF3030 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF8C8C', endColorstr='#FF3030', GradientType=0);
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+	background-repeat: repeat-x;
+	border-color: #FF3030;
+}
+
+
 .btn-primary:active, .btn-primary.active{
-	background-color: #154976;
+	background-color: #FF3030;
+	border-color: #E72626;
+}
+
+.btn-primary:hover{
+	background-color: #FF3030;
+	border-color: #E72626;
+}
+
+.btn-primary:focus{
+	background-color: #FF3030;
+	border-color: #E72626;
 }
 
 .jslider_round .jslider-bg i, .jslider_round .jslider-pointer{
-	background: red;
+	background: #FF3030;
 }
 
 html{

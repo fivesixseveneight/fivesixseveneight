@@ -56,8 +56,8 @@ $app->get('/test',  function () use ( $app ) {
 /*
 * sends an activation email to the user
 */
-
-$app->post('/activate-email',  function () use ( $app ) {
+ 
+$app->post('/activate-email',  function () use ($app) {
 	$output = new stdClass();
 	$errorBln = false;
 	$errorMsgStr = "";
@@ -807,6 +807,64 @@ $app->post('/logout',  function () use ( $app ) {
 });
 
 
+
+
+// Updates the users session
+$app->post('/updateUserSession',  function () use ( $app ) {
+	$output = new stdClass();
+	$errorBln = false;
+	$errorMsgStr = "";
+	$dbUserObj;
+	
+	$params = json_decode($app->request()->getBody());
+	$userIdNum = $params -> userIdNum;
+	
+	// checks the user id in the session and makes sure it's who the user is
+	if(checkUserIdConsistent($userIdNum)){
+		
+		$dbUserObj = getUserById($userIdNum) -> userObj;
+		
+		$_SESSION['userIdNum'] = $dbUserObj['userIdNum'];
+		$_SESSION['emailStr'] = $dbUserObj['emailStr'];
+		$_SESSION['usernameStr'] = $dbUserObj['usernameStr'];
+		$_SESSION['firstnameStr'] = $dbUserObj['firstnameStr'];
+		$_SESSION['lastnameStr'] = $dbUserObj['lastnameStr'];
+		$_SESSION['publisherBln'] = $dbUserObj['publisherBln'];
+		$_SESSION['advertiserBln'] = $dbUserObj['advertiserBln'];
+		$_SESSION['activatedBln'] = $dbUserObj['activatedBln'];
+		$_SESSION['prevloginDate'] = $dbUserObj['prevloginDate'];
+		$_SESSION['lastloginDate'] = $dbUserObj['lastloginDate'];
+		
+		$output -> userSessionObj = $_SESSION;
+		
+		
+	}else{
+		$errorBln = true;
+		$errorMsgStr = "User Id's dont match, session not updated";
+	}
+
+	if($errorBln == true){
+		$output -> successBln = false;
+		$output -> messageStr = $errorMsgStr;
+		header('HTTP/1.1 401 Unauthorized', true, 401);
+		renderJSON( '401',
+		array( 	'type'=>'POST only',
+		'description'=>'Sends an activation email to the user',
+		'called'=>'/activate-email' ),
+		$output);
+		exit;
+	}
+
+	renderJSON( '200',
+	array( 	'type'=>'POST only',
+	'description'=>'Updates the users session',
+	'called'=>'/updateUserSession' ),
+	$output);
+});
+
+	
+	
+
 /*
 *	fetchSqlQuery
 *	fetches data from database
@@ -832,6 +890,67 @@ function fetchSqlQuery($query){
 	$result -> close(); 
 	return $data;
 };
+
+
+/*
+ *  get user session
+ */
+
+function getUserSession($userIdNum){
+	$output = new stdClass();
+		
+	global $db_host;
+	global $db_username;
+	global $db_password;
+	global $db_database;
+	
+	$sqlQueryStr = "SELECT * FROM users WHERE userIdNum='$userIdNum'";
+	
+	$sql_db = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+	if (mysqli_connect_errno()){
+		echo "Failed to connect to MySQL: " . mysqli_connect_error();
+	}
+	
+	$result = mysqli_query($sql_db, $sqlQueryStr);
+	// check if user data has returned
+	$rowsNum = mysqli_num_rows($result);
+	
+	// no user found
+	if($rowsNum == 0 || $rowsNum == null){
+		//No user found
+		$output -> successBln = false;
+		$sql_db -> close();
+		$result -> close();
+		return $output;
+	}
+	
+	$dbUserObj = mysqli_fetch_assoc($result);
+	
+	$sql_db -> close();
+	$result -> close();
+	
+	$_SESSION['userIdNum'] = $dbUserObj['userIdNum'];
+	$_SESSION['emailStr'] = $dbUserObj['emailStr'];
+	$_SESSION['usernameStr'] = $dbUserObj['usernameStr'];
+	$_SESSION['firstnameStr'] = $dbUserObj['firstnameStr'];
+	$_SESSION['lastnameStr'] = $dbUserObj['lastnameStr'];
+	$_SESSION['publisherBln'] = $dbUserObj['publisherBln'];
+	$_SESSION['advertiserBln'] = $dbUserObj['advertiserBln'];
+	$_SESSION['activatedBln'] = $dbUserObj['activatedBln'];
+	$_SESSION['prevloginDate'] = $dbUserObj['prevloginDate'];
+	$_SESSION['lastloginDate'] = $dbUserObj['lastloginDate'];
+	
+	if($dbUserObj['adminBln'] == true || $dbUserObj['adminBln'] == 1){
+		$_SESSION['adminBln'] = $dbUserObj['adminBln'];
+	}
+	
+	$_SESSION['loggedInBln'] = true;
+	
+	$output -> successBln = true;
+	$output -> userObj = $_SESSION;
+	
+	return $output;
+}
 
 /*
 *	Send activation email to a user via their user id number
