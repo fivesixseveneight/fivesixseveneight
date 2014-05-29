@@ -12,6 +12,7 @@ define([
 	'./check-username-post',
 	'./check-email-post',
 	'./email-update-post',
+	'./forgotpassword-post',
 	'./login-form-post',
 	'./logout-post',
 	'./register-form-post',

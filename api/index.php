@@ -54,6 +54,63 @@ $app->get('/test',  function () use ( $app ) {
 });
 
 /*
+ * Sends a password recovery email
+*/
+
+$app->post('/recover-password',  function () use ($app) {
+	$output = new stdClass();
+	$errorBln = false;
+	$errorMsgStr = "";
+
+	$params = json_decode($app->request()->getBody());
+
+	if(isset($params) && isset($params -> email)){
+		$emailStr = $params -> email;
+		
+		$emailValidBln = checkEmailExists($emailStr) -> successBln;
+	
+		// if email doesnt exist
+		if($emailValidBln){
+			$errorBln = true;
+			$errorMsgStr = "The email you submitted does not exist";
+		//if email does exist
+		}else{
+			
+			// send email
+			
+			// create a password recovery key
+			
+		}
+		$output -> emailValidBln = $emailValidBln;
+	}else{
+			$errorBln = true;
+	//		$errorMsgStr = "Email not submitted";
+	}	
+	if($errorBln == true){
+		$output -> successBln = false;
+		$output -> messageStr = $errorMsgStr;
+		header('HTTP/1.1 401 Unauthorized', true, 401);
+		renderJSON( '401',
+		array( 	'type'=>'POST only',
+		'description'=>'Sends a password recovery email',
+		'called'=>'/recover-password' ),
+		$output);
+		exit;
+	}
+
+	$output -> successBln = true;
+	renderJSON( '200',
+	array( 	'type'=>'POST only',
+	'description'=>'Sends a password recovery email',
+	'called'=>'/recover-password' ),
+	$output);
+
+});
+	
+	
+	
+	
+/*
 * sends an activation email to the user
 */
  

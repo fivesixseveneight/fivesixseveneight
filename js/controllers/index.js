@@ -27,7 +27,8 @@ define([
     './home/home-controller',
     
     './jobs/jobs-controller',
- 
+   
+    './login/forgotpassword-controller',
     './login/login-controller',
     
     './logout/logout-controller',

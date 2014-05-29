@@ -311,6 +311,17 @@ define(['./app'], function (app) {
     		resolve:{
     		
     		}
+    	}).state('root.primary.forgotpassword', {
+    		url: '/forgotpassword/',
+    		views:{
+    			"mainView@root":{
+    				  templateUrl: 'partials/login/forgotpassword.html',
+    		          controller: 'forgotpasswordController'
+    			}
+    		},
+    		resolve:{
+    		
+    		}
     	}).state('root.primary.logout', {
     		url: '/logout/',
     		views:{
