@@ -59,7 +59,7 @@ define(['../module'], function (controllers) {
         		},
         		messages: {
         			password: "Please enter your password",
-        			email: "Please enter a valid e-mail"
+        			email: "Please enter your e-mail"
         		}
         	});
     		
