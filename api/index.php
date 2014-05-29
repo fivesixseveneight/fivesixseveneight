@@ -633,6 +633,23 @@ $app->post('/register',  function () use ( $app ) {
                 			$output);
 });
 
+
+
+// Checks if a user is logged in
+$app->post('/activate-account',  function () use ( $app ) {
+
+	$output = new stdClass();
+
+	
+	
+	renderJSON( '200',
+	array( 	'type'=>'POST only',
+	'description'=>'Activates a users account',
+	'called'=>'/activate-account' ),
+	$output);
+});
+
+	
 	
 
 // Checks if a user is logged in
@@ -968,11 +985,15 @@ function sendActivationEmailById($userIdNum){
 
 	$emailStr = $userObj['emailStr'];
 	$nameStr = $userObj['firstnameStr'];
-	$codeStr = $userObj['saltStr'];
-
+	
+	
+	$codeStr = $userIdNum." ".$userObj['saltStr'];
+	
+	$encrypted = encrypt_decrypt('encrypt', $codeStr);
+	
 	$messageStr = $nameStr." please activate your account by clicking on the link below";
 
-	$messageStr .= "http://www.stage.fivesixseveneight.co/#/activateaccount/".$codeStr;
+	$messageStr .= "http://www.stage.fivesixseveneight.co/#/activateaccount/".$encrypted;
 		
 	$to      = 'kendrick.lin@hotmail.com';
 	//$to      = 'kendrick.lin@alumni.utoronto.ca';
@@ -1179,6 +1200,22 @@ function checkUserIdConsistent($userIdNum){
 		return false;
 	}
 }
+
+/*
+ * used for encrypting data
+ */
+function encrypt_decrypt($action, $string) {
+	$output = false;
+	// initialization vector
+	if( $action == 'encrypt' ) {
+		$output = base64_encode($string);
+	}
+	else if( $action == 'decrypt' ){
+		$output = base64_decode($string);
+	}
+	return $output;
+}
+
 
 /**
  * Render View - JSON output

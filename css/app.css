@@ -789,6 +789,23 @@ Register
 }
 
 
+.activateregistration{
+	
+	
+}
+
+.activateregistration .form-group{
+	padding: 0px;
+	height: 80px;
+}
+
+
+.activateregistration .panel-body{
+	padding: 0px;
+}
+
+
+
 
 /*
 UI VIEW ANIMATION
