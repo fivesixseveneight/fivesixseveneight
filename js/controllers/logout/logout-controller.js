@@ -43,7 +43,7 @@ define(['../module'], function (controllers) {
     	var formSubmittedSuccess = function(obj){
     		$rootScope.userObj = obj.userSessionObj;
     	//	console.log("user session", $rootScope.userObj);
-    		console.log("logout success");
+    	//	console.log("logout success");
     		$rootScope.isLoggedInBln = false;
     		$state.transitionTo("root.primary.login");
     	};

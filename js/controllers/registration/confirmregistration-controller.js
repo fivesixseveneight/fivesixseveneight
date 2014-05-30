@@ -244,7 +244,7 @@ define(['../module'], function (controllers) {
 	    	};
 	    	
 	    	var destroy = function(){
-	    		console.log("destroy");
+	    	//	console.log("destroy");
 	    		destroyValidate();
 	    	};
     	

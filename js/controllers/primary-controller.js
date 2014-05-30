@@ -48,6 +48,23 @@ define(['./module'], function (controllers) {
     	});
     	
     	
+		
+    	$scope.$watch('userObj', function() {
+        //      console.log("watch userObj", $rootScope.userObj);
+	            if($rootScope.userObj.activatedBln == "1"){
+	            	$rootScope.activatedBln = true;
+	      		}else{
+	      			$rootScope.activatedBln = false;
+	      		}
+	            
+	     		if($rootScope.userObj.loggedInBln == true){
+	        		$rootScope.isLoggedInBln = true;
+	        	}else{
+	        		$rootScope.isLoggedInBln = false;
+	        	}
+        });
+    	
+    	
     	/*
     	 *  gets country codes
     	 */

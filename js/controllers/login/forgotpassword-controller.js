@@ -4,6 +4,9 @@ define(['../module'], function (controllers) {
      	
     	$scope.pageContent = {};
     	$scope.messageStr = "";
+    	$scope.userLoggedIn = $rootScope.isLoggedInBln;
+    	
+    	
     	$scope.$on('$destroy', function() {
         //  console.log("destroy scope");
             destroy();
@@ -11,6 +14,9 @@ define(['../module'], function (controllers) {
 		
     	var init = function(){
     	//	console.log("init");
+    		if($scope.userLoggedIn){
+    			return;
+    		}
     		setup();
     		setupVerification();
     		$scope.loadingEnd();
@@ -19,7 +25,20 @@ define(['../module'], function (controllers) {
     	var setup = function(){
     		$scope.messageStr = "Please enter your email and we'll send you a password recovery email.";
     	};
-        	
+    	
+    	$scope.$watch('isLoggedInBln', function() {
+        //     console.log("isLoggedInBln", $scope.userLoggedIn);
+             $scope.userLoggedIn = $rootScope.isLoggedInBln;
+             checkIfLoggedIn();
+       });
+       
+    	var checkIfLoggedIn = function(){
+    	//	console.log("forgotpassword checkIfLoggedIn", $rootScope.isLoggedInBln);
+    		if($scope.userLoggedIn == true){
+    			$state.transitionTo("root.primary.overview");
+    		}
+    	};
+    
     	$scope.recoverPasswordSubmit = function(){
         // 	console.log("recoverPasswordSubmit");
     		if(verfiyBeforeSubmit()){
@@ -27,7 +46,7 @@ define(['../module'], function (controllers) {
     			postFormData();
     		}
     	};
-        	
+        
         	
     	// this function obtains all the videos for a given playlist
     	var postFormData = function(){
