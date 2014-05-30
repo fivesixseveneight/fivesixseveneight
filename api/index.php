@@ -16,6 +16,13 @@ require_once dirname(__FILE__) . '/lib/slim/Slim.php';
 require_once dirname(__FILE__) . '/lib/orm/Idorm.php';
 require_once dirname(__FILE__) .'/lib/facebook/src/facebook.php';
 
+
+/*
+*	App config
+*/
+
+$debugBln = true;
+
 /*
 *
 * database configs
@@ -62,6 +69,11 @@ $app->post('/recover-password',  function () use ($app) {
 	$errorBln = false;
 	$errorMsgStr = "";
 
+	global $db_host;
+	global $db_username;
+	global $db_password;
+	global $db_database;
+	
 	$params = json_decode($app->request()->getBody());
 
 	if(isset($params) && isset($params -> email)){
@@ -77,37 +89,46 @@ $app->post('/recover-password',  function () use ($app) {
 		}else{
 			
 			
+
+
+				
+			
+			//generates a code for password reset
+			$todaysDate = date("Y-m-d");
+			$codeStr = md5($emailStr.$todaysDate);
+					
+			//sets the generated code into the database
+			$sqlQueryStr = "UPDATE users SET passwordRecoveryStr= '$codeStr' WHERE emailStr='$emailStr'";
+			
+			$sql_db = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+			if (mysqli_connect_errno()){
+				echo "Failed to connect to MySQL: " . mysqli_connect_error();
+			}
+			$result = mysqli_query($sql_db, $sqlQueryStr);
+
+			$sql_db -> close();
 			
 			
 			
-			
-			
-			$codeStr = $userIdNum." ".$userObj['saltStr'];
-			
-			//passwordRecoveryStr
+			$subject = 'Password recovery at fivesixseveneight.co';
 			
 			$encrypted = encrypt_decrypt('encrypt', $codeStr);
 			
 			$messageStr = "You are receiving this email because a password recovery was requested at ";
-			$messageStr .= "www.kendricklin.com, please click the link below to reset your password. \r\n";
 			
+			$messageStr .= "www.kendricklin.com, please click the link below to reset your password. \r\n";
 			$messageStr .= "http://www.stage.fivesixseveneight.co/#/resetpassword/".$encrypted." \r\n\r\n";
-
+			
 			$messageStr .= "If you didn't request a password reset, please click the link below \r\n";
 			$messageStr .= "http://www.stage.fivesixseveneight.co/#/resetpassword/".$encrypted." \r\n\r\n";
-				
 			
-			$to      = 'kendrick.lin@hotmail.com';
-			$subject = 'Password recovery at kendricklin.com';
-			$message = $messageStr;
-			$headers = 'From: no-reply@kendricklin.com \r\n' .
-					'Reply-To: no-reply@kendricklin.com \r\n' .
-					'Content-type: text/html \r\n';
-			$sendMailSuccessBln = mail($to, $subject, $message, $headers);
+			$sendMailSuccessBln = sendMail($emailStr, $subject, $messageStr);
+			
+			
+			
 			
 			// send email to recover password
 			// create a password recovery key
-			
 		}
 		$output -> emailValidBln = $emailValidBln;
 	}else{
@@ -1200,9 +1221,12 @@ function getUserSession($userIdNum){
  * 
  */
 
-function sendMail($subjectStr, $messageStr){
-	
-	$to      = 'kendrick.lin@hotmail.com';
+function sendMail($toStr, $subjectStr, $messageStr){
+	global $debugBln;
+	$to      = $toStr;
+	if($debugBln){
+		$toStr = 'kendrick.lin@hotmail.com';
+	}
 	$headers = 'From: no-reply@kendricklin.com \r\n' .
 			'Reply-To: no-reply@kendricklin.com \r\n' .
 			'Content-type: text/html \r\n';
@@ -1240,7 +1264,7 @@ function sendActivationEmailById($userIdNum){
 
 	$messageStr .= "http://www.stage.fivesixseveneight.co/#/activateaccount/".$encrypted;
 
-	$sendMailSuccessBln = sendMail($subject, $messageStr);
+	$sendMailSuccessBln = sendMail($emailStr, $subject, $messageStr);
 	return $sendMailSuccessBln;
 	
 };
