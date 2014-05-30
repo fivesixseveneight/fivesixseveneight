@@ -76,6 +76,35 @@ $app->post('/recover-password',  function () use ($app) {
 		//if email does exist
 		}else{
 			
+			
+			
+			
+			
+			
+			
+			$codeStr = $userIdNum." ".$userObj['saltStr'];
+			
+			//passwordRecoveryStr
+			
+			$encrypted = encrypt_decrypt('encrypt', $codeStr);
+			
+			$messageStr = "You are receiving this email because a password recovery was requested at ";
+			$messageStr .= "www.kendricklin.com, please click the link below to reset your password. \r\n";
+			
+			$messageStr .= "http://www.stage.fivesixseveneight.co/#/resetpassword/".$encrypted." \r\n\r\n";
+
+			$messageStr .= "If you didn't request a password reset, please click the link below \r\n";
+			$messageStr .= "http://www.stage.fivesixseveneight.co/#/resetpassword/".$encrypted." \r\n\r\n";
+				
+			
+			$to      = 'kendrick.lin@hotmail.com';
+			$subject = 'Password recovery at kendricklin.com';
+			$message = $messageStr;
+			$headers = 'From: no-reply@kendricklin.com \r\n' .
+					'Reply-To: no-reply@kendricklin.com \r\n' .
+					'Content-type: text/html \r\n';
+			$sendMailSuccessBln = mail($to, $subject, $message, $headers);
+			
 			// send email to recover password
 			// create a password recovery key
 			
@@ -1166,6 +1195,23 @@ function getUserSession($userIdNum){
 }
 
 /*
+ * 
+ *	Sends mail 
+ * 
+ */
+
+function sendMail($subjectStr, $messageStr){
+	
+	$to      = 'kendrick.lin@hotmail.com';
+	$headers = 'From: no-reply@kendricklin.com \r\n' .
+			'Reply-To: no-reply@kendricklin.com \r\n' .
+			'Content-type: text/html \r\n';
+	$sendMailSuccessBln = mail($to, $subjectStr, $messageStr, $headers);
+	
+	return $sendMailSuccessBln;
+};
+
+/*
 *	Send activation email to a user via their user id number
 */
 function sendActivationEmailById($userIdNum){
@@ -1187,18 +1233,14 @@ function sendActivationEmailById($userIdNum){
 	
 	$encrypted = encrypt_decrypt('encrypt', $codeStr);
 	
+
+	$subject = 'Please activate your account at www.fivesixseveneight.com';
+	
 	$messageStr = $nameStr." please activate your account by clicking on the link below";
 
 	$messageStr .= "http://www.stage.fivesixseveneight.co/#/activateaccount/".$encrypted;
-		
-	$to      = 'kendrick.lin@hotmail.com';
-	//$to      = 'kendrick.lin@alumni.utoronto.ca';
-	$subject = 'Please activate your account at www.fivesixseveneight.com';
-	$message = $messageStr;
-	$headers = 'From: no-reply@kendricklin.com \r\n' .
-			'Reply-To: no-reply@kendricklin.com \r\n' .
-		    'Content-type: text/html \r\n';
-	$sendMailSuccessBln = mail($to, $subject, $message, $headers);
+
+	$sendMailSuccessBln = sendMail($subject, $messageStr);
 	return $sendMailSuccessBln;
 	
 };

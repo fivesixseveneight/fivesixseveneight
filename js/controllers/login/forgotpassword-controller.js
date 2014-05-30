@@ -89,7 +89,7 @@ define(['../module'], function (controllers) {
   		  	$scope.$broadcast('formSubmittedBln', obj); 
     	
   		  	if(obj.successBln){
-  		  		$scope.messageStr = "We have sent a password recover email to "+$scope.email+" please check your inbox for further instructions.";
+  		  		$scope.messageStr = "We have sent a password recovery email to "+$scope.email+" please check your inbox for further instructions.";
     		}else{
     			$scope.messageStr = obj.messageStr;
     		}
