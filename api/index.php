@@ -94,7 +94,7 @@ $app->post('/recover-password',  function () use ($app) {
 				
 			
 			//generates a code for password reset
-			$todaysDate = date("Y-m-d");
+			$todaysDate = date('m/d/Y h:i:s a');
 			$codeStr = md5($emailStr.$todaysDate);
 			$encrypted = encrypt_decrypt('encrypt', $codeStr);
 			
