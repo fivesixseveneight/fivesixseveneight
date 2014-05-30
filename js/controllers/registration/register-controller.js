@@ -111,9 +111,11 @@ define(['../module'], function (controllers) {
 							dataObj.messageStr = obj.messageStr;
 							var successBln = obj.successBln;
 							if(successBln == false){
+								if($scope.validator != undefined){
 								$scope.validator.showErrors({
 									  "email": dataObj.messageStr
 									});
+								}
 							}	
 			    		});
 	    			}
@@ -243,7 +245,9 @@ define(['../module'], function (controllers) {
 		    	 		var errorObj = {};
 		    	 		for(var i in errorMessagesArr){
 		    	 			errorObj[i] = errorMessagesArr[i];
-		    	 			$scope.validator.showErrors(errorObj);
+		    	 			if($scope.validator != undefined){
+		    	 				$scope.validator.showErrors(errorObj);
+		    	 			}
 		    	 		}
 		    	 	}	
 	    	 	}

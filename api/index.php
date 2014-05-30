@@ -664,10 +664,8 @@ $app->post('/register',  function () use ( $app ) {
 				$userIdNum = $dbUserObj['userIdNum'];
 				if(sendActivationEmailById($userIdNum)){
 					$output -> confirmationemail = "success";
-					echo "confirmation email success";
 				}else{
 					$output -> confirmationemail = "failed";
-					echo "confirmation email failed";
 				}
 				
 				
