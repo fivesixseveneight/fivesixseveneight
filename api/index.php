@@ -96,23 +96,20 @@ $app->post('/recover-password',  function () use ($app) {
 			//generates a code for password reset
 			$todaysDate = date("Y-m-d");
 			$codeStr = md5($emailStr.$todaysDate);
-					
+			$encrypted = encrypt_decrypt('encrypt', $codeStr);
+			
 			//sets the generated code into the database
-			$sqlQueryStr = "UPDATE users SET passwordRecoveryStr= '$codeStr' WHERE emailStr='$emailStr'";
+			$sqlQueryStr = "UPDATE users SET passwordRecoveryStr= '$encrypted' WHERE emailStr='$emailStr'";
 			
 			$sql_db = mysqli_connect($db_host, $db_username, $db_password, $db_database);
 			if (mysqli_connect_errno()){
 				echo "Failed to connect to MySQL: " . mysqli_connect_error();
 			}
 			$result = mysqli_query($sql_db, $sqlQueryStr);
-
 			$sql_db -> close();
 			
-			
-			
+			// sends email
 			$subject = 'Password recovery at fivesixseveneight.co';
-			
-			$encrypted = encrypt_decrypt('encrypt', $codeStr);
 			
 			$messageStr = "You are receiving this email because a password recovery was requested at ";
 			
