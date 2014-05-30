@@ -452,7 +452,7 @@ $app->post('/register',  function () use ( $app ) {
 				$maxEmailLenNum = 255;
 				$maxNameLenNum = 35;
 				$maxUsernameLenNum = 30;
-				
+				$userIdNum;
 				global $db_host;
 				global $db_username;
 				global $db_password;
@@ -660,6 +660,16 @@ $app->post('/register',  function () use ( $app ) {
 					$output);
 					exit;
 				}
+				
+				$userIdNum = $dbUserObj['userIdNum'];
+				if(sendActivationEmailById($userIdNum)){
+					$output -> confirmationemail = "success";
+					echo "confirmation email success";
+				}else{
+					$output -> confirmationemail = "failed";
+					echo "confirmation email failed";
+				}
+				
 				
 				$sql_db -> close();
 				$result -> close();
@@ -1191,7 +1201,7 @@ function sendActivationEmailById($userIdNum){
 			'Reply-To: no-reply@kendricklin.com \r\n' .
 		    'Content-type: text/html \r\n';
 	$sendMailSuccessBln = mail($to, $subject, $message, $headers);
-	
+	return $sendMailSuccessBln;
 	
 };
 
