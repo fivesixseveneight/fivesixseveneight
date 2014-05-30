@@ -124,13 +124,12 @@ $app->post('/recover-password',  function () use ($app) {
 			
 			$sendMailSuccessBln = sendMail($emailStr, $subject, $messageStr);
 			
-			
+			$output -> sendMailSuccessBln = $sendMailSuccessBln;
 			
 			
 			// send email to recover password
 			// create a password recovery key
 		}
-		$output -> emailValidBln = $emailValidBln;
 	}else{
 			$errorBln = true;
 	//		$errorMsgStr = "Email not submitted";
