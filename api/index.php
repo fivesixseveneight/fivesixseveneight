@@ -88,18 +88,24 @@ $app->post('/recover-password',  function () use ($app) {
 		//if email does exist
 		}else{
 			
-			
-
-
-				
-			
 			//generates a code for password reset
 			$todaysDate = date('m/d/Y h:i:s a');
 			$codeStr = md5($emailStr.$todaysDate);
-			$encrypted = encrypt_decrypt('encrypt', $codeStr);
+			
+			/*
+			 * generate reset code
+			 */
+			$resetStr = $emailStr." "."reset"." ".$todaysDate." ".$codeStr;
+			$encryptedCodeStr = encrypt_decrypt('encrypt', $resetStr);
+			
+			/*
+			 * generate cancel code
+			 */
+			$cancelStr = $emailStr." "."cancel"." ".$todaysDate;
+			$encryptedCancelStr = encrypt_decrypt('encrypt', $cancelStr);
 			
 			//sets the generated code into the database
-			$sqlQueryStr = "UPDATE users SET passwordRecoveryStr= '$encrypted' WHERE emailStr='$emailStr'";
+			$sqlQueryStr = "UPDATE users SET passwordRecoveryStr='$codeStr' WHERE emailStr='$emailStr'";
 			
 			$sql_db = mysqli_connect($db_host, $db_username, $db_password, $db_database);
 			if (mysqli_connect_errno()){
@@ -113,11 +119,12 @@ $app->post('/recover-password',  function () use ($app) {
 			
 			$messageStr = "You are receiving this email because a password recovery was requested at ";
 			
-			$messageStr .= "www.kendricklin.com, please click the link below to reset your password. \r\n";
-			$messageStr .= "http://www.stage.fivesixseveneight.co/#/resetpassword/".$encrypted." \r\n\r\n";
+			$messageStr .= "www.kendricklin.com, please click the link below to reset your password. \r\n\r\n\r\n";
+			
+			$messageStr .= "http://www.stage.fivesixseveneight.co/#/resetpassword/".$encryptedCodeStr." \r\n\r\n";
 			
 			$messageStr .= "If you didn't request a password reset, please click the link below \r\n";
-			$messageStr .= "http://www.stage.fivesixseveneight.co/#/resetpassword/".$encrypted." \r\n\r\n";
+			$messageStr .= "http://www.stage.fivesixseveneight.co/#/resetpassword/".$encryptedCancelStr." \r\n\r\n";
 			
 			$sendMailSuccessBln = sendMail($emailStr, $subject, $messageStr);
 			
