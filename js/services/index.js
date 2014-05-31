@@ -15,6 +15,7 @@ define([
 	'./forgotpassword-post',
 	'./login-form-post',
 	'./logout-post',
+	'./reset-password-post',
 	'./recover-password-post',
 	'./register-form-post',
 	'./update-session-post'

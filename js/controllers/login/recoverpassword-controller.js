@@ -1,11 +1,12 @@
 define(['../module'], function (controllers) {
     'use strict';
-    controllers.controller('recoverpasswordController', ['$scope','$rootScope', '$state', '$stateParams', 'recoverPasswordPost', function ($scope, $rootScope, $state, $stateParams, recoverPasswordPost) {
+    controllers.controller('recoverpasswordController', ['$scope','$rootScope', '$state', '$stateParams', 'recoverPasswordPost', 'resetPasswordPost', function ($scope, $rootScope, $state, $stateParams, recoverPasswordPost, resetPasswordPost) {
      	
     	$scope.pageContent = {};
     	$scope.messageStr = "";
-    	$scope.password;
-    	$scope.password2;
+    	$scope.userObj = {};
+    	$scope.userObj.password;
+    	$scope.userObj.password2;
     	$scope.editBln;
     	var activationIdNum;
     	
@@ -18,20 +19,24 @@ define(['../module'], function (controllers) {
     	//	console.log("init");
     		setup();
     		checkRecovery();
-    
     		$scope.loadingEnd();
     	};
     	
     	var setup = function(){
-    		console.log("setup", $stateParams.id);
+    	//	console.log("setup", $stateParams.id);
         	$scope.editBln = false;
     		activationIdNum = $stateParams.id;
     		$scope.messageStr = "Verifying password recovery";
     	};
         
+           	
     	var checkRecovery = function(){
-    		console.log("checkRecovery");
-    		
+    	//	console.log("checkRecovery");
+      		if(activationIdNum == "" || $rootScope.isLoggedInBln){
+        		$state.transitionTo("root.primary.overview");
+        		return;
+        	}
+      		
     		var dataObj = {
     				activationIdNum: activationIdNum
 			};
@@ -39,7 +44,7 @@ define(['../module'], function (controllers) {
 			recoverPasswordPost.postRecoverPasswordData(dataObj).then(function(obj){
 				console.log("callback post", obj);
 				if(obj.successBln){
-					enableEdit();
+					checkRecoverSuccess(obj);
 				}else{
 					checkRecoverFailed(obj);
 				}
@@ -48,23 +53,19 @@ define(['../module'], function (controllers) {
     	};
     	
     	
-    	
-    	var enableEdit = function(){
-    		console.log("enableEdit");
-    		$scope.messageStr = "Please enter your new password.";
-    		setupVerification();
-    		$scope.editBln = true;
+    	var checkRecoverSuccess = function(obj){
+    		console.log("checkRecoverSuccess");
+    		$scope.messageStr = obj.messageStr;
+    		if(obj.editBln){
+    			setupVerification();
+        		$scope.editBln = true;				
+    		}
     	};
     	
     	var checkRecoverFailed = function(obj){
     		console.log("checkRecoverFailed", obj.messageStr);
     		$scope.messageStr = obj.messageStr;
     	};
-    	
-    	
-    	
-    	
-    	
     	
     	$scope.recoverPasswordSubmit = function(){
         // 	console.log("recoverPasswordSubmit");
@@ -78,15 +79,15 @@ define(['../module'], function (controllers) {
     	var postFormData = function(){
 		//	console.log('postFormData');
     		var dataObj = {
-					password: $scope.password,
-					password2: $scope.password2
+					password: $scope.userObj.password,
+					password2: $scope.userObj.password2,
+					activationIdNum: activationIdNum
 			};
 			
-    		return;
 			$scope.$broadcast('formProcessingBln');
-			recoverPasswordPost.postRecoverPasswordData(dataObj).then(function(obj){
+			resetPasswordPost.postResetPasswordData(dataObj).then(function(obj){
 				console.log("callback post", obj);
-				formSubmittedComplete(obj);
+				
 			});
 		};
 		
@@ -95,7 +96,7 @@ define(['../module'], function (controllers) {
     		$("#recoverPasswordForm").submit(false);
     		
 			$.validator.addMethod("checkPasswordsMatch", function(passwordStr, element) {
-				if($scope.password == $scope.password2){
+				if($scope.userObj.password == $scope.userObj.password2){
 					return true;
 				}else{
 					return false;
@@ -148,10 +149,18 @@ define(['../module'], function (controllers) {
     
 
     	
+    	var destroyValidate = function(){
+    	//	console.log("destroyValidate");
+    		$('#recoverPasswordForm').data('validator', null);
+    		$("#recoverPasswordForm").unbind('validate');
+    		$scope.validator = undefined;
+    	};
+    	
     	var destroy = function(){
-        	//	console.log("destroy");
-
-        };
+    	//	console.log("destroy");
+    		destroyValidate();
+    	};
+	
         	
     	init();
 

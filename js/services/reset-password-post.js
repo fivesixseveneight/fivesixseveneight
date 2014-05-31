@@ -1,11 +1,11 @@
 define(['./module'], function (services) {
     'use strict';   
-    services.service('recoverPasswordPost', ['$http', '$q', function ($http, $q) {
-    	var recoverpasswordPostService = {
-    			postRecoverPasswordData: function(dataObj) {
+    services.service('resetPasswordPost', ['$http', '$q', function ($http, $q) {
+    	var resetpasswordPostService = {
+    			postResetPasswordData: function(dataObj) {
     				var deferred = $q.defer();
     				var postObj = dataObj;
-    				var urlStr = "api/verify-recovery";
+    				var urlStr = "api/reset-password";
     				
     		    	var postData = function(){
     		    	//	console.log('postData', postObj);
@@ -28,9 +28,6 @@ define(['./module'], function (services) {
     		    			if(obj.data.messageStr){
     		    				returnObj.messageStr = obj.data.messageStr;
     		    			};
-    		    			if(obj.data.editBln != undefined){
-    		    				returnObj.editBln = obj.data.editBln;
-    		    			}
     		    		};
     		    		
     		    		deferred.resolve(returnObj);
@@ -39,7 +36,7 @@ define(['./module'], function (services) {
     		    	var requestFailed = function(obj){
     		    	//	console.log('requestFailed', obj);
     		    		var returnObj = {};
-    		    		returnObj.messageStr = "Something went wrong and we can't recover your password at the moment. Please contact us to assist you.";
+    		    		returnObj.messageStr = "Something went wrong and we could't reset your password. Please contact us to assist you.";
     		    		returnObj.successBln = false;
     		    		if(obj.data && obj.data.messageStr){
     		    			returnObj.messageStr = obj.data.messageStr;
@@ -56,7 +53,7 @@ define(['./module'], function (services) {
     		     return deferred.promise;
     		     }
     		  };
-    		  return recoverpasswordPostService;
+    		  return resetpasswordPostService;
     }]);
     
     

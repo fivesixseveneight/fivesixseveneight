@@ -95,13 +95,13 @@ $app->post('/recover-password',  function () use ($app) {
 			/*
 			 * generate reset code
 			 */
-			$resetStr = $emailStr." "."reset"." ".$todaysDate." ".$codeStr;
+			$resetStr = $emailStr." "."reset"." ".$codeStr." ".$todaysDate;
 			$encryptedCodeStr = encrypt_decrypt('encrypt', $resetStr);
 			
 			/*
-			 * generate cancel code
+			 * generate cancel/didn't request code
 			 */
-			$cancelStr = $emailStr." "."cancel"." ".$todaysDate;
+			$cancelStr = $emailStr." "."cancel"." ".$codeStr." ".$todaysDate;
 			$encryptedCancelStr = encrypt_decrypt('encrypt', $cancelStr);
 			
 			//sets the generated code into the database
@@ -128,11 +128,9 @@ $app->post('/recover-password',  function () use ($app) {
 			
 			$sendMailSuccessBln = sendMail($emailStr, $subject, $messageStr);
 		
-			$output -> encryptedCodeStr = $encryptedCodeStr;
-			$output -> encryptedCancelStr = $encryptedCancelStr;
+			//	$output -> encryptedCodeStr = $encryptedCodeStr;
+			//	$output -> encryptedCancelStr = $encryptedCancelStr;
 			
-			// send email to recover password
-			// create a password recovery key
 		}
 	}else{
 			$errorBln = true;
@@ -162,19 +160,75 @@ $app->post('/recover-password',  function () use ($app) {
 /*
  * verifies password recovery code
 */
-
 $app->post('/verify-recovery',  function () use ($app) {
 	$output = new stdClass();
 	$errorBln = false;
 	$errorMsgStr = "";
 
-	$params = json_decode($app->request()->getBody());
-	$keyStr = $params -> activationIdNum;
-	
 	global $db_host;
 	global $db_username;
 	global $db_password;
 	global $db_database;
+	
+	$params = json_decode($app->request()->getBody());
+	$keyStr = $params -> activationIdNum;
+	
+	$decrypted = encrypt_decrypt('decrypt', $keyStr);
+	// if the email is found
+	try {
+		$emailStr = explode(" ", $decrypted)[0];
+		$instructionStr = explode(" ", $decrypted)[1];
+		$passwordResetKeyStr = explode(" ", $decrypted)[2];
+		$timeStr = explode(" ", $decrypted)[3];
+		
+		if($instructionStr == "reset" || $instructionStr == "cancel"){
+
+			$sql_db = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+			if (mysqli_connect_errno()){
+				echo "Failed to connect to MySQL: " . mysqli_connect_error();
+			}
+			
+			// checks database if the code was valid
+			$sqlQueryStr = "SELECT emailStr, passwordRecoveryStr FROM users WHERE emailStr='$emailStr'";
+			$result = mysqli_query($sql_db, $sqlQueryStr);
+			$dbUserObj = mysqli_fetch_assoc($result);
+			
+			// if the database key is the same as the password reset key provided by user, reset
+			if($dbUserObj['passwordRecoveryStr'] == $passwordResetKeyStr){
+
+				if($instructionStr == "cancel"){
+					// cancel
+					// this resets the password recovery string
+					$sqlQueryStr = "UPDATE users SET passwordRecoveryStr='' WHERE emailStr='$emailStr'";
+					$result = mysqli_query($sql_db, $sqlQueryStr);
+					$output -> messageStr = "We have cancelled the pending password reset and will look into issue.";
+					$output -> editBln = false;
+				}else if($instructionStr == "reset"){
+					// reset
+					$output -> messageStr = "Please enter your new password.";
+					$output -> editBln = true;
+				}
+			
+			}else{
+				$errorBln = true;
+				$errorMsgStr = "Reset password verification key is invalid";
+			}
+			
+		//	$output -> dbUserObj = $dbUserObj;
+
+		}else{
+			$errorBln = true;
+			$errorMsgStr = "Reset password verification key is invalid";
+		}
+		// if the email is not found
+	} catch (Exception $e) {
+		$emailStr = "";
+		$instructionStr = "";
+		$errorBln = true;
+		$errorMsgStr = "Reset password verification key is invalid";
+	}
+	
+	//	$output -> decrypted = $decrypted;
 	
 	if($errorBln == true){
 		$output -> successBln = false;
@@ -197,6 +251,133 @@ $app->post('/verify-recovery',  function () use ($app) {
 	
 });
 
+
+
+/*
+ * Resets the password of the user
+*/
+$app->post('/reset-password',  function () use ($app) {
+	$output = new stdClass();
+	$errorBln = false;
+	$errorMsgStr = "";
+	$passwordApprovedBln = false;
+	$saltStr = "";
+	global $db_host;
+	global $db_username;
+	global $db_password;
+	global $db_database;
+
+	$params = json_decode($app->request()->getBody());
+	$keyStr = $params -> activationIdNum;
+	$passwordStr = $params -> password;
+	$password2Str = $params -> password2;
+	$minPasswordLenNum = 8;
+	$maxPasswordLenNum = 100;
+	
+	//checks password
+	if(!isset($passwordStr) || !isset($password2Str)){
+		$errorBln = true;
+		$errorMsgStr = "Passwords not set";
+	}else{
+		if($passwordStr != $password2Str){
+			$errorBln = true;
+			$errorMsgStr = "Passwords are not the same";
+		}
+		if(strlen($passwordStr) < $minPasswordLenNum){
+			// password too short
+			$errorBln = true;
+			$errorMsgStr = "Password length is too short";
+		}
+		if(strlen($passwordStr) > $maxPasswordLenNum){
+			// password too long
+			$errorBln = true;
+			$errorMsgStr = "Password length is too long";
+		}
+		
+		$passwordApprovedBln = true;
+	}
+	
+	// only fire if password was approved
+	if($passwordApprovedBln == true){		
+		$decrypted = encrypt_decrypt('decrypt', $keyStr);
+		// if the email is found
+		try {
+			$emailStr = explode(" ", $decrypted)[0];
+			$instructionStr = explode(" ", $decrypted)[1];
+			$passwordResetKeyStr = explode(" ", $decrypted)[2];
+			$timeStr = explode(" ", $decrypted)[3];
+	
+			
+			if($instructionStr == "reset"){
+	
+				$sql_db = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+				if (mysqli_connect_errno()){
+					echo "Failed to connect to MySQL: " . mysqli_connect_error();
+				}
+					
+				// checks database if the code was valid
+				$sqlQueryStr = "SELECT emailStr, saltStr, passwordRecoveryStr FROM users WHERE emailStr='$emailStr'";
+				$result = mysqli_query($sql_db, $sqlQueryStr);
+				$dbUserObj = mysqli_fetch_assoc($result);
+					
+				// if the database key is the same as the password reset key provided by user, reset
+				if($dbUserObj['passwordRecoveryStr'] == $passwordResetKeyStr){
+					
+					
+					$saltStr = $dbUserObj['saltStr'] ;
+					$passwordMd5 = md5($saltStr.$passwordStr);
+					
+					$sqlQueryStr = "UPDATE users SET passwordStr='$passwordMd5', passwordRecoveryStr='' WHERE emailStr='$emailStr'";
+					$result2 = mysqli_query($sql_db, $sqlQueryStr);
+					// reset
+					$output -> messageStr = "Your password has been reset.";
+				//	$output -> passwordMd5 = $passwordMd5;
+					$output -> editBln = true;
+					
+				}else{
+					$errorBln = true;
+					$errorMsgStr = "Reset password verification key is invalid";
+				}
+					
+				//	$output -> dbUserObj = $dbUserObj;
+	
+			}else{
+				$errorBln = true;
+				$errorMsgStr = "Reset password verification key is invalid";
+			}
+			// if the email is not found
+		} catch (Exception $e) {
+			$emailStr = "";
+			$instructionStr = "";
+			$errorBln = true;
+			$errorMsgStr = "Reset password verification key is invalid";
+		}
+	//	$output -> decrypted = $decrypted;
+		
+	}
+		
+
+	if($errorBln == true){
+		$output -> successBln = false;
+		$output -> messageStr = $errorMsgStr;
+		header('HTTP/1.1 401 Unauthorized', true, 401);
+		renderJSON( '401',
+		array( 	'type'=>'POST only',
+		'description'=>'Resets the users password',
+		'called'=>'/reset-password' ),
+		$output);
+		exit;
+	}
+
+	$output -> successBln = true;
+	renderJSON( '200',
+	array( 	'type'=>'POST only',
+	'description'=>'Resets the users password',
+	'called'=>'/reset-password' ),
+	$output);
+
+});
+	
 	
 /*
 * sends an activation email to the user
