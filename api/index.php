@@ -133,7 +133,7 @@ $app->post('/recover-password',  function () use ($app) {
 		}
 	}else{
 			$errorBln = true;
-	//		$errorMsgStr = "Email not submitted";
+			$errorMsgStr = "Email not submitted";
 	}	
 	if($errorBln == true){
 		$output -> successBln = false;

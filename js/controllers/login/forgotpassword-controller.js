@@ -5,7 +5,10 @@ define(['../module'], function (controllers) {
     	$scope.pageContent = {};
     	$scope.messageStr = "";
     	$scope.userLoggedIn = $rootScope.isLoggedInBln;
+    	$scope.editBln;
     	
+    	$scope.userObj = {};
+    	$scope.userObj.email;
     	
     	$scope.$on('$destroy', function() {
         //  console.log("destroy scope");
@@ -24,6 +27,7 @@ define(['../module'], function (controllers) {
     	
     	var setup = function(){
     		$scope.messageStr = "Please enter your email and we'll send you a password recovery email.";
+    		$scope.editBln = true;
     	};
     	
     	$scope.$watch('isLoggedInBln', function() {
@@ -47,12 +51,11 @@ define(['../module'], function (controllers) {
     		}
     	};
         
-        	
     	// this function obtains all the videos for a given playlist
     	var postFormData = function(){
-		//	console.log('postFormData');
+			console.log('postFormData', $scope.userObj.email);
 			var dataObj = {
-					email: $scope.email
+					email: $scope.userObj.email
 			};
 			
 			$scope.$broadcast('formProcessingBln');
@@ -89,19 +92,15 @@ define(['../module'], function (controllers) {
   		  	$scope.$broadcast('formSubmittedBln', obj); 
     	
   		  	if(obj.successBln){
-  		  		$scope.messageStr = "We have sent a password recovery email to "+$scope.email+" please check your inbox for further instructions.";
-    		}else{
+  		  		$scope.messageStr = "We have sent a password recovery email to "+$scope.userObj.email+" please check your inbox for further instructions.";
+  		  		$scope.editBln = false;
+  		  	}else{
     			$scope.messageStr = obj.messageStr;
     		}
     	};
 		
-        	
-    
-
-    	
     	var destroy = function(){
         	//	console.log("destroy");
-
         };
         	
     	init();
