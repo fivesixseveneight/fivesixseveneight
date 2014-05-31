@@ -42,19 +42,18 @@ define(['../module'], function (controllers) {
 			};
 			
 			recoverPasswordPost.postRecoverPasswordData(dataObj).then(function(obj){
-				console.log("callback post", obj);
+			//	console.log("callback post", obj);
 				if(obj.successBln){
 					checkRecoverSuccess(obj);
 				}else{
 					checkRecoverFailed(obj);
 				}
 			});
-    		
     	};
     	
     	
     	var checkRecoverSuccess = function(obj){
-    		console.log("checkRecoverSuccess");
+    	//	console.log("checkRecoverSuccess");
     		$scope.messageStr = obj.messageStr;
     		if(obj.editBln){
     			setupVerification();
@@ -63,7 +62,7 @@ define(['../module'], function (controllers) {
     	};
     	
     	var checkRecoverFailed = function(obj){
-    		console.log("checkRecoverFailed", obj.messageStr);
+    	//	console.log("checkRecoverFailed", obj.messageStr);
     		$scope.messageStr = obj.messageStr;
     	};
     	
@@ -147,10 +146,6 @@ define(['../module'], function (controllers) {
     			$scope.messageStr = obj.messageStr;
     		}
     	};
-		
-        	
-    
-
     	
     	var destroyValidate = function(){
     	//	console.log("destroyValidate");

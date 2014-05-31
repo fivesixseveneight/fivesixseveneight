@@ -760,6 +760,12 @@ Register
 	padding-left: 30px;
 }
 
+
+.recoverpassword .form-group{
+	padding: 0px;
+}
+
+
 .confirmregistration .form-group{
 	padding: 0px;
 	height: auto;
