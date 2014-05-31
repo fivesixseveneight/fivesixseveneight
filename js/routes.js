@@ -323,7 +323,7 @@ define(['./app'], function (app) {
     		
     		}
     	}).state('root.primary.recoverpassword', {
-    		url: '/recoverpassword/',
+    		url: '/recoverpassword/:id',
     		views:{
     			"mainView@root":{
     				  templateUrl: 'partials/login/recoverpassword.html',

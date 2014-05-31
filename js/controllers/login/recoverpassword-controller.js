@@ -1,11 +1,13 @@
 define(['../module'], function (controllers) {
     'use strict';
-    controllers.controller('recoverpasswordController', ['$scope','$rootScope', '$state', function ($scope, $rootScope, $state) {
+    controllers.controller('recoverpasswordController', ['$scope','$rootScope', '$state', '$stateParams', 'recoverPasswordPost', function ($scope, $rootScope, $state, $stateParams, recoverPasswordPost) {
      	
     	$scope.pageContent = {};
     	$scope.messageStr = "";
     	$scope.password;
     	$scope.password2;
+    	$scope.editBln;
+    	var activationIdNum;
     	
     	$scope.$on('$destroy', function() {
         //  console.log("destroy scope");
@@ -15,14 +17,55 @@ define(['../module'], function (controllers) {
     	var init = function(){
     	//	console.log("init");
     		setup();
-    		setupVerification();
+    		checkRecovery();
+    
     		$scope.loadingEnd();
     	};
     	
     	var setup = function(){
-    		$scope.messageStr = "Please enter your new password.";
+    		console.log("setup", $stateParams.id);
+        	$scope.editBln = false;
+    		activationIdNum = $stateParams.id;
+    		$scope.messageStr = "Verifying password recovery";
     	};
         
+    	var checkRecovery = function(){
+    		console.log("checkRecovery");
+    		
+    		var dataObj = {
+    				activationIdNum: activationIdNum
+			};
+			
+			recoverPasswordPost.postRecoverPasswordData(dataObj).then(function(obj){
+				console.log("callback post", obj);
+				if(obj.successBln){
+					enableEdit();
+				}else{
+					checkRecoverFailed(obj);
+				}
+			});
+    		
+    	};
+    	
+    	
+    	
+    	var enableEdit = function(){
+    		console.log("enableEdit");
+    		$scope.messageStr = "Please enter your new password.";
+    		setupVerification();
+    		$scope.editBln = true;
+    	};
+    	
+    	var checkRecoverFailed = function(obj){
+    		console.log("checkRecoverFailed", obj.messageStr);
+    		$scope.messageStr = obj.messageStr;
+    	};
+    	
+    	
+    	
+    	
+    	
+    	
     	$scope.recoverPasswordSubmit = function(){
         // 	console.log("recoverPasswordSubmit");
     		if(verfiyBeforeSubmit()){
@@ -41,8 +84,8 @@ define(['../module'], function (controllers) {
 			
     		return;
 			$scope.$broadcast('formProcessingBln');
-			registerFormPost.postregisterFormData(dataObj).then(function(obj){
-			//	console.log("callback post", obj);
+			recoverPasswordPost.postRecoverPasswordData(dataObj).then(function(obj){
+				console.log("callback post", obj);
 				formSubmittedComplete(obj);
 			});
 		};

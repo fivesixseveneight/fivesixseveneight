@@ -121,15 +121,15 @@ $app->post('/recover-password',  function () use ($app) {
 			
 			$messageStr .= "www.kendricklin.com, please click the link below to reset your password. \r\n\r\n\r\n";
 			
-			$messageStr .= "http://www.stage.fivesixseveneight.co/#/resetpassword/".$encryptedCodeStr." \r\n\r\n";
+			$messageStr .= "http://www.stage.fivesixseveneight.co/#/recoverpassword/".$encryptedCodeStr." \r\n\r\n";
 			
 			$messageStr .= "If you didn't request a password reset, please click the link below \r\n";
-			$messageStr .= "http://www.stage.fivesixseveneight.co/#/resetpassword/".$encryptedCancelStr." \r\n\r\n";
+			$messageStr .= "http://www.stage.fivesixseveneight.co/#/recoverpassword/".$encryptedCancelStr." \r\n\r\n";
 			
 			$sendMailSuccessBln = sendMail($emailStr, $subject, $messageStr);
-			
-			$output -> sendMailSuccessBln = $sendMailSuccessBln;
-			
+		
+			$output -> encryptedCodeStr = $encryptedCodeStr;
+			$output -> encryptedCancelStr = $encryptedCancelStr;
 			
 			// send email to recover password
 			// create a password recovery key
@@ -159,8 +159,44 @@ $app->post('/recover-password',  function () use ($app) {
 
 });
 	
+/*
+ * verifies password recovery code
+*/
+
+$app->post('/verify-recovery',  function () use ($app) {
+	$output = new stdClass();
+	$errorBln = false;
+	$errorMsgStr = "";
+
+	$params = json_decode($app->request()->getBody());
+	$keyStr = $params -> activationIdNum;
 	
+	global $db_host;
+	global $db_username;
+	global $db_password;
+	global $db_database;
 	
+	if($errorBln == true){
+		$output -> successBln = false;
+		$output -> messageStr = $errorMsgStr;
+		header('HTTP/1.1 401 Unauthorized', true, 401);
+		renderJSON( '401',
+		array( 	'type'=>'POST only',
+		'description'=>'Verifies if password can be changed',
+		'called'=>'/verify-recovery' ),
+		$output);
+		exit;
+	}
+	
+	$output -> successBln = true;
+	renderJSON( '200',
+	array( 	'type'=>'POST only',
+	'description'=>'Verifies if password can be changed',
+	'called'=>'/verify-recovery' ),
+	$output);
+	
+});
+
 	
 /*
 * sends an activation email to the user
