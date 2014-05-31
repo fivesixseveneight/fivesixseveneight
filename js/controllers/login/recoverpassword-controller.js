@@ -86,10 +86,12 @@ define(['../module'], function (controllers) {
 			
 			$scope.$broadcast('formProcessingBln');
 			resetPasswordPost.postResetPasswordData(dataObj).then(function(obj){
-				console.log("callback post", obj);
-				
+			//	console.log("callback post", obj);
+				formSubmittedSuccess(obj);
 			});
 		};
+		
+		
 		
 		var setupVerification = function(event ){
     	//	console.log("setupVerification");
@@ -137,7 +139,8 @@ define(['../module'], function (controllers) {
     	var formSubmittedSuccess = function(obj){
     	//	console.log("formSubmittedSuccess", obj);
   		  	$scope.$broadcast('formSubmittedBln', obj); 
-    	
+  		  	
+  		  	$scope.editBln = false;
   		  	if(obj.successBln){
   		  		$scope.messageStr = "Password has been reset.";
     		}else{

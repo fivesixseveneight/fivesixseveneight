@@ -117,10 +117,9 @@ $app->post('/recover-password',  function () use ($app) {
 			// sends email
 			$subject = 'Password recovery at fivesixseveneight.co';
 			
-			$messageStr = "You are receiving this email because a password recovery was requested at ";
+			$messageStr = "You are receiving this email because a password recovery was requested at www.kendricklin.com \r\n\r\n\r\n";
 			
-			$messageStr .= "www.kendricklin.com, please click the link below to reset your password. \r\n\r\n\r\n";
-			
+			$messageStr .= "Please click the link below to reset your password. \r\n";
 			$messageStr .= "http://www.stage.fivesixseveneight.co/#/recoverpassword/".$encryptedCodeStr." \r\n\r\n";
 			
 			$messageStr .= "If you didn't request a password reset, please click the link below \r\n";
