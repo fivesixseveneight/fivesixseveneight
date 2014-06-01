@@ -62,6 +62,7 @@ define(['./module'], function (controllers) {
 	        	}else{
 	        		$rootScope.isLoggedInBln = false;
 	        	}
+	     		        	
         });
     	
     	
@@ -142,6 +143,7 @@ define(['./module'], function (controllers) {
         	}else{
         		$rootScope.isLoggedInBln = false;
         	}
+
         	
        // 	console.log("$rootScope.isLoggedInBln", $rootScope.userObj);
     	};

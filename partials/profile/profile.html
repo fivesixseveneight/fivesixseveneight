@@ -6,11 +6,10 @@
 			<img class="profileImage"  src="img/profile/default.png"/>
 		</div>
 	
+		<a ui-sref="root.primary.profile.edit({id: userObj.userIdNum})"><div class="profileEditButton col-xs-12 ">Edit Profile</div></a>	
+		
 		<div class="profileQuickBio col-xs-12">
 			
-			<div ng-if="!editBln" >
-			
-				
 				<div ng-if="userObj.usernameStr" class="profileBioDetails" >{{userObj.usernameStr}}</div>
 				
 				<div ng-if="userObj.firstnameStr" class="profileBioDetails" >{{userObj.firstnameStr}}</div>
@@ -42,97 +41,40 @@
 				<div ng-if="userObj.lactActiveDate" class="profileBioDetails" >Last Active {{userObj.lactActiveDate}} </div>
 				
 				<div ng-if="userObj.joinedDate" class="profileBioDetails" >Date Joined {{userObj.joinedDate}}</div>
-				
-				
-		
-			</div>
-			
-			<div ng-if="editBln" >
-						
-				<div class="form-group col-xs-12">
-					<label>First Name</label>
-			    	<input type="text" ng-model="userObj.firstnameStr" class="form-control" placeholder="First Name">
-			    </div>
-			    
-			    <div class="form-group col-xs-12">
-					<label>Last Name</label>
-			    	<input type="text" ng-model="userObj.lastnameStr" class="form-control" placeholder="Last Name">
-			    </div>
-			    
-			    <div class="form-group col-xs-12">
-					<label>Company </label>
-			    	<input type="text" ng-model="userObj.companyStr" class="form-control" placeholder="Company">
-			    </div>
-			    
-			    <div class="form-group col-xs-12">
-					<label>Website</label>
-			    	<input type="text" ng-model="userObj.websiteStr" class="form-control" placeholder="Website">
-			    </div>
-			  
-			    
-			</div>
-			
-			
-		
-			
-				
+
 		</div>
 			
 		<div class="profileBio col-xs-12">
 		
 			<div class="profileBioTitle col-xs-12">
 				<div class="profile-section-title col-xs-8 col-sm-offset-0 col-sm-8 col-md-9">About me</div>
-				
-				<div ng-if="!editBln" ng-click="editProfile()" class="profileEditButton col-xs-offset-2 col-xs-2 col-sm-offset-1 col-sm-3 col-md-offset-1 col-md-2">Edit</div>	
-			
 			</div>
 			
 		
 			
 			<div class="form-group col-xs-12">
 				<label>Campaigns I support</label>
-				<div ng-if="editBln">
-		    		<textarea ng-model="aboutObj.supportStr" class="form-control" placeholder=""></textarea>
-		   		</div>
-		   		<div ng-if="!editBln">
-   		 			<div class="profile-sub-title">{{aboutObj.supportStr}}</div>
-   		 		</div>
+   		 		<div class="profile-sub-title">{{aboutObj.supportStr}}</div>
 		    </div>
 		    
 		    	
 			<div class="form-group col-xs-12">
 				<label>My Primary Audience</label>
-				<div ng-if="editBln">
-		    	<textarea ng-model="aboutObj.audienceStr" class="form-control" placeholder=""></textarea>
-		   		</div>
-   		 		<div ng-if="!editBln">
-   		 			<div class="profile-sub-title">{{aboutObj.audienceStr}}</div>
-   		 		</div>
+   		 		<div class="profile-sub-title">{{aboutObj.audienceStr}}</div>
 		    </div>
 			    	
 			<div class="form-group col-xs-12">
 				<label>Locations</label>
-				<div ng-if="editBln">
-		    	<input ng-model="aboutObj.locationsStr" class="form-control" placeholder="Locations"/>
-		   		</div>
-   		 		<div ng-if="!editBln">
-   		 			<div class="profile-sub-title">{{aboutObj.locationsStr}}</div>
-   		 		</div>
+   		 		<div class="profile-sub-title">{{aboutObj.locationsStr}}</div>
 		    </div>
 			
 			<div class="form-group col-xs-12">
 				<label>Markets</label>
-				<div ng-if="editBln">
-		    	<input ng-model="aboutObj.marketsStr" class="form-control" placeholder="Markets"/>
-		   		</div>
-   		 		<div ng-if="!editBln">
-   		 			<div class="profile-sub-title">{{aboutObj.marketsStr}}</div>
-   		 		</div>
+				<div class="profile-sub-title">{{aboutObj.marketsStr}}</div>
+   	
 		    </div>
 			
-			<div ng-if="editBln">
-				<button id="submitButton" type="submit" ng-click="saveProfile()" submit-form-clicked form-submit-complete-bln class="btn btn-sm btn-default">Submit</button>
-  		 	</div>
+
 		</div>
 	</div>
 		

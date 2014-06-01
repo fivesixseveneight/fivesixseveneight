@@ -169,7 +169,7 @@ define(['./app'], function (app) {
     		
     		}
     	}).state('root.primary.profile', {
-    		url: '/profile/',
+    		url: '/profile/:id/',
     		views:{
     			"mainView@root":{
     				  templateUrl: 'partials/profile/profile.html',
@@ -178,6 +178,24 @@ define(['./app'], function (app) {
     		},
     		resolve:{
     		
+    		}
+    	}).state('root.primary.profile.edit', {
+    		url: 'edit/',
+    		views:{
+    			"mainView@root":{
+    				  templateUrl: 'partials/profile/editProfile.html',
+    		          controller: 'editProfileController'
+    			}
+    		},
+    		resolve:{
+    			getEditUserProfile: (["$q", "$http", "$stateParams",function($q, $http, $stateParams){         
+            		var deferred = $q.defer();
+            		return $http({method: 'POST', url: "/api/get-edit-profile", data:{userIdNum: $stateParams.id}}).then(function (obj) {
+	        			 deferred.resolve();
+	                     return obj.data;
+                    });
+            		return deferred.promise;
+            	}])
     		}
     	}).state('root.primary.notifications', {
     		url: '/notifications/',
@@ -323,7 +341,7 @@ define(['./app'], function (app) {
     		
     		}
     	}).state('root.primary.recoverpassword', {
-    		url: '/recoverpassword/:id',
+    		url: '/recoverpassword/:id/',
     		views:{
     			"mainView@root":{
     				  templateUrl: 'partials/login/recoverpassword.html',
@@ -367,7 +385,7 @@ define(['./app'], function (app) {
     		
     		}
     	}).state('root.primary.activateaccount', {
-    		url: '/activateaccount/:id',
+    		url: '/activateaccount/:id/',
     		views:{
     			"mainView@root":{
     				  templateUrl: 'partials/register/activateregistration.html',

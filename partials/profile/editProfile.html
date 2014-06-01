@@ -1,0 +1,85 @@
+<div class="editProfile col-xs-12">
+	
+	
+	<div class="profileTopWrapper col-xs-12 col-sm-offset-1 col-sm-5 col-md-offset-2 col-md-4" >
+		<div class="profileImageWrapper col-xs-12">
+			<img class="profileImage"  src="img/profile/default.png"/>
+		</div>
+	
+		<div class="profileQuickBio col-xs-12">
+				
+				<div class="form-group col-xs-12">
+					<label>First Name</label>
+			    	<input type="text" ng-model="userObj.firstnameStr" class="form-control" placeholder="First Name">
+			    </div>
+			    
+			    <div class="form-group col-xs-12">
+					<label>Last Name</label>
+			    	<input type="text" ng-model="userObj.lastnameStr" class="form-control" placeholder="Last Name">
+			    </div>
+			    
+			    <div class="form-group col-xs-12">
+					<label>Company </label>
+			    	<input type="text" ng-model="userObj.companyStr" class="form-control" placeholder="Company">
+			    </div>
+			    
+			    <div class="form-group col-xs-12">
+					<label>Website</label>
+			    	<input type="text" ng-model="userObj.websiteStr" class="form-control" placeholder="Website">
+			    </div>
+	
+		</div>
+			
+		<div class="profileBio col-xs-12">
+		
+			<div class="form-group col-xs-12">
+				<label>About me</label>
+		    	<textarea ng-model="aboutObj.aboutStr" class="form-control" placeholder=""></textarea>  		
+			</div>
+						
+			<div class="form-group col-xs-12">
+				<label>Campaigns I support</label>
+		    	<textarea ng-model="aboutObj.supportStr" class="form-control" placeholder=""></textarea>  		
+		    </div>
+		    
+			<div class="form-group col-xs-12">
+				<label>My Primary Audience</label>
+		    	<textarea ng-model="aboutObj.audienceStr" class="form-control" placeholder=""></textarea>
+		    </div>
+			    	
+			<div class="form-group col-xs-12">
+				<label>Locations</label>
+		    	<input ng-model="aboutObj.locationsStr" class="form-control" placeholder="Locations"/>
+		    </div>
+			
+			<div class="form-group col-xs-12">
+				<label>Markets</label>
+		    	<input ng-model="aboutObj.marketsStr" class="form-control" placeholder="Markets"/>
+		    </div>
+			
+			<div>
+				<button id="submitButton" type="submit" ng-click="saveProfile()" submit-form-clicked form-submit-complete-bln class="btn btn-sm btn-default">Submit</button>
+  		 	</div>
+		</div>
+	</div>
+	
+	
+	<div class="profileBottomWrapper col-xs-12 col-sm-6 col-md-offset-0 col-md-5">
+	
+		<div class="profileCampaigntitle col-xs-12">Social Media Accounts</div>
+		<div class="col-xs-12">Connect to facebook</div>
+		<div class="col-xs-12">Allow published campaigns on Facebook</div>
+		
+	</div>
+
+
+</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	

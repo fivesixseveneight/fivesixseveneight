@@ -22,6 +22,7 @@ require_once dirname(__FILE__) .'/lib/facebook/src/facebook.php';
 */
 
 $debugBln = true;
+$lockdownBln = false;
 
 /*
 *
@@ -61,9 +62,48 @@ $app->get('/test',  function () use ( $app ) {
 });
 
 /*
- * Sends a password recovery email
-*/
+ *	request edit profile 
+ */
+$app->post('/get-edit-profile',  function () use ($app) {
+	$output = new stdClass();
+	$errorBln = false;
+	$params = json_decode($app->request()->getBody());
+	$userIdNum = $params -> userIdNum;
+		
+	if(checkUserIdConsistent($userIdNum) || checkUserIsAdmin($userIdNum)){
+		$dataObj;
+		
+		
+		$output -> userObj = $userObj;
+		
+	}else{
+		
+		$output -> messageStr = "User does not have permission to edit profile.";
+	}
+	
+	if($errorBln == true){
+		$output -> successBln = false;
+		$output -> messageStr = $errorMsgStr;
+		header('HTTP/1.1 401 Unauthorized', true, 401);
+		renderJSON( '401',
+		array( 	'type'=>'POST only',
+		'description'=>'Checks if user has permission to edit profile, then sends profile info.',
+		'called'=>'/get-edit-profile' ),
+		$output);
+		exit;
+	}
+	
+	$output -> successBln = true;
+	renderJSON( '200',
+	array( 	'type'=>'POST only',
+	'description'=>'Checks if user has permission to edit profile, then sends profile info.',
+	'called'=>'/get-edit-profile' ),
+	$output);
+});
 
+/*
+* Sends a password recovery email
+*/
 $app->post('/recover-password',  function () use ($app) {
 	$output = new stdClass();
 	$errorBln = false;
@@ -153,11 +193,10 @@ $app->post('/recover-password',  function () use ($app) {
 	'description'=>'Sends a password recovery email',
 	'called'=>'/recover-password' ),
 	$output);
-
 });
 	
 /*
- * verifies password recovery code
+* verifies password recovery code
 */
 $app->post('/verify-recovery',  function () use ($app) {
 	$output = new stdClass();
@@ -249,8 +288,6 @@ $app->post('/verify-recovery',  function () use ($app) {
 	$output);
 	
 });
-
-
 
 /*
  * Resets the password of the user
@@ -519,58 +556,6 @@ $app->post('/update-email-form',  function () use ( $app ) {
 	
 });
 	
-	
-// SEND AN EMAIL OUT
-$app->post('/contact-form',  function () use ( $app ) {
-				$output = "Success";
-				$params = json_decode($app->request()->getBody());
-				$nameStr = $params -> name;
-				$emailStr = $params -> email;
-				$messageStr = $params -> message;
-				$sendMailBln = true;
-				$sendMailSuccessBln = false;
-				//this variable is used to detect spam
-				
-				if(isset($params -> name2)){
-					$sendMailBln = false;
-					// we lie to the front end saying email was sent if it is spam mail
-					$sendMailSuccessBln = true;
-				}
-				
-				if($sendMailBln == true){
-				// only send mail if name2 isnt filled out, name2 isn't visible to humans
-						$to      = 'info@kendricklin.com';
-						$subject = $nameStr.' sent a message from the www.kendricklin.com';
-						$message = $messageStr;
-						$headers = 'From: '.$emailStr."\r\n" .
-						    'Reply-To: '.$emailStr. "\r\n" .
-						    'X-Mailer: PHP/' . phpversion();
-						$sendMailSuccessBln = mail($to, $subject, $message, $headers);
-				}
-				
-				$output = new stdClass();
-				$output -> messageStr = "Thank you for contacting me, I will get back to you as soon as I can!";
-				$output -> successBln = true;
-				
-				if($sendMailSuccessBln == false){
-					$output -> messageStr = "Oops something went wrong on our end, please try contacting us again in a few minutes";
-					$output -> successBln = false;
-					
-					header('HTTP/1.1 404 Not Found', true, 404);
-				    renderJSON( '404', 
-		                	array( 	'type'=>'GET only',
-		                					'description'=>'Contact Page Form Submission',
-		                					'called'=>'/contact-form' ),
-                			$output);
-					exit;
-				}
-
-                renderJSON( '200', 
-		                	array( 	'type'=>'GET only',
-		                					'description'=>'Contact Page Form Submission',
-		                					'called'=>'/contact-form' ),
-                			$output);
-});
 
 // FACEBOOK
 $app->get('/facebookAppId',  function () use ( $app ) {
@@ -605,7 +590,6 @@ $app->get('/facebookGetUser',  function () use ( $app ) {
 		                					'called'=>'/facebookGetUser' ),
                 			$output);
 });
-
 
 
 
@@ -722,10 +706,12 @@ $app->post('/register',  function () use ( $app ) {
 				$maxNameLenNum = 35;
 				$maxUsernameLenNum = 30;
 				$userIdNum;
+				
 				global $db_host;
 				global $db_username;
 				global $db_password;
 				global $db_database;
+				global $lockdownBln;		
 				
 				//checks password
 				if(!isset($passwordStr)){
@@ -828,9 +814,13 @@ $app->post('/register',  function () use ( $app ) {
 				}
 			
 				// check for errors
-				if($errorBln){
+				if($errorBln || $lockdownBln){
 					$output -> errorMessagesArr = $errorMessageArr;
+					
 					$output -> messageStr = "Registration Unsuccessful";
+					if($lockdownBln){
+						$output -> messageStr = "Registration Unsuccessful, website is currently locked from new user registrations";
+					}
 					$output -> successBln = false;
 					header('HTTP/1.1 401 Unauthorized', true, 401);
 					renderJSON( '401',
@@ -967,8 +957,6 @@ $app->post('/register',  function () use ( $app ) {
                 			$output);
 });
 
-
-
 // Checks if a user is logged in
 $app->post('/activate-account',  function () use ( $app ) {
 	$output = new stdClass();
@@ -1028,70 +1016,6 @@ $app->post('/activate-account',  function () use ( $app ) {
 	'called'=>'/activate-account' ),
 	$output);
 });
-
-/*
- * activates an account based on user id and it's salt
- */
-function activateAccount($userIdNum, $saltStr){
-	
-	$output = new stdClass();
-	global $db_host;
-	global $db_username;
-	global $db_password;
-	global $db_database;
-
-	if(isset($userIdNum) && isset($saltStr)){
-
-		// checks for unique email
-		$sqlQueryStr = "SELECT userIdNum, saltStr, activatedBln FROM users WHERE userIdNum='$userIdNum'";
-		$sql_db = mysqli_connect($db_host, $db_username, $db_password, $db_database);
-		if (mysqli_connect_errno()){
-			echo "Failed to connect to MySQL: " . mysqli_connect_error();
-		}
-		
-		$result = mysqli_query($sql_db, $sqlQueryStr);
-		// check if user data has returned
-		$rowsNum = mysqli_num_rows($result);
-		
-		if($rowsNum != 0){
-			$dbUserObj = mysqli_fetch_assoc($result);
-			
-			// checks if user id and salts line up
-			if($dbUserObj['saltStr'] == $saltStr && $dbUserObj['userIdNum'] == $userIdNum){
-				
-				// checks if user is already activated
-				if($dbUserObj['activatedBln'] == "0"){
-					$output -> activatedBln = $dbUserObj['activatedBln'] ;
-					
-					$sqlQueryStr = "UPDATE users SET activatedBln='1' WHERE userIdNum='$userIdNum'";
-					$result2 = mysqli_query($sql_db, $sqlQueryStr);
-					
-					$output -> successBln = true;
-					$output -> messageStr = "User Activated";
-					
-				}else{
-					$output -> successBln = false;
-					$output -> messageStr = "User already activated";
-				}
-			}else{
-				$output -> successBln = false;
-			//	$output -> messageStr = "User id found but keys dont match";
-			}
-		}else{
-			$output -> successBln = false;
-		//	$output -> messageStr = "User id not found";
-		}
-		$sql_db -> close();
-		$result -> close();
-	
-	}else{
-		$output -> successBln = false;
-	//	$output -> messageStr = "Keys not set for user activation";
-	}
-	
-	return $output;
-};
-
 
 
 // Checks if a user is logged in
@@ -1371,6 +1295,69 @@ function fetchSqlQuery($query){
 	$sql_db -> close(); 
 	$result -> close(); 
 	return $data;
+};
+
+/*
+ * activates an account based on user id and it's salt
+*/
+function activateAccount($userIdNum, $saltStr){
+
+	$output = new stdClass();
+	global $db_host;
+	global $db_username;
+	global $db_password;
+	global $db_database;
+
+	if(isset($userIdNum) && isset($saltStr)){
+
+		// checks for unique email
+		$sqlQueryStr = "SELECT userIdNum, saltStr, activatedBln FROM users WHERE userIdNum='$userIdNum'";
+		$sql_db = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+		if (mysqli_connect_errno()){
+			echo "Failed to connect to MySQL: " . mysqli_connect_error();
+		}
+
+		$result = mysqli_query($sql_db, $sqlQueryStr);
+		// check if user data has returned
+		$rowsNum = mysqli_num_rows($result);
+
+		if($rowsNum != 0){
+			$dbUserObj = mysqli_fetch_assoc($result);
+				
+			// checks if user id and salts line up
+			if($dbUserObj['saltStr'] == $saltStr && $dbUserObj['userIdNum'] == $userIdNum){
+
+				// checks if user is already activated
+				if($dbUserObj['activatedBln'] == "0"){
+					$output -> activatedBln = $dbUserObj['activatedBln'] ;
+						
+					$sqlQueryStr = "UPDATE users SET activatedBln='1' WHERE userIdNum='$userIdNum'";
+					$result2 = mysqli_query($sql_db, $sqlQueryStr);
+						
+					$output -> successBln = true;
+					$output -> messageStr = "User Activated";
+						
+				}else{
+					$output -> successBln = false;
+					$output -> messageStr = "User already activated";
+				}
+			}else{
+				$output -> successBln = false;
+				//	$output -> messageStr = "User id found but keys dont match";
+			}
+		}else{
+			$output -> successBln = false;
+			//	$output -> messageStr = "User id not found";
+		}
+		$sql_db -> close();
+		$result -> close();
+
+	}else{
+		$output -> successBln = false;
+		//	$output -> messageStr = "Keys not set for user activation";
+	}
+
+	return $output;
 };
 
 
@@ -1681,6 +1668,20 @@ function checkUserIdConsistent($userIdNum){
 		return false;
 	}
 }
+
+/*
+ * checks if the user is an admin  
+ */
+function checkUserIsAdmin($userIdNum){
+
+
+	if( isset($_SESSION['adminBln']) && $userIdNum == $_SESSION['adminBln']){
+		return true;
+	}else{
+		return false;
+	}
+}
+
 
 /*
  * used for encrypting data

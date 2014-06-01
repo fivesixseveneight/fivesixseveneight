@@ -31,7 +31,7 @@
 						<li ng-if="isLoggedInBln && windowWidth > 767" class="dropdown">
 				        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{userObj.usernameStr}} <b class="caret"></b></a>
 				        	<ul class="dropdown-menu">
-				       		 	<li><a ui-sref="root.primary.profile">Profile</a></li>
+				       		 	<li><a ui-sref="root.primary.profile({id: userObj.userIdNum})">Profile</a></li>
 				        		<li><a ui-sref="root.primary.notifications">Notifications</a></li>
 				        		<li><a ui-sref="root.primary.messages">Messages</a></li>
 				        		<li class="divider"></li>
@@ -47,7 +47,7 @@
 				        </li>
 						<!-- if the window size is smaller than 768 px -->
 						<li ng-if="isLoggedInBln && windowWidth <= 767" class="divider"></li>
-					 	<li ng-if="isLoggedInBln && windowWidth <= 767"><a ui-sref="root.primary.profile">Profile</a></li>
+					 	<li ng-if="isLoggedInBln && windowWidth <= 767"><a ui-sref="root.primary.profile({id: userObj.userIdNum})">Profile</a></li>
 		        		<li ng-if="isLoggedInBln && windowWidth <= 767"><a ui-sref="root.primary.notifications">Notifications</a></li>
 		        		<li ng-if="isLoggedInBln && windowWidth <= 767"><a ui-sref="root.primary.messages">Messages</a></li>
 		       		 	<li ng-if="isLoggedInBln && windowWidth <= 767" class="divider"></li>

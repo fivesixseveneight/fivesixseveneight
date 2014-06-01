@@ -40,6 +40,7 @@ define([
     
     './overview/overview-controller',
     
+    './profile/edit-profile-controller',
     './profile/profile-controller',
     
     './registration/activateregistration-controller',

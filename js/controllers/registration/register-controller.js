@@ -19,7 +19,7 @@ define(['../module'], function (controllers) {
   //  	$scope.city = "Adak";
   //  	$scope.state;
    // 	$scope.zip;
-    	
+    	$scope.messageStr;
     	$scope.countriesListArr = $rootScope.countriesArr;
     	$scope.citiesListArr = $rootScope.citiesArr;
 
@@ -230,7 +230,7 @@ define(['../module'], function (controllers) {
 	    	};
 	    	
 	    	var formSubmittedComplete = function(obj){
-	    	//	console.log("formSubmittedComplete", obj);
+	    		console.log("formSubmittedComplete", obj);
 	    	 	$scope.$broadcast('formSubmittedBln', obj); 
 	    	 	var successBln = obj.successBln;
 	    	 	var errorMessagesArr;
@@ -249,7 +249,10 @@ define(['../module'], function (controllers) {
 		    	 				$scope.validator.showErrors(errorObj);
 		    	 			}
 		    	 		}
-		    	 	}	
+		    	 	}
+	    	 		if(obj.messageStr){
+	    	 			$scope.messageStr = obj.messageStr;
+	    	 		}
 	    	 	}
 	    	};
 

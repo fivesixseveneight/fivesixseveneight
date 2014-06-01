@@ -90,6 +90,12 @@
 							<input name="zip" type="text" ng-model="zip" class="form-control" placeholder="12345">
 						</div>
 						 -->
+						 
+						<div ng-if="messageStr" class="col-md-12">
+							<div>{{messageStr}}</div>
+							<br>
+						</div>
+						
 						 <div class="col-md-12">
 							<button id="submitButton" type="submit" submit-form-clicked form-submit-complete-bln class="btn btn-sm btn-default">Sign up</button>
 							<a ui-sref="root.primary.login" ><button type="button"  class="btn btn-sm btn-default">Cancel</button></a>

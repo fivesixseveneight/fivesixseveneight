@@ -538,8 +538,8 @@ Profile
 
 .profile .profileQuickBio{
 	vertical-align: top;
-	padding: 15px;
-	padding-bottom: 0px;
+	padding-left: 15px;
+	padding-right: 15px;
 }
 
 .profile .profileBioDetails{
@@ -578,14 +578,15 @@ Profile
 
 .profile .profileEditButton{
 	cursor: pointer;
-	font-family: "ProximaNova-Semibold";
+	font-family: "ProximaNova-Regular";
 	font-size: 20px;
-	float: right;
-	padding: 0px;
+
+	padding: 15px;
 }
 
 .profile .profileEditButton:hover{
-	color: #FF3030;	
+	background-color: #FF3030;	
+	color: #fff;
 }
 
 .profile .profile-advertise-stats-wrapper,
@@ -980,7 +981,7 @@ FOOTER
 	}
 	
 	.profile .profileEditButton {
-		float: left; 
+
 	}
 
 	.profile .profileTopWrapper{
