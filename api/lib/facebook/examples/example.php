@@ -42,6 +42,19 @@ if ($user) {
   }
 }
 
+/*
+ * Gets friends lists
+ * */
+if ($user) {
+  try {
+    // Proceed knowing you have a logged in user who's authenticated.
+    $user_friends = $facebook->api('/'.$user.'/friendlists');
+    print_r($user_friends);
+  } catch (FacebookApiException $e) {
+    error_log($e);
+    $user = null;
+  }
+}
 // Login or logout url will be needed depending on current user state.
 if ($user) {
  	$logoutUrl = $facebook->getLogoutUrl();

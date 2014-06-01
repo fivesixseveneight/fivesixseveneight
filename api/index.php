@@ -55,9 +55,9 @@ $app->get('/test',  function () use ( $app ) {
 				$output = [];
                 renderJSON( '200', 
 		                	array( 			
-		                					'type'=>'GET only',
-		                					'description'=>'Test Api',
-		                					'called'=>'/test' ),
+                					'type'=>'GET only',
+                					'description'=>'Test Api',
+                					'called'=>'/test' ),
                 			$output);
 });
 
@@ -69,15 +69,40 @@ $app->post('/get-edit-profile',  function () use ($app) {
 	$errorBln = false;
 	$params = json_decode($app->request()->getBody());
 	$userIdNum = $params -> userIdNum;
-		
+	$dbUserAcctObj = [];
 	if(checkUserIdConsistent($userIdNum) || checkUserIsAdmin($userIdNum)){
-		$dataObj;
+	// if(false){
+		$userObj = new stdClass();
+		
+		$dbUserObj = getUserById($userIdNum) -> userObj;
+		
+		$dbUserAcctResultObj = getUserAccountsById($userIdNum);
+		if($dbUserAcctResultObj -> successBln){
+			$dbUserAcctObj = $dbUserAcctResultObj -> userObj;
+		};
 		
 		
+		$userObj -> firstnameStr = $dbUserObj["firstnameStr"];
+		$userObj -> lastnameStr = $dbUserObj["lastnameStr"];
+		$userObj -> companyStr = $dbUserObj["firstnameStr"];
+		$userObj -> websiteStr = "websiteStr";
+		$userObj -> facebookStr = "facebookStr";
+		$userObj -> twitterStr = "twitterStr";
+		$userObj -> instagramStr = "instagramStr";
+		$userObj -> googleplusStr = "googleplusStr";
+		$userObj -> vineStr = "vineStr";
+		$userObj -> pinterestStr = "pinterestStr";
+		
+
+		
+		
+		$output -> permissionBln = true;
 		$output -> userObj = $userObj;
-		
+		$output -> dbUserObj = $dbUserObj;
+		$output -> dbUserAcctObj = $dbUserAcctObj;
 	}else{
-		
+
+		$output -> permissionBln = false;
 		$output -> messageStr = "User does not have permission to edit profile.";
 	}
 	
@@ -1086,7 +1111,22 @@ $app->post('/login',  function () use ( $app ) {
 				global $db_password;
 				global $db_database;
 
-				$sqlQueryStr = "SELECT * FROM users WHERE emailStr='$emailStr'";
+				$sqlQueryStr = "SELECT 
+				userIdNum,
+				emailStr,
+				usernameStr,
+				firstnameStr,
+				lastnameStr,
+				publisherBln,
+				advertiserBln,
+				activatedBln,
+				prevloginDate,
+				lastloginDate,
+				adminBln,
+				passwordStr,
+				saltStr
+				
+				FROM users WHERE emailStr='$emailStr'";
 				
 				$sql_db = mysqli_connect($db_host, $db_username, $db_password, $db_database);
 				if (mysqli_connect_errno()){
@@ -1373,7 +1413,21 @@ function getUserSession($userIdNum){
 	global $db_password;
 	global $db_database;
 	
-	$sqlQueryStr = "SELECT * FROM users WHERE userIdNum='$userIdNum'";
+	$sqlQueryStr = "SELECT 
+	
+	userIdNum,
+	emailStr,
+	usernameStr,
+	firstnameStr,
+	lastnameStr,
+	publisherBln,	
+	advertiserBln,	
+	activatedBln,
+	prevloginDate,
+	lastloginDate,
+	adminBln
+
+	FROM users WHERE userIdNum='$userIdNum'";
 	
 	$sql_db = mysqli_connect($db_host, $db_username, $db_password, $db_database);
 	if (mysqli_connect_errno()){
@@ -1514,6 +1568,91 @@ function getUserById($userIdNum){
 	
 	return $output;
 }
+
+/*
+*	getUserAccountsById
+*	gets user social media accounts and profile data by id
+*/
+
+function getUserAccountsById($userIdNum){
+	$output = new stdClass();
+	$dbUserObj = [];
+	global $db_host;
+	global $db_username;
+	global $db_password;
+	global $db_database;
+
+	$sqlQueryStr = "SELECT * FROM useraccountinfo WHERE userIdNum='$userIdNum'";
+
+	$sql_db = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+	if (mysqli_connect_errno()){
+		echo "Failed to connect to MySQL: " . mysqli_connect_error();
+	}
+
+	$result = mysqli_query($sql_db, $sqlQueryStr);
+	// check if user data has returned
+	$rowsNum = mysqli_num_rows($result);
+
+	// no user found
+	if($rowsNum == 0 || $rowsNum == null){
+		$output -> successBln = false;
+	}else{
+		$output -> successBln = true;
+		$dbUserObj = mysqli_fetch_assoc($result);
+		$output -> userObj = $dbUserObj;
+	}
+
+	$sql_db -> close();
+	$result -> close();
+
+	return $output;
+}
+
+/*
+ *	createUserAccountsById
+*	creates user social media accounts and profile data by id
+*/
+
+function createUserAccountsById($userIdNum){
+	$output = new stdClass();
+	global $db_host;
+	global $db_username;
+	global $db_password;
+	global $db_database;
+	
+	
+	
+	$sqlQueryStr = "INSERT INTO
+	useraccountinfo(
+	useraccountIdNum,
+	userIdNum
+	)
+	
+	VALUES (
+	'',
+	'$userIdNum'
+	)";
+
+	$sql_db = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+	if (mysqli_connect_errno()){
+		echo "Failed to connect to MySQL: " . mysqli_connect_error();
+	}
+
+	$result = mysqli_query($sql_db, $sqlQueryStr);
+	
+	// no user found
+	if($result){
+		$output -> successBln = false;
+	}else{
+		$output -> successBln = true;
+	}
+
+	$sql_db -> close();
+	$result -> close();
+
+	return $output;
+}
+
 
 /*
 *	checkUserIdExists

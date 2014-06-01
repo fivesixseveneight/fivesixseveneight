@@ -188,9 +188,10 @@ define(['./app'], function (app) {
     			}
     		},
     		resolve:{
-    			getEditUserProfile: (["$q", "$http", "$stateParams",function($q, $http, $stateParams){         
+    			getEditUserProfile: (["$q", "$http", "$stateParams", function($q, $http, $stateParams){         
             		var deferred = $q.defer();
-            		return $http({method: 'POST', url: "/api/get-edit-profile", data:{userIdNum: $stateParams.id}}).then(function (obj) {
+            		return $http({method: 'POST', url: "/api/get-edit-profile", data:{userIdNum: $stateParams.id}
+		        	    }).then(function (obj) {
 	        			 deferred.resolve();
 	                     return obj.data;
                     });
