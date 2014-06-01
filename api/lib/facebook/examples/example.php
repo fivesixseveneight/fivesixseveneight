@@ -63,7 +63,7 @@ if ($user) {
 if ($user) {
   try {
     // Proceed knowing you have a logged in user who's authenticated.
-    $user_friends = $facebook->api('/'.$user.'/friendlists');
+    $user_friends = $facebook->api('/'.$user.'/friends');
   } catch (FacebookApiException $e) {
     error_log($e);
     $user = null;
