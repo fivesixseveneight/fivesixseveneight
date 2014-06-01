@@ -69,6 +69,23 @@ if ($user) {
     $user = null;
   }
 }
+
+/*
+ * Gets friends that can be invited lists
+* */
+if ($user) {
+	try {
+		// Proceed knowing you have a logged in user who's authenticated.
+		$user_invite_friends = $facebook->api('/me/invitable_friends');
+	} catch (FacebookApiException $e) {
+		error_log($e);
+		$user = null;
+	}
+}
+
+
+
+
 // Login or logout url will be needed depending on current user state.
 if ($user) {
  	$logoutUrl = $facebook->getLogoutUrl();
@@ -131,8 +148,13 @@ $naitik = $facebook->api('/naitik');
       <pre><?php print_r($user_profile); ?></pre>
       
       
-      <h3>Your Friends List Object (/friendlists)</h3>
+      <h3>Your Friends List Object (/friends)</h3>
       <pre><?php print_r($user_friends); ?></pre>
+      
+      
+      <h3>Invitable friends list (/invitable_friends)</h3>
+      <pre><?php print_r($user_invite_friends); ?></pre>
+          
       
     <?php else: ?>
       <strong><em>You are not Connected.</em></strong>
