@@ -57,7 +57,7 @@ if ($user) {
 // Login or logout url will be needed depending on current user state.
 if ($user) {
  	$logoutUrl = $facebook->getLogoutUrl();
-  //$facebook->destroySession();
+  	$facebook->destroySession();
   
 } else {
 // $statusUrl = $facebook->getLoginStatusUrl();
