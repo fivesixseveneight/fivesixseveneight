@@ -76,7 +76,7 @@ if ($user) {
 if ($user) {
 	try {
 		// Proceed knowing you have a logged in user who's authenticated.
-		$user_invite_friends = $facebook->api('/me/invitable_friends');
+		$user_invite_friends = $facebook->api('/'.$user.'/invitable_friends');
 	} catch (FacebookApiException $e) {
 		error_log($e);
 		$user = null;
