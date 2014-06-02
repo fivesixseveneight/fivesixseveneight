@@ -1,7 +1,51 @@
 define(['../module'], function (controllers) {
     'use strict';
-    controllers.controller('editProfileController', ['$scope','$rootScope', '$state' ,'$stateParams', 'getEditUserProfile', function ($scope, $rootScope, $state, $stateParams, getEditUserProfile) {
+    controllers.controller('editProfileController', ['$scope','$rootScope', '$state' , '$modal','$stateParams', 'getEditUserProfile', function ($scope, $rootScope, $state,$modal, $stateParams, getEditUserProfile) {
 
+    	
+
+    	  $scope.items = ['item1', 'item2', 'item3'];
+
+    	  $scope.open = function (size) {
+    		 console.log("open");
+    	    var modalInstance = $modal.open({
+    	      templateUrl: 'myModalContent.html',
+    	      controller: ModalInstanceCtrl,
+    	      size: size,
+    	      resolve: {
+    	        items: function () {
+    	          return $scope.items;
+    	        }
+    	      }
+    	    });
+
+    	    modalInstance.result.then(function (selectedItem) {
+    	      $scope.selected = selectedItem;
+    	    }, function () {
+    	 
+    	    });
+    	  };
+    	  
+    	  var ModalInstanceCtrl = function ($scope, $modalInstance, items) {
+
+    		  $scope.items = items;
+    		  $scope.selected = {
+    		    item: $scope.items[0]
+    		  };
+
+    		  $scope.ok = function () {
+    		    $modalInstance.close($scope.selected.item);
+    		  };
+
+    		  $scope.cancel = function () {
+    		    $modalInstance.dismiss('cancel');
+    		  };
+    		};
+    	  
+    	  
+    	  
+    	  
+    	  
     	$scope.pageContent = {};
     	$scope.dataObj;
 
@@ -14,6 +58,14 @@ define(['../module'], function (controllers) {
     		console.log("save profile");
     	};
     	
+    	$scope.refreshFacebook = function(){
+    		console.log("refreshFacebook");
+    	};
+    	
+    	$scope.removeFacebook = function(){
+    		console.log("removeFacebook");
+    	};
+
     	$scope.$on('$destroy', function() {
         //  console.log("destroy scope");
             destroy();

@@ -1,5 +1,31 @@
 <div class="editProfile col-xs-12">
 	
+		
+					<script type="text/ng-template" id="myModalContent.html">
+                   <div class="modal-header">
+            <h3 class="modal-title">I'm a modal!</h3>
+        </div>
+        <div class="modal-body">
+            <ul>
+                <li ng-repeat="item in items">
+                    <a ng-click="selected.item = item">{{ item }}</a>
+                </li>
+            </ul>
+            Selected: <b>{{ selected.item }}</b>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>	
+     </script>
+									
+				    <button class="btn btn-default" ng-click="open()">Open me!</button>
+				    <button class="btn btn-default" ng-click="open('lg')">Large modal</button>
+				    <button class="btn btn-default" ng-click="open('sm')">Small modal</button>
+				    <div ng-show="selected">Selection from a modal: {{ selected }}</div>
+			
+			
+			
 	
 	<div class="profileTopWrapper col-xs-12 col-sm-offset-1 col-sm-5 col-md-offset-2 col-md-4" >
 		<div class="profileImageWrapper col-xs-12">
@@ -68,10 +94,9 @@
 	
 		<div class="profileCampaigntitle col-xs-12">Social Media Accounts</div>
 		
+		<div class="profile-section-title col-xs-12">Facebook</div>
+		
 		<div ng-if="userObj.facebookObj" class="col-xs-12">
-
-			<div class="profile-section-title">Facebook</div>
-			
 			<div class="profile-row-wrapper col-xs-12">
 				<div class="profile-left-col  col-xs-8 col-sm-offset-0 col-sm-8 col-md-9">
 				Facebook Id
@@ -104,20 +129,13 @@
 				{{userObj.facebookObj.friendsCountNum}}
 				</div>
 			</div>
-			<div class="profile-row-wrapper col-xs-12">
-				<div class="profile-left-col  col-xs-8 col-sm-offset-0 col-sm-8 col-md-9">
-				Allow published campaigns on Facebook
-				</div>
-				<div class="profile-right-col  col-xs-offset-2 col-xs-2 col-sm-offset-1 col-sm-3 col-md-offset-1 col-md-2">
-				add checkbox here
-				</div>
-			</div>
+
 			<div class="profile-row-wrapper col-xs-12">
 				<div class="profile-left-col  col-xs-8 col-sm-offset-0 col-sm-8 col-md-9">
 				Refresh Facebook stats
 				</div>
 				<div class="profile-right-col  col-xs-offset-2 col-xs-2 col-sm-offset-1 col-sm-3 col-md-offset-1 col-md-2">
-				Add button here
+					<button type="submit" ng-click="refreshFacebook()" submit-form-clicked form-submit-complete-bln class="btn btn-sm btn-default pull-right">Refresh</button>
 				</div>
 			</div>
 			<div class="profile-row-wrapper col-xs-12">
@@ -125,15 +143,22 @@
 				Remove Facebook account
 				</div>
 				<div class="profile-right-col  col-xs-offset-2 col-xs-2 col-sm-offset-1 col-sm-3 col-md-offset-1 col-md-2">
-				Add button here
+					<button type="submit" ng-click="removeFacebook()" submit-form-clicked form-submit-complete-bln class="btn btn-sm btn-default pull-right">Remove</button>
 				</div>
 			</div>
-			
-			</br>
 		</div>
-			
-	
-	
+		
+		<div ng-if="!userObj.facebookObj" class="col-xs-12">	
+			<div class="profile-row-wrapper col-xs-12">
+				<div class="profile-left-col  col-xs-8 col-sm-offset-0 col-sm-8 col-md-9">
+					Connect Facebook account
+				</div>
+				<div class="profile-right-col  col-xs-offset-2 col-xs-2 col-sm-offset-1 col-sm-3 col-md-offset-1 col-md-2">
+				     <input class="pull-right" type="checkbox">
+				</div>
+			</div>
+		</div>
+		</br>
 	
 
 		<!-- 

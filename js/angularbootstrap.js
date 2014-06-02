@@ -10,7 +10,8 @@ define([
     'jquery',
     'jqueryValidate',
     'bootstrap',
-    'bootstrap-select'
+    'bootstrap-select',
+    'ui.bootstrap'
 ], function (require, ng) {
     'use strict';
     /*

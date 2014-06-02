@@ -41,6 +41,22 @@
 	     url('../fonts/ProximaNova/Semibold/proxima-nova-semibold-webfont.eot?#iefix') format('embedded-opentype');
 }
 
+/*
+.modal {
+    display: block;
+}
+.modal-body:before,
+.modal-body:after {
+    display: table;
+    content: " ";
+}
+.modal-header:before,
+.modal-header:after {
+    display: table;
+    content: " ";
+}
+*/
+
 .btn-primary {
 	background-image: -webkit-linear-gradient(top,#FF8C8C 0,#FF3030 100%);
 	background-image: linear-gradient(to bottom,#FF8C8C 0,#FF3030 100%);

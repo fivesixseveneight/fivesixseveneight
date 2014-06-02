@@ -16,8 +16,9 @@ require.config({
         'domReady': '../lib/requirejs-domready/domReady',
         'jquery': "../lib/jquery/jquery",
         'jqueryValidate': "../lib/jquery/jquery.validate",
-	    'bootstrap': "../lib/bootstrap/js/bootstrap.min",
-	    'bootstrap-select': "../lib/bootstrap-select/bootstrap-select"
+        'bootstrap': "../lib/bootstrap/js/bootstrap.min",
+	    'bootstrap-select': "../lib/bootstrap-select/bootstrap-select",
+	    'ui.bootstrap': "../lib/bootstrap/js/ui-bootstrap",
     },
 
     /**
@@ -48,6 +49,9 @@ require.config({
         },
         'bootstrap-select': {
             deps: ['bootstrap']
+        },
+        'ui.bootstrap': {
+            deps: ['angular', 'bootstrap']
         },
         'jqueryValidate': {
             deps: ['jquery']
