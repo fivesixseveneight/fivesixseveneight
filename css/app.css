@@ -765,7 +765,41 @@ Profile
 	max-height: 300px;
 }
 
+.editProfile .profile-row-wrapper{
+	margin-bottom: 10px;
+	padding: 0px;
+}
 
+.editProfile .profile-left-col{
+	vertical-align:top;
+	display: inline-block;
+
+	margin-bottom: 5px;
+	font-family: "ProximaNova-Regular";
+	padding: 0px;
+}
+
+.editProfile .profile-right-col{
+	vertical-align:top;
+	display: inline-block;
+	padding: 0px;
+	
+}
+
+.editProfile .profile-section-title{
+	margin-top: 20px;
+	margin-bottom: 30px;
+	font-size: 20px;
+	font-family: "ProximaNova-Regular";
+}
+
+.editProfile .profileCampaigntitle{
+	margin-bottom: 0px;
+	font-size: 20px;
+	font-family: "ProximaNova-Regular";
+	padding-left: 15px;
+	padding-right: 15px;
+}
 
 
 
@@ -1084,6 +1118,8 @@ FOOTER
 	.profile .profileImageWrapper{
 		float: none;
 	}
+	
+	
 	
 	
 	.editProfile .profileTopWrapper{

@@ -70,6 +70,7 @@ $app->post('/get-edit-profile',  function () use ($app) {
 	$params = json_decode($app->request()->getBody());
 	$userIdNum = $params -> userIdNum;
 	$dbUserAcctObj = [];
+	$newdbUserAcctObj;
 	if(checkUserIdConsistent($userIdNum) || checkUserIsAdmin($userIdNum)){
 	// if(false){
 		$userObj = new stdClass();
@@ -77,29 +78,54 @@ $app->post('/get-edit-profile',  function () use ($app) {
 		$dbUserObj = getUserById($userIdNum) -> userObj;
 		
 		$dbUserAcctResultObj = getUserAccountsById($userIdNum);
+		
 		if($dbUserAcctResultObj -> successBln){
 			$dbUserAcctObj = $dbUserAcctResultObj -> userObj;
 		};
-		
-		
+				
+		$userObj -> useraccountIdNum = $dbUserAcctObj["useraccountIdNum"];
+		$userObj -> userIdNum = $dbUserObj["userIdNum"];		
+		$userObj -> usernameStr = $dbUserObj["usernameStr"];
 		$userObj -> firstnameStr = $dbUserObj["firstnameStr"];
 		$userObj -> lastnameStr = $dbUserObj["lastnameStr"];
-		$userObj -> companyStr = $dbUserObj["firstnameStr"];
-		$userObj -> websiteStr = "websiteStr";
-		$userObj -> facebookStr = "facebookStr";
-		$userObj -> twitterStr = "twitterStr";
-		$userObj -> instagramStr = "instagramStr";
-		$userObj -> googleplusStr = "googleplusStr";
-		$userObj -> vineStr = "vineStr";
-		$userObj -> pinterestStr = "pinterestStr";
 		
-
+		$userObj -> profilePicStr = $dbUserAcctObj["profilePicStr"];
+		$userObj -> audienceStr = $dbUserAcctObj["audienceStr"];
+		$userObj -> bioStr = $dbUserAcctObj["bioStr"];
+		$userObj -> supportStr = $dbUserAcctObj["supportStr"];
+		$userObj -> websiteStr = $dbUserAcctObj["websiteStr"];
 		
+		if(isset($dbUserAcctObj["companyObj"])){
+			$userObj -> companyObj = $dbUserAcctObj["companyObj"];
+		}
+		if(isset($dbUserAcctObj["facebookObj"])){
+			$userObj -> facebookObj = $dbUserAcctObj["facebookObj"];
+		}
+		if(isset($dbUserAcctObj["twitterObj"])){
+			$userObj -> twitterObj = $dbUserAcctObj["twitterObj"];
+		}
+		if(isset($dbUserAcctObj["googleplusObj"])){
+			$userObj -> googleplusObj = $dbUserAcctObj["googleplusObj"];
+		}
+		if(isset($dbUserAcctObj["instagramObj"])){
+			$userObj -> instagramObj = $dbUserAcctObj["instagramObj"];
+		}
+		if(isset($dbUserAcctObj["pinterestObj"])){
+			$userObj -> pinterestObj = $dbUserAcctObj["pinterestObj"];
+		}
+		if(isset($dbUserAcctObj["vineObj"])){
+			$userObj -> vineObj = $dbUserAcctObj["vineObj"];
+		}
+		if(isset($dbUserAcctObj["youtubeObj"])){
+			$userObj -> youtubeObj = $dbUserAcctObj["youtubeObj"];
+		}
 		
 		$output -> permissionBln = true;
 		$output -> userObj = $userObj;
-		$output -> dbUserObj = $dbUserObj;
-		$output -> dbUserAcctObj = $dbUserAcctObj;
+		
+	//	$output -> dbUserObj = $dbUserObj;
+	//	$output -> dbUserAcctObj = $dbUserAcctObj;
+		
 	}else{
 
 		$output -> permissionBln = false;
@@ -1571,19 +1597,38 @@ function getUserById($userIdNum){
 
 /*
 *	getUserAccountsById
-*	gets user social media accounts and profile data by id
+*	gets user social media accounts by id
 */
 
 function getUserAccountsById($userIdNum){
 	$output = new stdClass();
 	$dbUserObj = [];
+	$userObj = [];
+	$newUserObj;
 	global $db_host;
 	global $db_username;
 	global $db_password;
 	global $db_database;
-
-	$sqlQueryStr = "SELECT * FROM useraccountinfo WHERE userIdNum='$userIdNum'";
-
+	
+	$sqlQueryStr = "SELECT 
+	userIdNum,
+	useraccountIdNum,
+	profilePicStr,
+	bioStr,
+	supportStr,
+	audienceStr,
+	websiteStr,
+	companyIdNum,
+	facebookBln, 
+	googleplusBln,
+	instagramBln,
+	pinterestBln,
+	twitterBln,
+	vineBln,
+	youtubeBln
+	
+	FROM useraccountinfo WHERE userIdNum='$userIdNum'";
+	
 	$sql_db = mysqli_connect($db_host, $db_username, $db_password, $db_database);
 	if (mysqli_connect_errno()){
 		echo "Failed to connect to MySQL: " . mysqli_connect_error();
@@ -1595,13 +1640,105 @@ function getUserAccountsById($userIdNum){
 
 	// no user found
 	if($rowsNum == 0 || $rowsNum == null){
-		$output -> successBln = false;
+		//create a new user if it doesn't exist
+		$newUserObj = createUserAccountsById($userIdNum);
+		
+		if($newUserObj -> successBln){
+			$output -> successBln = true;
+			$dbUserObj = $newUserObj -> userObj;
+		}else{
+			$output -> successBln = false;
+			$sql_db -> close();
+			$result -> close();
+		}
 	}else{
 		$output -> successBln = true;
 		$dbUserObj = mysqli_fetch_assoc($result);
-		$output -> userObj = $dbUserObj;
 	}
+	
 
+	$userObj["userIdNum"] = $dbUserObj["userIdNum"];
+	$userObj["useraccountIdNum"] = $dbUserObj["useraccountIdNum"];
+	$userObj["profilePicStr"] = $dbUserObj["profilePicStr"];
+	$userObj["bioStr"] = $dbUserObj["bioStr"];
+	$userObj["supportStr"] = $dbUserObj["supportStr"];
+	$userObj["audienceStr"] = $dbUserObj["audienceStr"];
+	$userObj["websiteStr"] = $dbUserObj["websiteStr"];
+	
+	
+	if(isset($dbUserObj["companyIdNum"]) && $dbUserObj["companyIdNum"] != "0"){
+		//	$userObj["facebookBln"] = $dbUserObj["facebookBln"];
+		$companyIdNum = $dbUserObj["companyIdNum"];
+		$companyObj;
+		$sqlQueryStr = "SELECT * FROM companies WHERE companyIdNum='$companyIdNum'";
+		$result = mysqli_query($sql_db, $sqlQueryStr);
+		$companyObj = mysqli_fetch_assoc($result);
+		$userObj["companyObj"] = $companyObj;
+	}
+	
+	if(isset($dbUserObj["facebookBln"]) && $dbUserObj["facebookBln"] == "1"){
+	//	$userObj["facebookBln"] = $dbUserObj["facebookBln"];
+		
+		$sqlQueryStr = "SELECT * FROM facebookaccounts WHERE userIdNum='$userIdNum'";
+		$result = mysqli_query($sql_db, $sqlQueryStr);
+		$userObj["facebookObj"] = mysqli_fetch_assoc($result);
+	}
+	
+	if(isset($dbUserObj["googleplusBln"]) && $dbUserObj["googleplusBln"] == "1"){
+	//	$userObj["googleplusBln"] = $dbUserObj["googleplusBln"];
+		
+		$sqlQueryStr = "SELECT * FROM googleplusaccounts WHERE userIdNum='$userIdNum'";
+		$result = mysqli_query($sql_db, $sqlQueryStr);
+		$userObj["googleplusObj"] = mysqli_fetch_assoc($result);
+		
+	}
+	
+	if(isset($dbUserObj["instagramBln"]) && $dbUserObj["instagramBln"] == "1"){
+	//	$userObj["instagramBln"] = $dbUserObj["instagramBln"];
+		
+		$sqlQueryStr = "SELECT * FROM instagramaccounts WHERE userIdNum='$userIdNum'";
+		$result = mysqli_query($sql_db, $sqlQueryStr);
+		$userObj["instagramObj"] = mysqli_fetch_assoc($result);
+		
+	}
+	
+	if(isset($dbUserObj["pinterestBln"]) && $dbUserObj["pinterestBln"] == "1"){
+	//	$userObj["pinterestBln"] = $dbUserObj["pinterestBln"];
+		
+		$sqlQueryStr = "SELECT * FROM pinterestaccounts WHERE userIdNum='$userIdNum'";
+		$result = mysqli_query($sql_db, $sqlQueryStr);
+		
+		$userObj["pinterestObj"] = mysqli_fetch_assoc($result);
+	}
+	
+	if(isset($dbUserObj["twitterBln"]) && $dbUserObj["twitterBln"] == "1"){
+	//	$userObj["twitterBln"] = $dbUserObj["twitterBln"];
+		
+		$sqlQueryStr = "SELECT * FROM twitteraccounts WHERE userIdNum='$userIdNum'";
+		$result = mysqli_query($sql_db, $sqlQueryStr);
+		
+		$userObj["twitterObj"] = mysqli_fetch_assoc($result);
+	}
+	
+	if(isset($dbUserObj["vineBln"]) && $dbUserObj["vineBln"] == "1"){
+	//	$userObj["vineBln"] = $dbUserObj["vineBln"];
+		
+		$sqlQueryStr = "SELECT * FROM vineaccounts WHERE userIdNum='$userIdNum'";
+		$result = mysqli_query($sql_db, $sqlQueryStr);
+		
+		$userObj["vineObj"] = mysqli_fetch_assoc($result);
+	}
+	
+	if(isset($dbUserObj["youtubeBln"]) && $dbUserObj["youtubeBln"] == "1"){
+	//	$userObj["youtubeBln"] = $dbUserObj["youtubeBln"];
+		
+		$sqlQueryStr = "SELECT * FROM youtubeaccounts WHERE userIdNum='$userIdNum'";
+		$result = mysqli_query($sql_db, $sqlQueryStr);
+		$userObj["youtubeObj"] = mysqli_fetch_assoc($result);
+	}
+		
+	
+	$output -> userObj = $userObj;
 	$sql_db -> close();
 	$result -> close();
 
@@ -1620,38 +1757,86 @@ function createUserAccountsById($userIdNum){
 	global $db_password;
 	global $db_database;
 	
-	
-	
-	$sqlQueryStr = "INSERT INTO
-	useraccountinfo(
-	useraccountIdNum,
-	userIdNum
-	)
-	
-	VALUES (
-	'',
-	'$userIdNum'
-	)";
-
 	$sql_db = mysqli_connect($db_host, $db_username, $db_password, $db_database);
 	if (mysqli_connect_errno()){
 		echo "Failed to connect to MySQL: " . mysqli_connect_error();
 	}
-
+	
+	$sqlQueryStr = "SELECT * FROM useraccountinfo WHERE userIdNum='$userIdNum'";
 	$result = mysqli_query($sql_db, $sqlQueryStr);
+	$rowsNum = mysqli_num_rows($result);
 	
 	// no user found
-	if($result){
-		$output -> successBln = false;
-	}else{
-		$output -> successBln = true;
+	if($rowsNum == 0 || $rowsNum == null){
+		//create user because they don't exist
+		$result -> close();
+		
+		$sqlQueryStr = "INSERT INTO
+		useraccountinfo(
+		useraccountIdNum,
+		userIdNum
+		)
+		
+		VALUES (
+		'',
+		'$userIdNum'
+		)";
+		
+		$result = mysqli_query($sql_db, $sqlQueryStr);
+
+		//successfully added new user
+		if($result){
+			// query the user account info after adding them
+			$sqlQueryStr = "SELECT * FROM useraccountinfo WHERE userIdNum='$userIdNum'";
+			$result = mysqli_query($sql_db, $sqlQueryStr);
+			$output -> successBln = true;
+		}else{
+			$output -> successBln = false;
+		}
 	}
-
-	$sql_db -> close();
+	
+	$dbUserObj = mysqli_fetch_assoc($result);
+	
+	$output -> userObj = $dbUserObj;
 	$result -> close();
-
+	$sql_db -> close();
+	
 	return $output;
 }
+
+/*
+ * Gets facebook id by user id
+ */
+function getFacebookIdById($userIdNum){
+	$output = new stdClass();
+	global $db_host;
+	global $db_username;
+	global $db_password;
+	global $db_database;
+	
+	$sqlQueryStr = "SELECT facebookIdNum FROM facebookaccounts WHERE userIdNum='$userIdNum'";
+	$sql_db = mysqli_connect($db_host, $db_username, $db_password, $db_database);
+	if (mysqli_connect_errno()){
+		echo "Failed to connect to MySQL: " . mysqli_connect_error();
+	}
+	
+	$result = mysqli_query($sql_db, $sqlQueryStr);
+	
+	if($result){
+		$dbUserObj = mysqli_fetch_assoc($result);
+		$output -> dataObj = $dbUserObj;
+		$output -> successBln = true;
+	}else{
+		$output -> dataObj = "";
+		$output -> successBln = false;
+		$output -> messageStr = "Facebook Id not found";
+	}
+		
+	$sql_db -> close();
+	$result -> close();
+	
+	return $output;
+};
 
 
 /*

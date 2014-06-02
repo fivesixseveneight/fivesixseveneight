@@ -34,27 +34,27 @@
 		
 			<div class="form-group col-xs-12">
 				<label>About me</label>
-		    	<textarea ng-model="aboutObj.aboutStr" class="form-control" placeholder=""></textarea>  		
+		    	<textarea ng-model="userObj.bioStr" class="form-control" placeholder=""></textarea>  		
 			</div>
 						
 			<div class="form-group col-xs-12">
 				<label>Campaigns I support</label>
-		    	<textarea ng-model="aboutObj.supportStr" class="form-control" placeholder=""></textarea>  		
+		    	<textarea ng-model="userObj.supportStr" class="form-control" placeholder=""></textarea>  		
 		    </div>
 		    
 			<div class="form-group col-xs-12">
 				<label>My Primary Audience</label>
-		    	<textarea ng-model="aboutObj.audienceStr" class="form-control" placeholder=""></textarea>
+		    	<textarea ng-model="userObj.audienceStr" class="form-control" placeholder=""></textarea>
 		    </div>
 			    	
 			<div class="form-group col-xs-12">
 				<label>Locations</label>
-		    	<input ng-model="aboutObj.locationsStr" class="form-control" placeholder="Locations"/>
+		    	<input ng-model="userObj.locationsStr" class="form-control" placeholder="Locations"/>
 		    </div>
 			
 			<div class="form-group col-xs-12">
 				<label>Markets</label>
-		    	<input ng-model="aboutObj.marketsStr" class="form-control" placeholder="Markets"/>
+		    	<input ng-model="userObj.marketsStr" class="form-control" placeholder="Markets"/>
 		    </div>
 			
 			<div>
@@ -67,8 +67,102 @@
 	<div class="profileBottomWrapper col-xs-12 col-sm-6 col-md-offset-0 col-md-5">
 	
 		<div class="profileCampaigntitle col-xs-12">Social Media Accounts</div>
-		<div class="col-xs-12">Connect to facebook</div>
-		<div class="col-xs-12">Allow published campaigns on Facebook</div>
+		
+		<div ng-if="userObj.facebookObj" class="col-xs-12">
+
+			<div class="profile-section-title">Facebook</div>
+			
+			<div class="profile-row-wrapper col-xs-12">
+				<div class="profile-left-col  col-xs-8 col-sm-offset-0 col-sm-8 col-md-9">
+				Facebook Id
+				</div>
+				<div class="profile-right-col  col-xs-offset-2 col-xs-2 col-sm-offset-1 col-sm-3 col-md-offset-1 col-md-2">
+				{{userObj.facebookObj.facebookIdNum}}
+				</div>
+			</div>
+			<div class="profile-row-wrapper col-xs-12">
+				<div class="profile-left-col  col-xs-8 col-sm-offset-0 col-sm-8 col-md-9">
+				Facebook Link
+				</div>
+				<div class="profile-right-col  col-xs-offset-2 col-xs-2 col-sm-offset-1 col-sm-3 col-md-offset-1 col-md-2">
+				 {{userObj.facebookObj.linkStr}}
+				</div>
+			</div>
+			<div class="profile-row-wrapper col-xs-12">
+				<div class="profile-left-col  col-xs-8 col-sm-offset-0 col-sm-8 col-md-9">
+				Name
+				</div>
+				<div class="profile-right-col  col-xs-offset-2 col-xs-2 col-sm-offset-1 col-sm-3 col-md-offset-1 col-md-2">
+				 {{userObj.facebookObj.firstNameStr}}  {{userObj.facebookObj.lastNameStr}}
+				</div>
+			</div>
+			<div class="profile-row-wrapper col-xs-12">
+				<div class="profile-left-col  col-xs-8 col-sm-offset-0 col-sm-8 col-md-9">
+				Number of friends
+				</div>
+				<div class="profile-right-col  col-xs-offset-2 col-xs-2 col-sm-offset-1 col-sm-3 col-md-offset-1 col-md-2">
+				{{userObj.facebookObj.friendsCountNum}}
+				</div>
+			</div>
+			<div class="profile-row-wrapper col-xs-12">
+				<div class="profile-left-col  col-xs-8 col-sm-offset-0 col-sm-8 col-md-9">
+				Allow published campaigns on Facebook
+				</div>
+				<div class="profile-right-col  col-xs-offset-2 col-xs-2 col-sm-offset-1 col-sm-3 col-md-offset-1 col-md-2">
+				add checkbox here
+				</div>
+			</div>
+			<div class="profile-row-wrapper col-xs-12">
+				<div class="profile-left-col  col-xs-8 col-sm-offset-0 col-sm-8 col-md-9">
+				Refresh Facebook stats
+				</div>
+				<div class="profile-right-col  col-xs-offset-2 col-xs-2 col-sm-offset-1 col-sm-3 col-md-offset-1 col-md-2">
+				Add button here
+				</div>
+			</div>
+			<div class="profile-row-wrapper col-xs-12">
+				<div class="profile-left-col  col-xs-8 col-sm-offset-0 col-sm-8 col-md-9">
+				Remove Facebook account
+				</div>
+				<div class="profile-right-col  col-xs-offset-2 col-xs-2 col-sm-offset-1 col-sm-3 col-md-offset-1 col-md-2">
+				Add button here
+				</div>
+			</div>
+			
+			</br>
+		</div>
+			
+	
+	
+	
+
+		<!-- 
+			<div>
+				<div class="col-xs-12">Twitter</div>
+				<div class="col-xs-12">Allow published campaigns on Twitter</div>
+			</div>
+			<div>
+				<div class="col-xs-12">Google+</div>
+				<div class="col-xs-12">Allow published campaigns on Google+</div>
+			</div>
+			<div>
+				<div class="col-xs-12">Youtube</div>
+				<div class="col-xs-12">Allow published campaigns on Youtube</div>
+			</div>
+			<div>
+				<div class="col-xs-12">Instagram</div>
+				<div class="col-xs-12">Allow published campaigns on Instagram</div>
+			</div>
+			<div>
+				<div class="col-xs-12">Pinterest</div>
+				<div class="col-xs-12">Allow published campaigns on Pinterest</div>
+			</div>
+			<div>
+				<div class="col-xs-12">Vine</div>
+				<div class="col-xs-12">Allow published campaigns on Vine</div>
+			</div>
+		 -->
+		
 		
 	</div>
 

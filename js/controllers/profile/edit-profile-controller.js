@@ -4,17 +4,11 @@ define(['../module'], function (controllers) {
 
     	$scope.pageContent = {};
     	$scope.dataObj;
-    	$scope.userObj = {};
+
     	$scope.tokenStr = "";
     	
     	$scope.permissionBln = false;
     	
-    	$scope.aboutObj = {};
-    	$scope.aboutObj.aboutStr = "I am this and that";
-    	$scope.aboutObj.supportStr = "I support manufacturing and retail";
-    	$scope.aboutObj.audienceStr = "My audience includes auto industry";
-    	$scope.aboutObj.locationsStr = "";
-    	$scope.aboutObj.marketsStr = "";
     	
     	$scope.saveProfile = function(){
     		console.log("save profile");
@@ -30,6 +24,9 @@ define(['../module'], function (controllers) {
     	//console.log("init");
     		setup();
     		checkPermission();
+    		if($scope.permissionBln){
+    			parseData();
+    		}
     		$scope.loadingEnd();
     	};
     	
@@ -45,6 +42,34 @@ define(['../module'], function (controllers) {
     			//redirect
     	    	$state.transitionTo("root.primary.profile", {id: $stateParams.id});
     		}
+    	};
+    	
+    	var parseData = function(){
+    		console.log("parseData", $scope.userObj);
+
+        	$scope.userObj.locationsArr;
+        	$scope.userObj.marketsArr;
+        	
+        	$scope.userObj.audienceStr;
+        	$scope.userObj.bioStr;
+        	$scope.userObj.supportStr;
+        	
+        	$scope.userObj.userIdNum;
+        	$scope.userObj.useraccountIdNum;
+        	$scope.userObj.profilePicStr;
+        	
+    		$scope.userObj.usernameStr;
+        	$scope.userObj.firstnameStr;
+        	$scope.userObj.lastnameStr;
+        	$scope.userObj.websiteStr;
+
+    		$scope.userObj.companyObj;
+    		$scope.userObj.facebookObj;
+    		$scope.userObj.googleplusObj;
+    		$scope.userObj.instagramObj;
+    		$scope.userObj.pinterestObj;
+    		$scope.userObj.vineObj;
+    		$scope.userObj.youtubeObj;
     	};
     	
     	var destroy = function(){
