@@ -3,56 +3,14 @@ define(['../module'], function (controllers) {
     controllers.controller('editProfileController', ['$scope','$rootScope', '$state' , '$modal','$stateParams', 'getEditUserProfile', function ($scope, $rootScope, $state,$modal, $stateParams, getEditUserProfile) {
 
     	
-
-    	  $scope.items = ['item1', 'item2', 'item3'];
-
-    	  $scope.open = function (size) {
-    		 console.log("open");
-    	    var modalInstance = $modal.open({
-    	      templateUrl: 'myModalContent.html',
-    	      controller: ModalInstanceCtrl,
-    	      size: size,
-    	      resolve: {
-    	        items: function () {
-    	          return $scope.items;
-    	        }
-    	      }
-    	    });
-
-    	    modalInstance.result.then(function (selectedItem) {
-    	      $scope.selected = selectedItem;
-    	    }, function () {
-    	 
-    	    });
-    	  };
-    	  
-    	  var ModalInstanceCtrl = function ($scope, $modalInstance, items) {
-
-    		  $scope.items = items;
-    		  $scope.selected = {
-    		    item: $scope.items[0]
-    		  };
-
-    		  $scope.ok = function () {
-    		    $modalInstance.close($scope.selected.item);
-    		  };
-
-    		  $scope.cancel = function () {
-    		    $modalInstance.dismiss('cancel');
-    		  };
-    		};
-    	  
-    	  
-    	  
-    	  
-    	  
+    	
     	$scope.pageContent = {};
     	$scope.dataObj;
 
     	$scope.tokenStr = "";
     	
     	$scope.permissionBln = false;
-    	
+    	$scope.modalObj;
     	
     	$scope.saveProfile = function(){
     		console.log("save profile");
@@ -62,9 +20,33 @@ define(['../module'], function (controllers) {
     		console.log("refreshFacebook");
     	};
     	
+    	
+    	$scope.cancelModal = function(){
+    		console.log("cancelModal");
+    		$scope.modalObj.close();
+    	};
+    	
+    	$scope.confirmModal = function(){
+    		console.log("confirmModal");
+    		$scope.modalObj.close();
+    	};
+    	
     	$scope.removeFacebook = function(){
     		console.log("removeFacebook");
+    		$scope.modalObj = $modal.open({
+      	  			templateUrl: './partials/misc/modals/confirm.html',
+      	  			backdrop: "static",
+      	  			keyboard : false,
+      	  			scope: $scope
+      	    });
+
+    		$scope.modalObj.result.then(function () {
+      	    }, function () {
+      	    	console.log("modizzle dismizzle");
+      	    });
     	};
+    	
+    	
 
     	$scope.$on('$destroy', function() {
         //  console.log("destroy scope");
