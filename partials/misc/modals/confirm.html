@@ -1,10 +1,25 @@
 <div class="confirm-modal">
 
-Are you sure?
+		
+		<div ng-if="modalDataObj.titleStr" class="modal-header">
+			
+			{{modalDataObj.titleStr}}
+			
+		</div>
+		
+		<div ng-if="modalDataObj.bodyStr" class="modal-body">
+			
+			<div class="modal-body-content">
+				{{modalDataObj.bodyStr}}
+			</div>
+		
+			<ul>
+				<li ng-click="confirmModal()" class="modal-option" >Confirm</li>
+				<li ng-click="cancelModal()" class="modal-option">Cancel</li>
+			</ul>
+		</div>
 
-		<button type="submit" ng-click="cancelModal()" class="btn btn-sm btn-default pull-right">Cancel</button>
+		
 
-		<button type="submit" ng-click="confirmModal()" class="btn btn-sm btn-default pull-right">Confirm</button>
-
-
+	
 </div>

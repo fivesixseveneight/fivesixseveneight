@@ -41,21 +41,31 @@
 	     url('../fonts/ProximaNova/Semibold/proxima-nova-semibold-webfont.eot?#iefix') format('embedded-opentype');
 }
 
-/*
-.modal {
-    display: block;
+.modal-header{
+	
 }
-.modal-body:before,
-.modal-body:after {
-    display: table;
-    content: " ";
+
+.modal-body{
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-bottom: 5px;
+	padding-top: 0px;
 }
-.modal-header:before,
-.modal-header:after {
-    display: table;
-    content: " ";
+
+.modal-body-content{
+	padding: 20px;
 }
-*/
+
+
+.modal-option{
+	cursor: pointer;
+	padding: 20px;
+}
+
+.modal-option:hover{
+	background-color: #FF3030;
+	color: #FFF;
+}
 
 .btn-primary {
 	background-image: -webkit-linear-gradient(top,#FF8C8C 0,#FF3030 100%);

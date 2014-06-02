@@ -11,6 +11,7 @@ define(['../module'], function (controllers) {
     	
     	$scope.permissionBln = false;
     	$scope.modalObj;
+    	$scope.modalDataObj = {};
     	
     	$scope.saveProfile = function(){
     		console.log("save profile");
@@ -19,6 +20,7 @@ define(['../module'], function (controllers) {
     	$scope.refreshFacebook = function(){
     		console.log("refreshFacebook");
     	};
+    	
     	
     	
     	$scope.cancelModal = function(){
@@ -33,11 +35,13 @@ define(['../module'], function (controllers) {
     	
     	$scope.removeFacebook = function(){
     		console.log("removeFacebook");
+    		$scope.modalDataObj.titleStr = "Confirm";
+    		$scope.modalDataObj.bodyStr = "Are you sure you want to remove your Facebook account?";
+    		
     		$scope.modalObj = $modal.open({
       	  			templateUrl: './partials/misc/modals/confirm.html',
-      	  			backdrop: "static",
-      	  			keyboard : false,
-      	  			scope: $scope
+      	  			scope: $scope,
+      	  			size: "sm",
       	    });
 
     		$scope.modalObj.result.then(function () {
@@ -45,6 +49,7 @@ define(['../module'], function (controllers) {
       	    	console.log("modizzle dismizzle");
       	    });
     	};
+    	
     	
     	
 
