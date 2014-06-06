@@ -82,7 +82,7 @@ $app->post('/get-edit-profile',  function () use ($app) {
 		if($dbUserAcctResultObj -> successBln){
 			$dbUserAcctObj = $dbUserAcctResultObj -> userObj;
 		};
-				
+			
 		$userObj -> useraccountIdNum = $dbUserAcctObj["useraccountIdNum"];
 		$userObj -> userIdNum = $dbUserObj["userIdNum"];		
 		$userObj -> usernameStr = $dbUserObj["usernameStr"];
@@ -651,7 +651,7 @@ $app->get('/facebookGetUser',  function () use ( $app ) {
 *	
 */
 // GET USERS
-$app->get('/getUsers',  function () use ( $app ) {
+$app->post('/getUsers',  function () use ( $app ) {
 				$output = new stdClass();
 				
 				$sqlQueryStr = "SELECT * FROM users";
@@ -1834,7 +1834,6 @@ function getFacebookIdById($userIdNum){
 		
 	$sql_db -> close();
 	$result -> close();
-	
 	return $output;
 };
 
@@ -1881,7 +1880,7 @@ function checkUserIdExists($userIdNum){
 		$output -> messageStr = "UserId parameter not set";
 
 	}
-
+	
 	return $output;
 };
 
@@ -1924,7 +1923,6 @@ function updateUserEmail($userIdNum, $emailStr){
 
 /*
 *	checkEmailExists
-*
 *	Checks if an email exists
 */
 
@@ -1997,8 +1995,6 @@ function checkUserIdConsistent($userIdNum){
  * checks if the user is an admin  
  */
 function checkUserIsAdmin($userIdNum){
-
-
 	if( isset($_SESSION['adminBln']) && $userIdNum == $_SESSION['adminBln']){
 		return true;
 	}else{

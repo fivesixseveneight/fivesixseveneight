@@ -42,7 +42,8 @@
 }
 
 .modal-header{
-	
+	font-size: 20px;
+	font-family: "ProximaNova-Regular";
 }
 
 .modal-body{
@@ -811,6 +812,18 @@ Profile
 	padding: 0px;
 	
 }
+
+.editProfile .profile-row-button{
+	padding: 15px;
+	font-family: "ProximaNova-Regular";
+	cursor: pointer;
+}
+
+.editProfile .profile-row-button:hover{
+	color: #fff;
+	background-color: #FF3030;
+}
+
 
 .editProfile .profile-section-title{
 	margin-top: 20px;

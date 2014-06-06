@@ -57,7 +57,9 @@
 		    </div>
 			
 			<div>
+			
 				<button id="submitButton" type="submit" ng-click="saveProfile()" submit-form-clicked form-submit-complete-bln class="btn btn-sm btn-default pull-right">Save</button>
+  		 	
   		 	</div>
 		</div>
 	</div>
@@ -67,6 +69,12 @@
 	
 		<div class="profileCampaigntitle col-xs-12">Social Media Accounts</div>
 		
+		
+		<!-- 
+		
+		FACEBOOK
+		
+		 -->
 		<div class="profile-section-title col-xs-12">Facebook</div>
 		
 		<div ng-if="userObj.facebookObj" class="col-xs-12">
@@ -76,14 +84,6 @@
 				</div>
 				<div class="profile-right-col  col-xs-offset-2 col-xs-2 col-sm-offset-1 col-sm-3 col-md-offset-1 col-md-2">
 				{{userObj.facebookObj.facebookIdNum}}
-				</div>
-			</div>
-			<div class="profile-row-wrapper col-xs-12">
-				<div class="profile-left-col  col-xs-8 col-sm-offset-0 col-sm-8 col-md-9">
-				Facebook Link
-				</div>
-				<div class="profile-right-col  col-xs-offset-2 col-xs-2 col-sm-offset-1 col-sm-3 col-md-offset-1 col-md-2">
-				 {{userObj.facebookObj.linkStr}}
 				</div>
 			</div>
 			<div class="profile-row-wrapper col-xs-12">
@@ -102,36 +102,40 @@
 				{{userObj.facebookObj.friendsCountNum}}
 				</div>
 			</div>
-
-			<div class="profile-row-wrapper col-xs-12">
-				<div class="profile-left-col  col-xs-8 col-sm-offset-0 col-sm-8 col-md-9">
-				Refresh Facebook stats
-				</div>
-				<div class="profile-right-col  col-xs-offset-2 col-xs-2 col-sm-offset-1 col-sm-3 col-md-offset-1 col-md-2">
-					<button type="submit" ng-click="refreshFacebook()" submit-form-clicked form-submit-complete-bln class="btn btn-sm btn-default pull-right">Refresh</button>
-				</div>
+		</div>
+		
+		<div ng-if="userObj.facebookObj">
+		
+			<div class="profile-row-button col-xs-12">
+				To Facebook profile {{userObj.facebookObj.linkStr}}
 			</div>
-			<div class="profile-row-wrapper col-xs-12">
-				<div class="profile-left-col  col-xs-8 col-sm-offset-0 col-sm-8 col-md-9">
+			
+			<div ng-click="refreshFacebook()" class="profile-row-button col-xs-12">
+				Refresh Facebook info
+			</div>
+
+			<div ng-click="removeFacebook()" class="profile-row-button col-xs-12">
 				Remove Facebook account
-				</div>
-				<div class="profile-right-col  col-xs-offset-2 col-xs-2 col-sm-offset-1 col-sm-3 col-md-offset-1 col-md-2">
-					<button type="submit" ng-click="removeFacebook()" submit-form-clicked form-submit-complete-bln class="btn btn-sm btn-default pull-right">Remove</button>
+			</div>				
+		
+		</div>
+		
+		<div ng-if="!userObj.facebookObj">
+			<div class="profile-row-wrapper col-xs-12">
+				<div class="profile-row-button">
+					Connect Facebook account
 				</div>
 			</div>
 		</div>
 		
-		<div ng-if="!userObj.facebookObj" class="col-xs-12">	
-			<div class="profile-row-wrapper col-xs-12">
-				<div class="profile-left-col  col-xs-8 col-sm-offset-0 col-sm-8 col-md-9">
-					Connect Facebook account
-				</div>
-				<div class="profile-right-col  col-xs-offset-2 col-xs-2 col-sm-offset-1 col-sm-3 col-md-offset-1 col-md-2">
-				     <input class="pull-right" type="checkbox">
-				</div>
-			</div>
-		</div>
 		</br>
+		
+		<!-- 
+		
+		TWITTER
+		
+		 -->
+		
 	
 
 		<!-- 
