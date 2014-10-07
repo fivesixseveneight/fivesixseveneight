@@ -20,11 +20,12 @@
 					
 						<li ng-if="isLoggedInBln" ><a ui-sref="root.primary.overview">Overview</a></li>
 						
-						
+						<!-- 
 						<li ng-if="isLoggedInBln" ><a ui-sref="root.primary.campaign.mycampaigns">Campaign</a></li>
-						<li ng-if="!isLoggedInBln" ><a ui-sref="root.primary.campaign.search">Campaign</a></li>
-							
+						<li ng-if="!isLoggedInBln" ><a ui-sref="root.primary.campaign.search">Campaign</a></li>	
 						<li ng-if="isLoggedInBln" ><a ui-sref="root.primary.reporting">Reporting</a></li>
+						 -->
+						 
 						<li><a ui-sref="root.primary.users.advertisers">Users</a></li>
 						
 						<!-- if the window size is larger than 768 px -->
@@ -39,8 +40,12 @@
 				        		<li><a ui-sref="root.primary.flagged">Flagged</a></li>
 				       		 	<li class="divider"></li>
 				        		<li><a ui-sref="root.primary.settings">Settings</a></li>
+				        		
+				        		<!-- 
 				        		<li><a ui-sref="root.primary.funds">Add/Transfer Funds</a></li>
 				        		<li><a ui-sref="root.primary.tools">Tools</a></li>
+				        		 -->
+				        		 
 				        		<li class="divider"></li>
 				        		<li><a ui-sref="root.primary.logout">Logout</a></li>	
 				        	</ul>
@@ -56,8 +61,10 @@
 		        		<li ng-if="isLoggedInBln && windowWidth <= 767"><a ui-sref="root.primary.flagged">Flagged</a></li>
 		       		 	<li ng-if="isLoggedInBln && windowWidth <= 767" class="divider"></li>
 		        		<li ng-if="isLoggedInBln && windowWidth <= 767"><a ui-sref="root.primary.settings">Settings</a></li>
+		        		<!-- 
 		        		<li ng-if="isLoggedInBln && windowWidth <= 767"><a ui-sref="root.primary.funds">Add/Transfer Funds</a></li>
 		        		<li ng-if="isLoggedInBln && windowWidth <= 767"><a ui-sref="root.primary.tools">Tools</a></li>
+		        		-->
 		        		<li ng-if="isLoggedInBln && windowWidth <= 767" class="divider"></li>
 		        		<li ng-if="isLoggedInBln && windowWidth <= 767"><a ui-sref="root.primary.logout">Logout</a></li>	
 						

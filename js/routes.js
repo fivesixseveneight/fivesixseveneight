@@ -59,7 +59,11 @@ define(['./app'], function (app) {
     		resolve:{
     		
     		}
-    	}).state('root.primary.campaign', {
+    	})
+    	
+    	
+    	/*
+    	.state('root.primary.campaign', {
     		url: '/campaign/',
     		abstract: true,
     		views:{
@@ -93,7 +97,8 @@ define(['./app'], function (app) {
     		resolve:{
     		
     		}
-    	}).state('root.primary.campaign.search', {
+    	})
+    	.state('root.primary.campaign.search', {
     		url: 'search/',
     		views:{
     			"campaignOptionWrapper@root.primary.campaign":{
@@ -126,7 +131,11 @@ define(['./app'], function (app) {
     		resolve:{
     		
     		}
-    	}).state('root.primary.users', {
+    	})
+    	*/
+    	
+    	
+    	.state('root.primary.users', {
     		url: '/users/',
     		abstract: true,
     		views:{
@@ -231,7 +240,12 @@ define(['./app'], function (app) {
     		resolve:{
     		
     		}
-    	}).state('root.primary.tools', {
+    	})
+    	
+    	
+    	/*
+    	
+    	.state('root.primary.tools', {
     		url: '/tools/',
     		views:{
     			"mainView@root":{
@@ -253,7 +267,10 @@ define(['./app'], function (app) {
     		resolve:{
     		
     		}
-    	}).state('root.primary.about', {
+    	})
+    	*/
+    	
+    	.state('root.primary.about', {
     		url: '/about/',
     		views:{
     			"mainView@root":{

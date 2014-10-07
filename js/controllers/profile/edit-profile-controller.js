@@ -21,7 +21,10 @@ define(['../module'], function (controllers) {
     		console.log("refreshFacebook");
     	};
     	
-    	
+    	$scope.editProfileImageClick = function(){
+    		console.log("editProfileImageClick");
+    		
+    	};
     	
     	$scope.cancelModal = function(){
     		console.log("cancelModal");

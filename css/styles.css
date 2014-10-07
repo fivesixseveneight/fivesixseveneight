@@ -1,9 +1,8 @@
-@charset "UTF-8";
-
-@import url("bootstrap.min.css");
-@import url("bootstrap-theme.min.css");
-@import url("bootstrap-select.css");
-@import url("reset.css");
-@import url("ng-slider.min.css");
-@import url("app.css");
-
+@import url(modules/bootstrap.css);
+@import url(modules/bootstrap-theme.css);
+@import url(modules/bootstrap-select.css);
+@import url(modules/ng-slider.min.css);
+@import url(reset.css);
+@import url(partials/footer.css);
+@import url(partials/header.css);
+@import url(app.css);

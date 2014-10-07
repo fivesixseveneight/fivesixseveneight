@@ -1,0 +1,9 @@
+# Portal
+
+
+node_modules/*
+node_modules/
+.sass-cache/*
+.sass-cache/
+*.project
+*.factorypath
