@@ -1,0 +1,50 @@
+/* line 2, ../../sass/partials/overview.scss */
+.overview .overview-top-content {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+/* line 5, ../../sass/partials/overview.scss */
+.overview .overview-top-content .overview-row-wrapper {
+  margin-bottom: 10px;
+}
+/* line 7, ../../sass/partials/overview.scss */
+.overview .overview-top-content .overview-row-wrapper .overview-left-col {
+  display: inline-block;
+  vertical-align: top;
+  min-width: 360px;
+  margin-right: 20px;
+  margin-bottom: 5px;
+  font-family: "ProximaNova-Regular";
+}
+/* line 15, ../../sass/partials/overview.scss */
+.overview .overview-top-content .overview-row-wrapper .overview-right-col {
+  display: inline-block;
+  vertical-align: top;
+  min-width: 360px;
+}
+/* line 25, ../../sass/partials/overview.scss */
+.overview .overview-campaign-title-wrapper {
+  font-size: 35px;
+  padding: 10px;
+}
+/* line 26, ../../sass/partials/overview.scss */
+.overview .overview-campaign-title-wrapper:hover {
+  background-color: #FF3030;
+  color: #fff;
+}
+/* line 33, ../../sass/partials/overview.scss */
+.overview .collapse, .overview .collapsing {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+@media (max-width: 767px) {
+  /* line 53, ../../sass/partials/overview.scss */
+  .overview {
+    font-size: 18px;
+  }
+  /* line 55, ../../sass/partials/overview.scss */
+  .overview .overview-campaign-title-wrapper {
+    font-size: 25px;
+  }
+}

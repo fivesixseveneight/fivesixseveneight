@@ -1,0 +1,212 @@
+/* line 2, ../../sass/partials/profile.scss */
+.profile {
+  text-align: center;
+  margin-bottom: 50px;
+  padding: 0px;
+}
+/* line 6, ../../sass/partials/profile.scss */
+.profile .form-group {
+  padding: 0px;
+}
+/* line 10, ../../sass/partials/profile.scss */
+.profile .profileTopWrapper {
+  position: relative;
+  display: inline-block;
+  text-align: left;
+  max-width: 100%;
+  vertical-align: top;
+  padding: 0px;
+  border-right: 1px solid #cdcdcd;
+}
+/* line 18, ../../sass/partials/profile.scss */
+.profile .profileTopWrapper .profileImageWrapper {
+  padding: 15px;
+  margin-left: 15px;
+  margin-right: 15px;
+  width: 300px;
+  display: inline-block;
+  vertical-align: top;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  max-width: 90%;
+}
+/* line 27, ../../sass/partials/profile.scss */
+.profile .profileTopWrapper .profileImageWrapper .profileImage {
+  max-width: 100%;
+  max-height: 100%;
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+/* line 35, ../../sass/partials/profile.scss */
+.profile .profileTopWrapper .profileEditButton {
+  cursor: pointer;
+  font-family: "ProximaNova-Regular";
+  font-size: 20px;
+  padding: 15px;
+}
+/* line 36, ../../sass/partials/profile.scss */
+.profile .profileTopWrapper .profileEditButton:hover {
+  background-color: #FF3030;
+  color: #fff;
+}
+/* line 46, ../../sass/partials/profile.scss */
+.profile .profileTopWrapper .profileQuickBio {
+  vertical-align: top;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+/* line 50, ../../sass/partials/profile.scss */
+.profile .profileTopWrapper .profileQuickBio .profileBioDetails {
+  margin-bottom: 5px;
+}
+/* line 55, ../../sass/partials/profile.scss */
+.profile .profileTopWrapper .profileBio {
+  padding: 15px;
+  padding-top: 0px;
+  text-align: left;
+}
+/* line 59, ../../sass/partials/profile.scss */
+.profile .profileTopWrapper .profileBio .profileBioTitle {
+  position: relative;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  padding: 0px;
+}
+/* line 64, ../../sass/partials/profile.scss */
+.profile .profileTopWrapper .profileBio .profileBioTitle .profile-section-title {
+  margin: 0px;
+  display: inline-block;
+  vertical-align: top;
+  padding: 0px;
+}
+/* line 72, ../../sass/partials/profile.scss */
+.profile .profileTopWrapper .profileBio .form-group {
+  height: auto;
+  margin-bottom: 15px;
+}
+/* line 75, ../../sass/partials/profile.scss */
+.profile .profileTopWrapper .profileBio .form-group .profile-sub-title {
+  margin-bottom: 10px;
+}
+/* line 79, ../../sass/partials/profile.scss */
+.profile .profileTopWrapper .profileBio textarea {
+  resize: vertical;
+  max-height: 300px;
+}
+/* line 86, ../../sass/partials/profile.scss */
+.profile .profileBottomWrapper {
+  text-align: left;
+  max-width: 100%;
+  display: inline-block;
+  vertical-align: top;
+  padding: 0px;
+  border-left: 1px solid #cdcdcd;
+  margin-left: -1px;
+}
+/* line 94, ../../sass/partials/profile.scss */
+.profile .profileBottomWrapper .profileCampaigntitle {
+  margin-bottom: 0px;
+  font-size: 20px;
+  font-family: "ProximaNova-Regular";
+  padding-left: 15px;
+  padding-right: 15px;
+}
+/* line 101, ../../sass/partials/profile.scss */
+.profile .profileBottomWrapper .profileStats {
+  padding: 0px;
+}
+/* line 104, ../../sass/partials/profile.scss */
+.profile .profileBottomWrapper .profileStats .profile-advertise-stats-wrapper,
+.profile .profileBottomWrapper .profileStats .profile-publisher-stats-wrapper {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+/* line 107, ../../sass/partials/profile.scss */
+.profile .profileBottomWrapper .profileStats .profile-advertise-stats-wrapper .profile-section-title,
+.profile .profileBottomWrapper .profileStats .profile-publisher-stats-wrapper .profile-section-title {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  font-size: 20px;
+  font-family: "ProximaNova-Regular";
+}
+/* line 113, ../../sass/partials/profile.scss */
+.profile .profileBottomWrapper .profileStats .profile-advertise-stats-wrapper .profile-row-wrapper,
+.profile .profileBottomWrapper .profileStats .profile-publisher-stats-wrapper .profile-row-wrapper {
+  margin-bottom: 10px;
+  padding: 0px;
+}
+/* line 116, ../../sass/partials/profile.scss */
+.profile .profileBottomWrapper .profileStats .profile-advertise-stats-wrapper .profile-row-wrapper .profile-title,
+.profile .profileBottomWrapper .profileStats .profile-publisher-stats-wrapper .profile-row-wrapper .profile-title {
+  margin-bottom: 10px;
+  font-family: "ProximaNova-Regular";
+}
+/* line 120, ../../sass/partials/profile.scss */
+.profile .profileBottomWrapper .profileStats .profile-advertise-stats-wrapper .profile-row-wrapper .profile-left-col,
+.profile .profileBottomWrapper .profileStats .profile-publisher-stats-wrapper .profile-row-wrapper .profile-left-col {
+  vertical-align: top;
+  display: inline-block;
+  margin-bottom: 5px;
+  font-family: "ProximaNova-Regular";
+  padding: 0px;
+}
+/* line 127, ../../sass/partials/profile.scss */
+.profile .profileBottomWrapper .profileStats .profile-advertise-stats-wrapper .profile-row-wrapper .profile-right-col,
+.profile .profileBottomWrapper .profileStats .profile-publisher-stats-wrapper .profile-row-wrapper .profile-right-col {
+  vertical-align: top;
+  display: inline-block;
+  padding: 0px;
+}
+/* line 139, ../../sass/partials/profile.scss */
+.profile #publishingCampaignAccordion,
+.profile #advertisingCampaignAccordion {
+  padding: 0px;
+}
+/* line 141, ../../sass/partials/profile.scss */
+.profile #publishingCampaignAccordion .profile-title,
+.profile #advertisingCampaignAccordion .profile-title {
+  padding: 15px;
+  margin-bottom: 0px;
+}
+/* line 142, ../../sass/partials/profile.scss */
+.profile #publishingCampaignAccordion .profile-title:hover,
+.profile #advertisingCampaignAccordion .profile-title:hover {
+  background-color: #FF3030;
+  color: #fff;
+}
+/* line 149, ../../sass/partials/profile.scss */
+.profile #publishingCampaignAccordion .profile-row-wrapper,
+.profile #advertisingCampaignAccordion .profile-row-wrapper {
+  margin-bottom: 0px;
+  padding: 0px;
+}
+/* line 153, ../../sass/partials/profile.scss */
+.profile #publishingCampaignAccordion .collapse, .profile #publishingCampaignAccordion .collapsing,
+.profile #advertisingCampaignAccordion .collapse,
+.profile #advertisingCampaignAccordion .collapsing {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+@media (max-width: 767px) {
+  /* line 178, ../../sass/partials/profile.scss */
+  .profile .profileTopWrapper {
+    text-align: center;
+  }
+  /* line 181, ../../sass/partials/profile.scss */
+  .profile .profileQuickBio {
+    text-align: center;
+  }
+  /* line 187, ../../sass/partials/profile.scss */
+  .profile .profileTopWrapper {
+    border-right: none;
+  }
+  /* line 190, ../../sass/partials/profile.scss */
+  .profile .profileBottomWrapper {
+    border-left: none;
+    margin-left: 0px;
+  }
+  /* line 194, ../../sass/partials/profile.scss */
+  .profile .profileImageWrapper {
+    float: none;
+  }
+}

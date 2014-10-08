@@ -1,0 +1,44 @@
+/*
+* home
+*/
+/* line 5, ../../sass/partials/home.scss */
+.home {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+/* line 12, ../../sass/partials/home.scss */
+.home .home-background {
+  position: absolute;
+  background: #04335F;
+  background: url("../../img/global/home-background.png");
+  width: 100%;
+  height: 100%;
+  min-height: 370px;
+}
+/* line 20, ../../sass/partials/home.scss */
+.home .fake-height {
+  display: inline-block;
+  vertical-align: middle;
+  height: 100%;
+  width: 0px;
+}
+/* line 26, ../../sass/partials/home.scss */
+.home .container {
+  display: inline-block;
+  margin: auto;
+  text-align: left;
+  vertical-align: middle;
+  width: 98%;
+  margin-bottom: 10%;
+}
+/* line 33, ../../sass/partials/home.scss */
+.home .container .home-title {
+  color: #fefefe;
+  font-size: 27px;
+  text-align: center;
+  margin-bottom: 20px;
+}
