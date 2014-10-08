@@ -1,0 +1,271 @@
+
+#header{
+	height: auto;
+	color: #fff;
+	position: fixed;
+	z-index: 1;
+	width: 100%;
+	border-bottom: 1px solid rgba(0,0,0,0.1);
+	background-color: #fff;
+	.header-centre{
+		width: auto;
+		position: relative;
+		margin: auto;
+	}
+	
+	.divider{
+		height: 1px;
+		overflow: hidden;
+		background-color: rgba(0,0,0,0.1);
+		width: 100%;
+		margin: auto;
+	}
+	
+	
+	.noshow{
+		#main-logo{
+			width: 0px;
+			height: 50px;
+		}
+	}
+	#main-logo{
+		vertical-align: middle;
+		margin: 15px;
+		margin-top: 10px;
+		margin-bottom: 10px;
+		width: 50px;
+	}
+	
+	#main-navbar-menu{
+		margin: 11px;
+		padding: 10px;
+		position: relative;
+		.menu-key-line{
+			border-bottom: 3px solid #000;
+			width: 30px;
+			height: 4px;
+			margin-bottom: 4px;
+		}
+	}
+
+	#right-navigation-wrapper{
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		top: 0;
+		vertical-align: middle;
+		height: 26px;
+		margin: auto;
+		.nav-wrapper{
+			display: inline-block;
+			vertical-align: middle;
+			.navbar-collapse{
+				max-height: none;
+				padding-left: 0px;
+				padding-right: 0px;
+				.navbar-nav{
+					margin: 0px;
+					.primary-nav{
+						height: 25px;
+						li{
+							position: relative;
+							display: inline-block;
+							margin-left:10px;
+							margin-right:10px;
+							a{
+								&:hover{
+									border-bottom: 2px solid #FF3030;
+									color: #000;
+								}
+								padding-top: 5px;
+								padding-bottom: 5px;
+								position: relative;
+								display: block;
+								font-size: 16px;
+								margin-left:0px;
+								margin-right:0px;
+								color: #000;
+								text-decoration: none;
+							}
+						}
+						.dropdown{
+							&.open{
+								a{
+									text-decoration: none;
+									border-bottom: 2px solid #FF3030;
+									color: #000;
+									background-color: transparent;
+								}
+							}
+							.dropdown-menu{
+								right: 0;
+								left: auto;	
+								width: 100%;
+								min-width: 200px;
+								li{
+									&:hover{
+										background-color: #FF3030;
+									}	
+									display: block;
+									margin-left: 0px;
+									margin-right: 0px;
+									a{
+										&:hover{
+											color: #fff;
+										}
+										background-color: transparent;
+										border-bottom: transparent;
+										background: none;
+									}
+								}
+							}
+									
+						}
+						
+					}
+				}
+			}
+		}
+		.contact-image-wrapper{
+			display: inline-block;
+			vertical-align: middle;
+			margin-left: 20px;
+			.mail-image{
+				&:hover{
+	
+				}
+			}
+		}
+	}
+}
+
+
+@media (max-width:1499px) {
+	
+}
+
+@media (max-width:1199px) {
+
+}
+	
+@media (max-width:991px) {
+		
+}
+
+@media (max-width:767px) {
+
+	#header{
+		.header-centre{
+		}
+		.divider{
+		}
+		.noshow{
+			#main-logo{
+			}
+		}
+		#main-logo{
+			margin-top: 10px;
+			margin-bottom: 9px;
+		}
+		#main-navbar-menu{
+			.menu-key-line{
+			}
+		}
+		#right-navigation-wrapper{
+			display: block;
+			border-bottom: 1px solid rgba(255,255,255,0.1);
+			position: relative;
+			height: auto;
+			.nav-wrapper{
+				display: block;
+				.navbar-collapse{
+					.navbar-nav{
+						.primary-nav{
+							height: auto;
+							float: none;
+							position: relative;
+							width: auto;
+							right: auto;
+							li{
+								float: none;
+								display: block;
+								margin-left: 0px;
+								margin-right: 0px;	
+								a{
+									padding: 15px;
+									margin: 0px;
+									&:hover{
+										background-color: #FF3030;
+										color: #fff;
+										border-bottom: none;
+									}
+								}
+							}
+							.dropdown{
+								&.open{
+									a{
+									}
+								}
+								.dropdown-menu{
+									li{
+										&:hover{
+										}	
+										a{
+											&:hover{
+												
+											}
+										}
+									}
+								}	
+							}
+						}
+					}
+				}
+			}
+			.contact-image-wrapper{
+				display: none;
+				.mail-image{
+					&:hover{
+		
+					}
+				}
+			}
+		}
+	}
+
+
+	
+	
+	
+
+
+		
+}
+
+/* mobile */
+
+@media (max-width:480px) {
+	
+
+}
+
+@media (max-width:479px) {
+
+}
+
+@media (max-width: 319px) {
+	
+}
+
+@media (max-height: 330px) {
+	
+}
+
+
+@media (max-height: 680px) {
+	#header {
+		position: relative;
+	}
+
+}
+
